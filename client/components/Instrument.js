@@ -17,6 +17,10 @@ import {
   sinF4,
   sinG4,
   transpo,
+  playSnareWav,
+  playClosedHatWav,
+  playKickWav,
+  playClapWav,
 } from './tone.fn.js';
 
 const soundList = [
@@ -36,6 +40,10 @@ const soundList = [
   sinE4,
   sinF4,
   sinG4,
+  playSnareWav,
+  playClosedHatWav,
+  playKickWav,
+  playClapWav,
 ];
 function rainbow(numOfSteps, step) {
   // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
