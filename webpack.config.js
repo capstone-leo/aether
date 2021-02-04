@@ -1,4 +1,4 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './client/index.js',
@@ -20,4 +20,16 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+      API_KEY: '',
+      AUTH_DOMAIN: '',
+      projectId: '',
+      STORAGE_BUCKET: '',
+      MESSAGING_SENDER_ID: '',
+      APP_ID: '',
+      MEASUREMENT_ID: '',
+    }),
+  ],
 };
