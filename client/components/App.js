@@ -1,24 +1,18 @@
-import React, { useEffect, useState, useRef } from "react";
-import * as THREE from "three";
-import { DragControls } from "three/examples/jsm/controls/DragControls";
-import * as Tone from "tone";
-import Instrument from "./Instrument";
-import { Slider } from "./Slider";
-import { About } from "./About";
-import Modal from "react-modal";
-import "./css/App.css";
+import React, { useEffect, useState, useRef } from 'react';
+import * as THREE from 'three';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
+import * as Tone from 'tone';
+import Instrument from './Instrument';
+import { Slider } from './Slider';
+import { About } from './About';
+import Modal from 'react-modal';
+import './css/App.css';
 
-import "firebase/firestore";
-import "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "./Home";
-import socket from "socket";
+import 'firebase/firestore';
+import 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, db } from './Home';
 
-const socket = io.connect("http://localhost:5000");
-
-socket.on("connect", function () {
-  console.log("connected!!");
-});
 const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const mount = useRef(null);
@@ -174,7 +168,7 @@ const App = () => {
       camera,
       renderer.domElement
     );
-    dragControls.addEventListener("drag", onDrag);
+    dragControls.addEventListener('drag', onDrag);
     function onDrag() {
       renderScene();
     }
@@ -204,8 +198,8 @@ const App = () => {
     }
 
     function playSound() {
-      socket.emit("log", {
-        message: "Hello World!",
+      socket.emit('log', {
+        message: 'Hello World!',
       });
       if (objectSelect) {
         if (objectSelect.hover) {
@@ -214,14 +208,14 @@ const App = () => {
       }
     }
 
-    window.addEventListener("dblclick", addInstrument, false);
-    window.addEventListener("click", playSound, false);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('dblclick', addInstrument, false);
+    window.addEventListener('click', playSound, false);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('resize', handleResize);
 
     let sliderValue = 0.05;
-    let slider = document.getElementById("slider");
-    slider.addEventListener("input", onInput);
+    let slider = document.getElementById('slider');
+    slider.addEventListener('input', onInput);
     function onInput() {
       sliderValue = Number(slider.value);
     }
@@ -331,9 +325,9 @@ const App = () => {
     //Trash Clean up
     return () => {
       stop();
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
       mount.current.removeChild(renderer.domElement);
-      dragControls.removeEventListener("drag", onDrag);
+      dragControls.removeEventListener('drag', onDrag);
       for (let i = 0; i < scene.length; i++) {
         scene.remove(i);
       }
