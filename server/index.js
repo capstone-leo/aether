@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const morgan = require('morgan');
-
+const PORT = process.env.PORT||5000
 app.use(morgan('dev'));
 
 //static stuff
@@ -13,6 +13,6 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
   console.log('listening on 5000');
 });
