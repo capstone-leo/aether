@@ -8,7 +8,6 @@ app.use(morgan('dev'));
 
 //static stuff
 app.use(express.static(path.join(__dirname, '..', 'public')));
-console.log(process.env.API_KEY);
 //sends HTML no matter what
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
