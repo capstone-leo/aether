@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 
 module.exports = {
@@ -21,5 +22,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [ new webpack.HtmlWebpackPlugin({template:'./public/index.html'})],
+  plugins: [ new HtmlWebpackPlugin({template:'./public/index.html'})],
 };
