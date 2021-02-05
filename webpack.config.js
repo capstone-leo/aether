@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 
+
 module.exports = {
   entry: './client/index.js',
   output: {
@@ -20,16 +21,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
-      API_KEY: '',
-      AUTH_DOMAIN: '',
-      projectId: '',
-      STORAGE_BUCKET: '',
-      MESSAGING_SENDER_ID: '',
-      APP_ID: '',
-      MEASUREMENT_ID: '',
-    }),
-  ],
+  plugins: [ new webpack.HtmlWebpackPlugin({template:'./public/index.html'})],
 };
