@@ -341,11 +341,12 @@ const App = () => {
 	}, [isAnimating]);
 
 	const endSession = () => {
-		setRedirectTo(true);
 		setAnimating(false);
+		auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
 	};
+
 	if (redirectTo) {
-		return <Redirect to='/' />;
+		return <Redirect to={redirectTo} />;
 	}
 	return (
 		<div
@@ -363,7 +364,7 @@ const App = () => {
 			</button>
 			<button
 				onClick={() => {
-					setRedirectTo(true);
+					endSession;
 				}}
 			>
 				End Session

@@ -6,17 +6,23 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, db } from './Home';
 
-const UserAccountPage = () => {
+const UserAccountPage = (props) => {
 	const [user] = useAuthState(auth); //user JSON
 	const report = () => {
 		console.log('user-->', user);
 	};
 	return (
 		<div>
-			<button onClick={() => report()}></button>
+			<button onClick={() => report()}>Report</button>
 			<Link to='/sesh'>
 				<button>Start Jamming</button>
 			</Link>
+			<button
+				className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+				onClick={() => auth.signOut()}
+			>
+				Sign Out
+			</button>
 		</div>
 	);
 };

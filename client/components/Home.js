@@ -1,41 +1,35 @@
 import React, { Component, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 // Initialize Firebase
-firebase.initializeApp({
-	apiKey: 'AIzaSyAWVIxjZTaEY90wBDSxj1v7ECUUKyG7Vb0',
-	authDomain: 'sound-collabo.firebaseapp.com',
-	projectId: 'sound-collabo',
-	storageBucket: 'sound-collabo.appspot.com',
-	messagingSenderId: '564645648142',
-	appId: '1:564645648142:web:f0b8c196f95fd2b70c295f',
-	measurementId: 'G-V44HEGZ64L'
-});
+firebase.initializeApp({});
 // Initialize auth and firestore
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 
 // Main Component
 const Home = () => {
+	const [user] = useAuthState(auth); //user JSON
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeydown);
-		console.log('user-->', auth.currentUser);
+		console.log('user-->', user);
 	});
-
-	const [enableOutline, setenableOutline] = useState(false);
-
+	// React Hooks
+	const [enableOutline, setEnableOutline] = useState(false);
 	const [showInstructions, setShowInstructions] = useState(false);
+	const [redirectTo, setRedirectTo] = useState('');
 
 	//Accessibility Handler
 	const handleKeydown = (e) => {
 		const isTabEvent = e.keyCode === 9;
 		if (isTabEvent) {
-			setenableOutline(true);
+			setEnableOutline(true);
 		}
 	};
 
@@ -111,15 +105,17 @@ const Home = () => {
 					</button>
 				</Link>
 				<br />
-				{/* <SignIn enableOutline={enableOutline} /> */}
-				{!auth.currentUser ? (
-					<SignIn
+
+				{user ? (
+					<SignOut
+						user={user}
 						enableOutline={enableOutline}
 						setShowInstructions={setShowInstructions}
 						showInstructions={showInstructions}
 					/>
 				) : (
-					<SignOut
+					<SignIn
+						user={user}
 						enableOutline={enableOutline}
 						setShowInstructions={setShowInstructions}
 						showInstructions={showInstructions}
@@ -149,8 +145,8 @@ const Home = () => {
 							You have the unique opportunity to collaborate in realtime with other
 							musicians
 						</p>
-						<p>Cpck a sound object Once to hear its sound.</p>
-						<p>Cpck and Drag a sound object onto the Jam-Space</p>
+						<p>Click a sound object Once to hear its sound.</p>
+						<p>Click and Drag a sound object onto the Jam-Space</p>
 						<p>When the Hammer strikes it, hear the sounds!</p>
 						<p>
 							Exlore the music you can create with your friends or match with users from
@@ -175,25 +171,32 @@ const Home = () => {
 
 // Helper Components
 function SignIn(props) {
+	let user;
 	const signInWithGoogle = () => {
 		const provider = new firebase.auth.GoogleAuthProvider();
 		//instatiate new auth token
-		auth.signInWithPopup(provider);
+		auth.signInWithRedirect(provider);
+		// 	.then((result) => {
+		// 	user = result.user;
+		// });
 		//prompts separate window to google login
 	};
+	console.log('props-->', props);
+	console.log('user-->', props.user);
 
-	props.setShowInstructions(props.showInstructions);
-	return (
+	return user ? (
+		<Redirect to='/studio' />
+	) : (
 		<button
 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
 			onClick={signInWithGoogle}
 		>
-			Sign in with Google
+			Sign In with Google
 		</button>
-	); // button to prompt Google login
+	);
+	// button to prompt Google login
 }
 function SignOut(props) {
-	props.setShowInstructions(props.showInstructions);
 	return auth.currentUser ? (
 		<button
 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
