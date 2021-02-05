@@ -135,7 +135,7 @@ const App = () => {
       wireframeLinewidth: 2,
     });
     const jamSpace = new THREE.LineLoop(jamSpaceGeometry, jamSpaceMaterial);
-    jamSpace.scale.set(20, 20, 20);
+    jamSpace.scale.set(30, 30, 30);
     scene.add(jamSpace);
 
     const hammerGeometry = new THREE.BoxGeometry(0.1, 10, 0.1);

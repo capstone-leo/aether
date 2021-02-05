@@ -118,7 +118,7 @@ export function sinB4() {
   synth.oscillator.type = 'sine';
   gain.toDestination();
   synth.connect(gain);
-  synth.triggerAttackRelease('B4', 0.5);
+  synth.triggerAttackRelease('B3.6', 0.5);
 }
 export function sinA4() {
   const synth = new Tone.Synth().toDestination();
@@ -126,7 +126,7 @@ export function sinA4() {
   synth.oscillator.type = 'sine';
   gain.toDestination();
   synth.connect(gain);
-  synth.triggerAttackRelease('A4', 0.5);
+  synth.triggerAttackRelease('A3.6', 0.5);
 }
 
 export function sinC4() {
@@ -135,7 +135,7 @@ export function sinC4() {
   synth.oscillator.type = 'sine';
   gain.toDestination();
   synth.connect(gain);
-  synth.triggerAttackRelease('C4', 0.5);
+  synth.triggerAttackRelease('C3.6', 0.5);
 }
 
 export function sinD4() {
@@ -144,7 +144,7 @@ export function sinD4() {
   synth.oscillator.type = 'sine';
   gain.toDestination();
   synth.connect(gain);
-  synth.triggerAttackRelease('D4', 0.5);
+  synth.triggerAttackRelease('D3.6', 0.5);
 }
 
 export function sinE4() {
@@ -153,7 +153,7 @@ export function sinE4() {
   synth.oscillator.type = 'sine';
   gain.toDestination();
   synth.connect(gain);
-  synth.triggerAttackRelease('E4', 0.5);
+  synth.triggerAttackRelease('E3.6', 0.5);
 }
 
 export function sinF4() {
@@ -162,7 +162,7 @@ export function sinF4() {
   synth.oscillator.type = 'sine';
   gain.toDestination();
   synth.connect(gain);
-  synth.triggerAttackRelease('F4', 0.5);
+  synth.triggerAttackRelease('F3.6', 0.5);
 }
 
 export function sinG4() {
@@ -171,28 +171,28 @@ export function sinG4() {
   synth.oscillator.type = 'sine';
   gain.toDestination();
   synth.connect(gain);
-  synth.triggerAttackRelease('G4', 0.5);
+  synth.triggerAttackRelease('G3.6', 0.5);
 }
-//percussion
-export function playKickDrumToneJS() {
-  const kickDrum = new Tone.MembraneSynth({
-    volume: 6,
-  }).toDestination();
-  kickDrum.triggerAttackRelease();
-}
-export function playSnareWav() {
-  const snare = new Audio('./sounds/snare.wav');
-  snare.play();
-}
-export function playClosedHatWav() {
-  const snare = new Audio('./sounds/closed-hat.wav');
-  snare.play();
-}
-export function playKickWav() {
-  const snare = new Audio('./sounds/kick.wav');
-  snare.play();
-}
-export function playClapWav() {
-  const snare = new Audio('./sounds/clap.wav');
-  snare.play();
-}
+// //percussion
+// export function playKickDrumToneJS() {
+//   const kickDrum = new Tone.MembraneSynth({
+//     volume: 6,
+//   }).toDestination();
+//   kickDrum.triggerAttackRelease();
+// }
+// export function playSnareWav() {
+//   const snare = new Audio('./sounds/snare.wav');
+//   snare.play();
+// }
+// export function playClosedHatWav() {
+//   const snare = new Audio('./sounds/closed-hat.wav');
+//   snare.play();
+// }
+// export function playKickWav() {
+//   const snare = new Audio('./sounds/kick.wav');
+//   snare.play();
+// }
+// export function playClapWav() {
+//   const snare = new Audio('./sounds/clap.wav');
+//   snare.play();
+// }

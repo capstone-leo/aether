@@ -24,26 +24,40 @@ import {
 } from './tone.fn.js';
 
 const soundList = [
-  playC4,
-  playD4,
-  playE4,
-  playF4,
-  playG4,
-  playA4,
-  playB4,
-  playC5,
-  // transpo,
-  sinB4,
-  sinA4,
-  sinC4,
-  sinD4,
-  sinE4,
-  sinF4,
-  sinG4,
+  // playC4,
+  // playD4,
+  // playE4,
+  // playF4,
+  // playG4,
+  // playA4,
+  // playB4,
+  // playC5,
+  // // transpo,
+  // sinB4,
+  // sinA4,
+  // sinC4,
+  // sinD4,
+  // sinE4,
+  // sinF4,
+  // sinG4,
+  playSnareWav,
   playSnareWav,
   playClosedHatWav,
+  playClosedHatWav,
+  playKickWav,
+  playKickWav,
+  playKickWav,
+  playKickWav,
+  playKickWav,
   playKickWav,
   playClapWav,
+  playClapWav,
+  sinD4,
+  sinA4,
+  sinB4,
+  sinC4,
+  sinE4,
+  sinG4
 ];
 function rainbow(numOfSteps, step) {
   // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
@@ -97,7 +111,7 @@ function rainbow(numOfSteps, step) {
 }
 class Instrument {
   constructor() {
-    this.geometry = new three.BoxGeometry(50, 20, 20);
+    this.geometry = new three.BoxGeometry(60, 30, 30);
     this.material = new three.MeshLambertMaterial({
       //wireframe: true,
       color: Math.random() * 0xffffff,

@@ -3,6 +3,7 @@ const path = require('path');
 const app = express();
 const morgan = require('morgan');
 const PORT = process.env.PORT || 5000;
+const socket = require('socket.io');
 //require('../secrets');
 app.use(morgan('dev'));
 
@@ -12,6 +13,10 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log('listening on 5000');
 });
+
+//Socket setup
+const io = socket(server);
+require('./socket')(io);
