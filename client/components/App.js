@@ -340,6 +340,10 @@ const App = () => {
 		}
 	}, [isAnimating]);
 
+	const endSession = () => {
+		setRedirectTo(true);
+		setAnimating(false);
+	};
 	if (redirectTo) {
 		return <Redirect to='/' />;
 	}
