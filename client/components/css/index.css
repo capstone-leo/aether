@@ -1,77 +1,130 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .about {
-  background-color: pink;
-  position: absolute;
-  left: 30px;
-  top: 30px;
+	background-color: pink;
+	position: absolute;
+	left: 30px;
+	top: 30px;
 }
 
 .about:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 #slider {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  color: gray;
-  background: pink;
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	color: gray;
+	background: pink;
 }
 #slider:hover {
-  cursor: grab;
+	cursor: grab;
 }
 .slider {
-  position: absolute;
-  right: 30px;
-  top: 30px;
+	position: absolute;
+	right: 30px;
+	top: 30px;
 }
 
 .tempoText {
-  font-size: 12px;
-  position: relative;
-  top: 15px;
-  right: 45px;
+	font-size: 12px;
+	position: relative;
+	top: 15px;
+	right: 45px;
 }
 
 .sliderchild {
-  font-size: 12px;
-  position: relative;
-  top: 10px;
+	font-size: 12px;
+	position: relative;
+	top: 10px;
 }
 
 .Modal {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 50%;
-  bottom: 40px;
-  opacity: 80%;
-  background: whitesmoke;
+	position: absolute;
+	top: 40px;
+	left: 40px;
+	right: 50%;
+	bottom: 40px;
+	opacity: 80%;
+	background: whitesmoke;
 }
 
 .closer {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
 }
 
 .closer:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .modalTextDiv {
-  padding: 30px;
-  background-color: whitesmoke;
+	padding: 30px;
+	background-color: whitesmoke;
+}
+button.home-btn {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 20%;
+	font-weight: 600;
+	background: radial-gradient(
+		circle,
+		rgb(230, 229, 223) 10%,
+		rgba(255, 255, 255, 1) 90%
+	);
+	color: #000000;
+	cursor: pointer;
+	border: 0;
+	transition: all 0.5s;
+	border-radius: 10px;
+	width: auto;
+	position: relative;
+	padding: 0.5%;
+}
+
+button.home-btn:hover {
+	font-family: 'Source Code Pro', monospace;
+	font-size: 20%;
+	font-weight: 600;
+	background: rgb(230, 229, 223) 0%;
+	color: #000000;
+	cursor: pointer;
+	border: 0;
+	transition: all 0.5s;
+	border-radius: 0px;
+	width: auto;
+	position: relative;
+	padding: 0.5%;
+}
+button.home-btn:active {
+	transform: scale(0.95);
+	transition: all 0.2s;
+}
+
+.no-outline-on-focus {
+	outline: none;
+}
+#particles-js {
+	width: 100%;
+	height: 100%;
+	/*background-image: url('');*/
+	background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+canvas {
+	display: block;
+	/* vertical-align: bottom; */
 }
