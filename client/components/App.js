@@ -198,9 +198,6 @@ const App = () => {
     }
 
     function playSound() {
-      socket.emit('log', {
-        message: 'Hello World!',
-      });
       if (objectSelect) {
         if (objectSelect.hover) {
           objectSelect.sound();
