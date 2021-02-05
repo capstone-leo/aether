@@ -173,26 +173,26 @@ export function sinG4() {
   synth.connect(gain);
   synth.triggerAttackRelease('G3.6', 0.5);
 }
-//percussion
-export function playKickDrumToneJS() {
-  const kickDrum = new Tone.MembraneSynth({
-    volume: 6,
-  }).toDestination();
-  kickDrum.triggerAttackRelease();
-}
-export function playSnareWav() {
-  const snare = new Audio('./sounds/snare.wav');
-  snare.play();
-}
-export function playClosedHatWav() {
-  const snare = new Audio('./sounds/closed-hat.wav');
-  snare.play();
-}
-export function playKickWav() {
-  const snare = new Audio('./sounds/kick.wav');
-  snare.play();
-}
-export function playClapWav() {
-  const snare = new Audio('./sounds/clap.wav');
-  snare.play();
-}
+// //percussion
+// export function playKickDrumToneJS() {
+//   const kickDrum = new Tone.MembraneSynth({
+//     volume: 6,
+//   }).toDestination();
+//   kickDrum.triggerAttackRelease();
+// }
+// export function playSnareWav() {
+//   const snare = new Audio('./sounds/snare.wav');
+//   snare.play();
+// }
+// export function playClosedHatWav() {
+//   const snare = new Audio('./sounds/closed-hat.wav');
+//   snare.play();
+// }
+// export function playKickWav() {
+//   const snare = new Audio('./sounds/kick.wav');
+//   snare.play();
+// }
+// export function playClapWav() {
+//   const snare = new Audio('./sounds/clap.wav');
+//   snare.play();
+// }
