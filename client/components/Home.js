@@ -32,8 +32,10 @@ const Home = () => {
   };
   return (
     <>
-      <div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
-        <header>a e t h e r</header>
+      <div     id="particles" style={{ textAlign: 'center', paddingTop: '8%', paddingBottom: '250px', fontSize: '60px', background: '#38373d', color: 'whitesmoke', height: '100%' }}>
+       
+      <header>a e t h e r</header>
+        
         <p style={{ fontSize: '15px' }}>(working title)</p>
         <SignIn />
         <SignOut />
@@ -41,7 +43,7 @@ const Home = () => {
         <Link to="/sesh">
           <button
             type="button"
-            style={{ textAlign: 'center', marginTop: '1%' }}
+            style={{ textAlign: 'center', marginTop: '1%', zIndex: 1, positon:'relative'}}
           >
             Start Jamming {'>'}
           </button>
@@ -53,8 +55,22 @@ const Home = () => {
           style={{ textAlign: 'center', marginTop: '1%', fontSize: '15px' }}
         >
           view instructions
-        </button>
-
+        </button> <Particles
+    style={{position: 'absolute'}}
+          params={{
+            particles: {
+              line_linked: {
+                shadow: {
+                  enable: true,
+                  color: '#3CA9D1',
+                  blur: 5,
+                },
+              },
+            },
+          }}
+       
+        />
+</div>
         {showInstructions ? (
           <ol style={{ textAlign: 'center', fontSize: '15px' }}>
             <li>“One band. One Sound.”</li>
@@ -69,23 +85,7 @@ const Home = () => {
         ) : null}
         <br />
 
-        <Particles
-          params={{
-            particles: {
-              line_linked: {
-                shadow: {
-                  enable: true,
-                  color: '#3CA9D1',
-                  blur: 5,
-                },
-              },
-            },
-          }}
-          style={{
-            width: '100%',
-          }}
-        />
-      </div>
+        
     </>
   );
 };
