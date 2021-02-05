@@ -32,9 +32,23 @@ const Home = () => {
   };
   return (
     <>
-      <div     id="particles" style={{ textAlign: 'center', paddingTop: '8%', paddingBottom: '250px', fontSize: '60px', background: '#38373d', color: 'whitesmoke', height: '100%' }}>
+      <div id="particles" style={{ textAlign: 'center', paddingTop: '8%', paddingBottom: '250px', fontSize: '60px', background: '#38373d', color: 'whitesmoke', height: '100%' }}>
+      <Particles
+    // style={{width: 100%, position: 'absolute'}}
+          params={{
+            particles: {
+              line_linked: {
+                shadow: {
+                  enable: true,
+                  color: '#3CA9D1',
+                  blur: 5,
+                },
+              },
+            },
+         }}
        
-      <header>a e t h e r</header>
+        />
+      <header style={{zIndex:-1}}>a e t h e r</header>
         
         <p style={{ fontSize: '15px' }}>(working title)</p>
         <SignIn />
@@ -55,21 +69,7 @@ const Home = () => {
           style={{ textAlign: 'center', marginTop: '1%', fontSize: '15px' }}
         >
           view instructions
-        </button> <Particles
-    style={{position: 'absolute'}}
-          params={{
-            particles: {
-              line_linked: {
-                shadow: {
-                  enable: true,
-                  color: '#3CA9D1',
-                  blur: 5,
-                },
-              },
-            },
-          }}
-       
-        />
+        </button> 
 </div>
         {showInstructions ? (
           <ol style={{ textAlign: 'center', fontSize: '15px' }}>

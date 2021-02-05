@@ -362,7 +362,7 @@ const App = () => {
           close
         </button>
       </Modal>
-      <Chat />
+      <Chat style={{position:'absolute', bottom:0}}/>
     </div>
   );
 };

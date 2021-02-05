@@ -6,22 +6,25 @@ export const Chat = (props) => {
   const { messages } = props;
   const [message, setMessage] = useState('');
   const messageList = useRef(null);
-
   const sendMessage = () => {
     let newMessage = message;
     if (newMessage) {
       socket.emit('new_message', message);
       setMessage('');
-    }
-  };
+      setTimeout(()=>messageList.current.querySelector('li').remove(), 5000)
 
+    }
+      // messageList.child ? setInterval()
+    }
+  
+  
   return (
     <div id="chat-box">
       <ul id="message-list" ref={messageList}>
         {messages &&
           messages.map((message, i) => {
             let { message: text } = message;
-            return <li key={i}>{`${text}`}</li>;
+            return <li id={i} key={i}>{`${text}`}</li>;
           })}
       </ul>
       <input
