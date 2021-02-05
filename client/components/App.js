@@ -7,6 +7,7 @@ import { Slider } from './Slider';
 import { About } from './About';
 import Modal from 'react-modal';
 import './css/App.css';
+import Chat from './Chat';
 
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -198,9 +199,6 @@ const App = () => {
     }
 
     function playSound() {
-      socket.emit('log', {
-        message: 'Hello World!',
-      });
       if (objectSelect) {
         if (objectSelect.hover) {
           objectSelect.sound();
@@ -364,6 +362,7 @@ const App = () => {
           close
         </button>
       </Modal>
+      <Chat />
     </div>
   );
 };
