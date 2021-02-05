@@ -24,7 +24,7 @@ export const db = firebase.firestore();
 const Home = () => {
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeydown);
-		// console.log(params);
+		console.log('user-->', auth.currentUser);
 	});
 
 	const [enableOutline, setenableOutline] = useState(false);
@@ -111,28 +111,62 @@ const Home = () => {
 					</button>
 				</Link>
 				<br />
-				<SignIn enableOutline={enableOutline} />
-				<SignOut enableOutline={enableOutline} />
+				{/* <SignIn enableOutline={enableOutline} /> */}
+				{!auth.currentUser ? (
+					<SignIn
+						enableOutline={enableOutline}
+						setShowInstructions={setShowInstructions}
+						showInstructions={showInstructions}
+					/>
+				) : (
+					<SignOut
+						enableOutline={enableOutline}
+						setShowInstructions={setShowInstructions}
+						showInstructions={showInstructions}
+					/>
+				)}
+
 				<br />
-				<button
-					type='button'
-					className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-					onClick={showDirections}
-					style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
-				>
-					view instructions
-				</button>
+
 				{showInstructions ? (
-					<ol style={{ textAlign: 'center', fontSize: '15px' }}>
-						<li>“One band. One Sound.”</li>
-						<li>"If you ain't first, you're last" </li>
-						<li>"You shall not pass!"</li>
-						<li>"I am McLovin"</li>
-						<li>
-							"Life is like a box of chocolates, you never know what you're gonna get"
-						</li>
-					</ol>
-				) : null}
+					<div
+						style={{
+							textAlign: 'center',
+							fontSize: '15px',
+							fontFamily: 'Source Code Pro, monospace'
+						}}
+					>
+						<button
+							type='button'
+							className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+							onClick={showDirections}
+							style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
+						>
+							close instructions
+						</button>
+						<h4>“One band. One Sound.”</h4>
+						<p>
+							You have the unique opportunity to collaborate in realtime with other
+							musicians
+						</p>
+						<p>Cpck a sound object Once to hear its sound.</p>
+						<p>Cpck and Drag a sound object onto the Jam-Space</p>
+						<p>When the Hammer strikes it, hear the sounds!</p>
+						<p>
+							Exlore the music you can create with your friends or match with users from
+							around the world.
+						</p>
+					</div>
+				) : (
+					<button
+						type='button'
+						className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+						onClick={showDirections}
+						style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
+					>
+						view instructions
+					</button>
+				)}
 				<br />
 			</div>
 		</>
@@ -148,6 +182,7 @@ function SignIn(props) {
 		//prompts separate window to google login
 	};
 
+	props.setShowInstructions(props.showInstructions);
 	return (
 		<button
 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
@@ -158,6 +193,7 @@ function SignIn(props) {
 	); // button to prompt Google login
 }
 function SignOut(props) {
+	props.setShowInstructions(props.showInstructions);
 	return auth.currentUser ? (
 		<button
 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
