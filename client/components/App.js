@@ -8,8 +8,9 @@ import { About } from './About';
 import Modal from 'react-modal';
 import './css/App.css';
 import Chat from './Chat';
+import socket from '../socket'
+import { connect } from 'react-redux'
 // import play_pause from '../../public/assets/play-pause.png';
-
 
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -20,9 +21,11 @@ import { Redirect } from 'react-router-dom';
 const App = () => {
   const [redirectTo, setRedirectTo] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [hovering, setHovering] = useState(false)
   const mount = useRef(null);
   const [isAnimating, setAnimating] = useState(true);
   const controls = useRef(null);
+  const hover = useRef(null)
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -148,9 +151,10 @@ const App = () => {
 
     let sliderValue = 0.05;
     let slider = document.getElementById('slider');
-    slider.addEventListener('input', onInput);
+    slider.addEventListener('change', onInput);
     function onInput() {
       sliderValue = Number(slider.value);
+      console.log(slider)
     }
 
     //Render & Animate Functions
@@ -206,10 +210,7 @@ const App = () => {
           instrument.alreadyPlayed = false;
         }
       });
-      //if the hammer strikes the instrument, play note
-      //setScene();
       renderScene();
-      //fetchScene();
       frameId = window.requestAnimationFrame(animate);
     };
 
@@ -277,6 +278,7 @@ const App = () => {
 			>
 				End Session
 			</button>
+
 			<Slider id='slider' />
 			<About toggleModal={toggleModal} />
 			<Modal className='Modal' appElement={mount.current} isOpen={modalOpen}>

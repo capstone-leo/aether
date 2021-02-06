@@ -50,9 +50,9 @@ const Home = () => {
 	// JSX
 	return (
 		<>
-			<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
+			<div style={{ textAlign: 'center', marginTop: '12%', fontSize: '60px' }}>
 			
-				<header style={{ textShadow: '0px 2px 6 rgba(218, 217, 217, 0.346)' }}>
+				<header style={{ textShadow: '0px 2px 6 rgba(218, 217, 217, 0.6)' }}>
 					a e t h e r
 				</header>
 				<br />
@@ -62,7 +62,7 @@ const Home = () => {
 						type='button'
 						style={{ textAlign: 'center', marginTop: '1%' }}
 					>
-						Start Jamming {'>'}
+						Enter {'>'}
 					</button>
 				</Link>
 				<br />

@@ -10,10 +10,12 @@ import socket from '../socket';
 
 export const Chat = (props) => {
   const { messages } = props;
-  const [message, setMessage] = useState('');
+
+  const [message, setMessage] = useState('')
   const messageList = useRef(null);
+
   useEffect(()=>{
-  document.querySelector('li') !== null ? setTimeout(function(){document.querySelector('li').remove() }, 3000) : null;
+   document.querySelector('li') !== null ? setTimeout(function(){document.querySelector('li').remove()}, 3000) : null;
 })
 
   const sendMessage = () => {
@@ -21,8 +23,13 @@ export const Chat = (props) => {
     if (newMessage) {
       socket.emit('new_message', message);
       setMessage('');
+      // console.log(socket)
     }
   };
+
+  const removeMessage = () => {
+
+  }
 
   return (
     <div id="chat-box">
@@ -41,7 +48,7 @@ export const Chat = (props) => {
           setMessage(e.target.value);
         }}
         onKeyDown={(e)=>e.key === "Enter" ? sendMessage() : null}
-        placeholder="new message"
+        placeholder="chat"
       ></input>
       {/* <button
        style={{background: 'transparent', color: 'whitesmoke'}}
