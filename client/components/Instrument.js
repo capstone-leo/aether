@@ -24,26 +24,40 @@ import {
 } from './tone.fn.js';
 
 const soundList = [
-  playC4,
-  playD4,
-  playE4,
-  playF4,
-  playG4,
-  playA4,
-  playB4,
-  playC5,
-  // transpo,
-  sinB4,
-  sinA4,
-  sinC4,
-  sinD4,
-  sinE4,
-  sinF4,
-  sinG4,
+  // playC4,
+  // playD4,
+  // playE4,
+  // playF4,
+  // playG4,
+  // playA4,
+  // playB4,
+  // playC5,
+  // // transpo,
+  // sinB4,
+  // sinA4,
+  // sinC4,
+  // sinD4,
+  // sinE4,
+  // sinF4,
+  // sinG4,
+  playSnareWav,
   playSnareWav,
   playClosedHatWav,
+  playClosedHatWav,
+  playKickWav,
+  playKickWav,
+  playKickWav,
+  playKickWav,
+  playKickWav,
   playKickWav,
   playClapWav,
+  playClapWav,
+  sinD4,
+  sinA4,
+  sinB4,
+  sinC4,
+  sinE4,
+  sinG4
 ];
 function rainbow(numOfSteps, step) {
   // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
@@ -106,10 +120,10 @@ class Instrument {
     this.mesh = new three.Mesh(this.geometry, this.material);
     //sets random X & Y coordinates where -300 >= X >= 300 & -150 >= Y >= 150 (basically it wont be in the circle)
     this.mesh.position.setX(
-      Math.floor(Math.random() * 300 + 300) * (Math.random() < 0.5 ? -1 : 1)
+      Math.floor(Math.random() * 300 + 350) * (Math.random() < 0.5 ? -1 : 1)
     );
     this.mesh.position.setY(
-      Math.floor(Math.random() * 150 + 150) * (Math.random() < 0.5 ? -1 : 1)
+      Math.floor(Math.random() * 150 + 170) * (Math.random() < 0.5 ? -1 : 1)
     );
 
     this.boundary = new three.Box3().setFromObject(this.mesh);

@@ -18,78 +18,11 @@ import { auth, db } from './Home';
 import { Redirect } from 'react-router-dom';
 
 const App = () => {
+  const [redirectTo, setRedirectTo] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const mount = useRef(null);
   const [isAnimating, setAnimating] = useState(true);
   const controls = useRef(null);
-
-  //   const [user] = useAuthState(auth); //user JSON
-  // console.log('user-->', user);
-
-  // seed
-  // const citiesRef = db.collection('cities');
-  // const sceneRef = db.collection('scenes');
-
-  // async function setCities() {
-  //   return await citiesRef.doc('SF').set({
-  //     name: 'San Francisco',
-  //     state: 'CA',
-  //     country: 'USA',
-  //     capital: false,
-  //     population: 860000,
-  //   });
-  // }
-
-  // const sceneRef = db.collection('scenes');
-
-  // async function setScene() {
-  //   return await sceneRef.doc('scene').set({
-  //     scene:
-  //   })
-  // }
-  // console.log(scene)
-  // setCities();
-  // get
-  // const cityRef = db.collection('cities').doc('SF');
-
-  // async function fetchCities() {
-  //   const doc = await cityRef.get();
-  //   if (!doc.exists) {
-  //     console.log('No such document!');
-  //   } else {
-  //     console.log('Document data:', doc.data());
-  //   }
-  // }
-  // fetchCities();
-
-  // //db Collection reference
-  // const sessionRef = db.collection('Session');
-  // console.log('sessionRef-->', sessionRef);
-
-  // //query
-  // const query = async () => await sessionRef.get();
-  // console.log('query-->', query());
-
-  // const [SessionList] = useCollectionData(query);
-  // console.log('SessionList-->', SessionList);
-
-  //soundstuffs
-  // const chords = [
-  //   'A0 C1 E1',
-  //   'F0 A0 C1',
-  //   'G0 B0 D1',
-  //   'D0 F0 A0',
-  //   'E0 G0 B0',
-  // ].map(formatChords);
-
-  // Tone.Transport.scheduleRepeat(onRepeat, '16n');
-  // Tone.Transport.start();
-  // Tone.Transport.bpm.value = 90;
-  // const synth = new Tone.Synth();
-  // const gain = new Tone.Gain(0.7);
-  // synth.oscillator.type = 'sine';
-  // gain.toDestination();
-  // synth.connect(gain);
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -139,7 +72,7 @@ const App = () => {
       wireframeLinewidth: 2,
     });
     const jamSpace = new THREE.LineLoop(jamSpaceGeometry, jamSpaceMaterial);
-    jamSpace.scale.set(20, 20, 20);
+    jamSpace.scale.set(30, 30, 30);
     scene.add(jamSpace);
 
     const hammerGeometry = new THREE.BoxGeometry(0.1, 10, 0.1);
@@ -189,7 +122,6 @@ const App = () => {
     }
 
     function addInstrument() {
-      console.log(modalOpen);
       const newInstrument = new Instrument();
       instruments.push(newInstrument);
       scene.add(newInstrument.mesh);
@@ -220,35 +152,6 @@ const App = () => {
     function onInput() {
       sliderValue = Number(slider.value);
     }
-
-    //FireStore
-    // const sceneRef = db.collection('scenes');
-
-    // async function setScene() {
-    //   return await sceneRef.doc('scenes').set({
-    //     scene: scene.toJSON(),
-    //   });
-    // }
-
-    // async function fetchScene() {
-    //   const doc = await sceneRef.doc('scene').get();
-    //   if (!doc.exists) {
-    //     console.log('No such document!');
-    //   } else {
-    //     console.log('Document data:', doc.data());
-    //   }
-    // }
-    // fetchScene();
-
-    //  async function setCities() {
-    //   return await citiesRef.doc('SF').set({
-    //     name: 'San Francisco',
-    //     state: 'CA',
-    //     country: 'USA',
-    //     capital: false,
-    //     population: 860000,
-    //   });
-    // }
 
     //Render & Animate Functions
     const renderScene = () => {
@@ -349,9 +252,9 @@ const App = () => {
 		auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
 	};
 
-	if (redirectTo) {
-		return <Redirect to={redirectTo} />;
-	}
+	// if (redirectTo) {
+	// 	return <Redirect to={redirectTo} />;
+	// }
 	return (
 		<div
 			className='App'
@@ -388,6 +291,7 @@ const App = () => {
 					close
 				</button>
 			</Modal>
+      <Chat id="chatbox" />
 		</div>
 	);
 };
