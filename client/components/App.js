@@ -258,10 +258,11 @@ const App = () => {
 	return (
 		<div
 			className='App'
-			ref={mount}
+      ref={mount}
+      style={{background: 'transparent'}}
 			// onClick={() => setAnimating(!isAnimating)}
 		>
-			<button onClick={() => setAnimating(!isAnimating)}>
+			<button className="startstop" onClick={() => setAnimating(!isAnimating)}>
 				{/* <img
 					src={play_pause}
 					alt='play-pause'
@@ -269,7 +270,7 @@ const App = () => {
 				/> */}
 				Play / Pause
 			</button>
-			<button
+			<button className="startstop2"
 				onClick={() => {
 					endSession;
 				}}

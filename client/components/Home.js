@@ -51,53 +51,7 @@ const Home = () => {
 	return (
 		<>
 			<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
-				<Particles
-					id='particles-js'
-					params={{
-						particles: {
-							line_linked: {
-								shadow: {
-									enable: true,
-									color: `${randomColor}`,
-									blur: 2
-								}
-							},
-							interactivity: {
-								detect_on: 'canvas',
-								events: {
-									onhover: {
-										enable: true,
-										mode: 'grab'
-									},
-									resize: true
-								},
-								modes: {
-									grab: {
-										distance: 400,
-										line_linked: {
-											opacity: 1
-										}
-									}
-								}
-							},
-							move: {
-								enable: true,
-								speed: 0.6,
-								direction: 'bottom-left',
-								random: false,
-								straight: false,
-								out_mode: 'bounce',
-								bounce: false,
-								attract: {
-									enable: false,
-									rotateX: 600,
-									rotateY: 1200
-								}
-							},
-							retina_detect: true
-						}
-					}}
-				/>
+			
 				<header style={{ textShadow: '0px 2px 6 rgba(218, 217, 217, 0.346)' }}>
 					a e t h e r
 				</header>
@@ -170,7 +124,54 @@ const Home = () => {
 						view instructions
 					</button>
 				)}
-				<br />
+				<br />	
+        <Particles
+					id='particles-js'
+					params={{
+						particles: {
+							line_linked: {
+								shadow: {
+									enable: true,
+									color: `${randomColor}`,
+									blur: 2
+								}
+							},
+							interactivity: {
+								detect_on: 'canvas',
+								events: {
+									onhover: {
+										enable: true,
+										mode: 'grab'
+									},
+									resize: true
+								},
+								modes: {
+									grab: {
+										distance: 400,
+										line_linked: {
+											opacity: 1
+										}
+									}
+								}
+							},
+							move: {
+								enable: true,
+								speed: 0.6,
+								direction: 'bottom-left',
+								random: false,
+								straight: false,
+								out_mode: 'bounce',
+								bounce: false,
+								attract: {
+									enable: false,
+									rotateX: 600,
+									rotateY: 1200
+								}
+							},
+							retina_detect: true
+						}
+					}}
+				/>
 			</div>
 		</>
 	);

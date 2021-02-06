@@ -34,7 +34,7 @@ export const Chat = (props) => {
           })}
       </ul>
       <input
-        style={{background: 'transparent', color: 'whitesmoke', border: 'none'}}
+        style={{background: 'transparent', color: 'whitesmoke'}}
         value={message}
         id="new-message"
         onChange={(e) => {
