@@ -128,3 +128,11 @@ canvas {
 	display: block;
 	/* vertical-align: bottom; */
 }
+
+.animate-buttons {
+	position: absolute;
+}
+
+#chat-box {
+	position: absolute;
+}

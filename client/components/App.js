@@ -5,9 +5,12 @@ import * as Tone from 'tone';
 import Instrument from './Instrument';
 import { Slider } from './Slider';
 import { About } from './About';
+import { SetAnimation } from './SetAnimation';
+import {EndSession} from './EndSession'
 import Modal from 'react-modal';
 import './css/App.css';
 import Chat from './Chat';
+
 // import play_pause from '../../public/assets/play-pause.png';
 
 import 'firebase/firestore';
@@ -344,6 +347,10 @@ const App = () => {
     }
   }, [isAnimating]);
 
+  const pausePlay = () => {
+    setAnimating(!isAnimating);
+  }
+
   const endSession = () => {
     setAnimating(false);
     auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
@@ -358,21 +365,8 @@ const App = () => {
       ref={mount}
       // onClick={() => setAnimating(!isAnimating)}
     >
-      <button onClick={() => setAnimating(!isAnimating)}>
-        {/* <img
-					src={play_pause}
-					alt='play-pause'
-
-				/> */}
-        Play / Pause
-      </button>
-      <button
-        onClick={() => {
-          endSession;
-        }}
-      >
-        End Session
-      </button>
+      <SetAnimation pausePlay={pausePlay} />
+      <EndSession endSession={endSession}/>
       <Slider id="slider" />
       <About toggleModal={toggleModal} />
       <Modal className="Modal" appElement={mount.current} isOpen={modalOpen}>
