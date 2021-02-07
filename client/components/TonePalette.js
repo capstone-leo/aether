@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-import { addInstrument, addDrum } from "./App.js";
+//import { addInstrument, addDrum } from "./App.js";
+
+//NOTES: importing and using functions on an onClick does
+//nothing. Same goal is achieved by the event listeners
+//in App.js
 
 export class TonePalette extends Component {
   render() {
     return (
       <div className="TonePalette">
-        <button id="addInstrumentButton" onClick={addInstrument}>
-          Add
-        </button>
-        <button onClick={addDrum}>Add Drum</button>
-        <img src="./drum-30128.png" id="drums"></img>
+        <img src="./oneDie.png" id="addInstrumentIcon"></img>
+        <img src="./drum-30128.png" id="drumIcon"></img>
         <img src="./vippng.com-trompeta-png-1767976.png" id="trumpet"></img>
+        <img src="./chord.png" id="chord"></img>
       </div>
     );
   }

@@ -3,14 +3,9 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // import { AnimatePresence } from 'framer-motion';
 
-<<<<<<< HEAD
-import App from "./App";
-import Home from "./Home";
-=======
 import App from './App';
 import Home from './Home';
 import UserAccountPage from './UserAccountPage';
->>>>>>> 2d81759fe8733c646048b611b4462e7e888100c7
 
 export default class Routes extends Component {
 	render() {

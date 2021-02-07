@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useState, useRef } from "react";
-import { connect } from "react-redux";
-import socket from "../socket";
-
-export const Chat = (props) => {
-  const { messages } = props;
-  const [message, setMessage] = useState("");
-=======
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import socket from '../socket';
@@ -14,19 +5,13 @@ import socket from '../socket';
 export const Chat = (props) => {
   const { messages } = props;
   const [message, setMessage] = useState('');
->>>>>>> 2d81759fe8733c646048b611b4462e7e888100c7
   const messageList = useRef(null);
 
   const sendMessage = () => {
     let newMessage = message;
     if (newMessage) {
-<<<<<<< HEAD
-      socket.emit("new_message", message);
-      setMessage("");
-=======
       socket.emit('new_message', message);
       setMessage('');
->>>>>>> 2d81759fe8733c646048b611b4462e7e888100c7
     }
   };
 
@@ -48,10 +33,6 @@ export const Chat = (props) => {
         placeholder="new message"
       ></input>
       <button
-<<<<<<< HEAD
-        className="chatButton"
-=======
->>>>>>> 2d81759fe8733c646048b611b4462e7e888100c7
         onClick={(e) => {
           e.preventDefault();
           sendMessage();

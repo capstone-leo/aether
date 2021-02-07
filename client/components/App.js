@@ -1,46 +1,29 @@
-<<<<<<< HEAD
 import React, { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { DragControls } from "three/examples/jsm/controls/DragControls";
 import * as Tone from "tone";
 import Instrument from "./Instrument";
+import Drums from "./Drums";
 import { Slider } from "./Slider";
 import { About } from "./About";
 import Modal from "react-modal";
 import "./css/App.css";
 import Chat from "./Chat";
-import TonePalette from "./TonePalette";
+// import play_pause from '../../public/assets/play-pause.png';
 
 import "firebase/firestore";
 import "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "./Home";
-=======
-import React, { useEffect, useState, useRef } from 'react';
-import * as THREE from 'three';
-import { DragControls } from 'three/examples/jsm/controls/DragControls';
-import * as Tone from 'tone';
-import Instrument from './Instrument';
-import { Slider } from './Slider';
-import { About } from './About';
-import Modal from 'react-modal';
-import './css/App.css';
-import Chat from './Chat';
-// import play_pause from '../../public/assets/play-pause.png';
-
-
-import 'firebase/firestore';
-import 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from './Home';
-import { Redirect } from 'react-router-dom';
->>>>>>> 2d81759fe8733c646048b611b4462e7e888100c7
+import { Redirect } from "react-router-dom";
+import TonePalette from "./TonePalette";
 
 const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const mount = useRef(null);
   const [isAnimating, setAnimating] = useState(true);
   const controls = useRef(null);
+  const [redirectTo, setRedirectTo] = "";
 
   //   const [user] = useAuthState(auth); //user JSON
   // console.log('user-->', user);
@@ -185,7 +168,14 @@ const App = () => {
       draggableObjects.push(newInstrument.mesh);
       scene.add(newInstrument.mesh);
     }
-
+    /*     const drums = [];
+    for (let i = 0; i <= 6; i++) {
+      const newDrum = new Drums();
+      drums.push(newDrum);
+      draggableObjects.push(newDrum.mesh);
+      scene.add(newDrum.mesh);
+    }
+ */
     let dragControls = new DragControls(
       [...draggableObjects],
       camera,
@@ -219,6 +209,18 @@ const App = () => {
         renderer.domElement
       );
     }
+    /*     function addDrum() {
+      console.log(modalOpen);
+      const newDrum = new Drums();
+      drums.push(newDrum);
+      scene.add(newDrum.mesh);
+      draggableObjects.push(newDrum.mesh);
+      dragControls = new DragControls(
+        [...draggableObjects],
+        camera,
+        renderer.domElement
+      );
+    } */
 
     function playSound() {
       if (objectSelect) {
@@ -227,7 +229,14 @@ const App = () => {
         }
       }
     }
-
+    /*     const drumIcon = document.getElementById("drumIcon");
+    drumIcon.addEventListener("click", function () {
+      addDrum();
+    }); */
+    const addInstrumentIcon = document.getElementById("addInstrumentIcon");
+    addInstrumentIcon.addEventListener("click", function () {
+      addInstrument();
+    });
     window.addEventListener("dblclick", addInstrument, false);
     window.addEventListener("click", playSound, false);
     window.addEventListener("mousemove", onMouseMove);
@@ -353,7 +362,6 @@ const App = () => {
       }
     };
   }, []);
-<<<<<<< HEAD
 
   //Listens for Start and Stop
   useEffect(() => {
@@ -364,14 +372,36 @@ const App = () => {
     }
   }, [isAnimating]);
 
+  const endSession = () => {
+    setAnimating(false);
+    auth.currentUser ? setRedirectTo("studio") : setRedirectTo("");
+  };
+
+  if (redirectTo) {
+    return <Redirect to={redirectTo} />;
+  }
   return (
     <div
       className="App"
       ref={mount}
       // onClick={() => setAnimating(!isAnimating)}
     >
+      <button onClick={() => setAnimating(!isAnimating)}>
+        {/* <img
+					src={play_pause}
+					alt='play-pause'
+					
+				/> */}
+        Play / Pause
+      </button>
+      <button
+        onClick={() => {
+          endSession;
+        }}
+      >
+        End Session
+      </button>
       <Slider id="slider" />
-
       <About toggleModal={toggleModal} />
       <Modal className="Modal" appElement={mount.current} isOpen={modalOpen}>
         <div className="modalTextDiv">
@@ -389,64 +419,6 @@ const App = () => {
       <TonePalette />
     </div>
   );
-=======
-  
-	//Listens for Start and Stop
-	useEffect(() => {
-		if (isAnimating) {
-			controls.current.start();
-		} else {
-			controls.current.stop();
-		}
-	}, [isAnimating]);
-
-	const endSession = () => {
-		setAnimating(false);
-		auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
-	};
-
-	if (redirectTo) {
-		return <Redirect to={redirectTo} />;
-	}
-	return (
-		<div
-			className='App'
-			ref={mount}
-			// onClick={() => setAnimating(!isAnimating)}
-		>
-			<button onClick={() => setAnimating(!isAnimating)}>
-				{/* <img
-					src={play_pause}
-					alt='play-pause'
-					
-				/> */}
-				Play / Pause
-			</button>
-			<button
-				onClick={() => {
-					endSession;
-				}}
-			>
-				End Session
-			</button>
-			<Slider id='slider' />
-			<About toggleModal={toggleModal} />
-			<Modal className='Modal' appElement={mount.current} isOpen={modalOpen}>
-				<div className='modalTextDiv'>
-					double click these shapes to adjust their sounds
-					<br />
-					single click to play a sound
-					<br />
-					jam with your friends or play by yourself <br />
-					PLACEHOLDERS
-				</div>
-				<button className='closer' onClick={() => setModalOpen(!modalOpen)}>
-					close
-				</button>
-			</Modal>
-		</div>
-	);
->>>>>>> 2d81759fe8733c646048b611b4462e7e888100c7
 };
 
 export default App;
