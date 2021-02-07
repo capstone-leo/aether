@@ -8,7 +8,15 @@ import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 // Initialize Firebase
-firebase.initializeApp({});
+firebase.initializeApp({
+	apiKey: 'AIzaSyAWVIxjZTaEY90wBDSxj1v7ECUUKyG7Vb0',
+	authDomain: 'sound-collabo.firebaseapp.com',
+	projectId: 'sound-collabo',
+	storageBucket: 'sound-collabo.appspot.com',
+	messagingSenderId: '564645648142',
+	appId: '1:564645648142:web:f0b8c196f95fd2b70c295f',
+	measurementId: 'G-V44HEGZ64L'
+});
 // Initialize auth and firestore
 export const auth = firebase.auth();
 export const db = firebase.firestore();
@@ -107,12 +115,24 @@ const Home = () => {
 				<br />
 
 				{user ? (
-					<SignOut
-						user={user}
-						enableOutline={enableOutline}
-						setShowInstructions={setShowInstructions}
-						showInstructions={showInstructions}
-					/>
+					<>
+						<Link to='/studio'>
+							<button
+								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+								type='button'
+								style={{ textAlign: 'center', marginTop: '1%' }}
+							>
+								Account Page {'>'}
+							</button>
+						</Link>
+						<br />
+						<SignOut
+							user={user}
+							enableOutline={enableOutline}
+							setShowInstructions={setShowInstructions}
+							showInstructions={showInstructions}
+						/>
+					</>
 				) : (
 					<SignIn
 						user={user}
@@ -171,22 +191,14 @@ const Home = () => {
 
 // Helper Components
 function SignIn(props) {
-	let user;
 	const signInWithGoogle = () => {
 		const provider = new firebase.auth.GoogleAuthProvider();
 		//instatiate new auth token
 		auth.signInWithRedirect(provider);
-		// 	.then((result) => {
-		// 	user = result.user;
-		// });
-		//prompts separate window to google login
+		//prompts redirect to google login, then back
 	};
-	console.log('props-->', props);
-	console.log('user-->', props.user);
 
-	return user ? (
-		<Redirect to='/studio' />
-	) : (
+	return (
 		<button
 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
 			onClick={signInWithGoogle}

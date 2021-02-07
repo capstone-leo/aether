@@ -9,20 +9,37 @@ import { auth, db } from './Home';
 const UserAccountPage = (props) => {
 	const [user] = useAuthState(auth); //user JSON
 	const report = () => {
-		console.log('user-->', user);
+		console.log('user-->', auth.currentUser);
 	};
+	// const accountSignOut = () => {};
+
+	// if (user) return <Redirect to='/' />;
 	return (
 		<div>
-			<button onClick={() => report()}>Report</button>
-			<Link to='/sesh'>
-				<button>Start Jamming</button>
-			</Link>
-			<button
-				className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-				onClick={() => auth.signOut()}
-			>
-				Sign Out
-			</button>
+			{/* {!auth.currentUser ? (
+				<Redirect to='/' />
+			) : ( */}
+			<>
+				<button onClick={() => report()}>Report</button>
+				<Link to='/sesh'>
+					<button
+						className={
+							props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'
+						}
+						type='button'
+						style={{ textAlign: 'center', marginTop: '1%' }}
+					>
+						Start Jamming
+					</button>
+				</Link>
+				<button
+					className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+					onClick={() => auth.signOut()}
+				>
+					Sign Out
+				</button>
+			</>
+			{/* )} */}
 		</div>
 	);
 };
