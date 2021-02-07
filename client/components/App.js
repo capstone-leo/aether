@@ -8,6 +8,7 @@ import { About } from "./About";
 import Modal from "react-modal";
 import "./css/App.css";
 import Chat from "./Chat";
+import TonePalette from "./TonePalette";
 
 import "firebase/firestore";
 import "firebase/auth";
@@ -348,6 +349,7 @@ const App = () => {
       // onClick={() => setAnimating(!isAnimating)}
     >
       <Slider id="slider" />
+
       <About toggleModal={toggleModal} />
       <Modal className="Modal" appElement={mount.current} isOpen={modalOpen}>
         <div className="modalTextDiv">
@@ -362,7 +364,7 @@ const App = () => {
           close
         </button>
       </Modal>
-      <Chat />
+      <TonePalette />
     </div>
   );
 };

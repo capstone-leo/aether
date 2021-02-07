@@ -89,7 +89,7 @@ input {
   font-size: 16px;
 }
 
-button {
+.chatButton {
   background: #575ed8;
   color: #fff;
   font-size: 18px;
@@ -97,4 +97,21 @@ button {
   padding: 12px 0;
   width: 100%;
   border-radius: 0 0 2px 2px;
+}
+
+.TonePalette {
+  padding: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  position: absolute;
+  float: left;
+  margin-top: 10%;
+  border: 2px solid #000000;
+  height: 400px;
+  width: 100px;
+  margin-left: 2px;
+}
+#addInstrumentButton {
+  width: 60px;
+  height: 30px;
 }

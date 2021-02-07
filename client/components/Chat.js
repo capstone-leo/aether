@@ -1,54 +1,50 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { connect } from "react-redux";
 import socket from "../socket";
 
-export const Chat = () => {
+export const Chat = (props) => {
+  const { messages } = props;
   const [message, setMessage] = useState("");
-  const [handle, setHandle] = useState("");
-  const output = useRef(null);
-  //const message = document.getElementById("message");
-  //const handle = document.getElementById("handle");
-  //const btn = document.getElementById("sending");
-  //const output = document.getElementById("output");
+  const messageList = useRef(null);
 
-  socket.on("chat", function (data) {
-    output.value =
-      "<p><strong>" + data.handle + ": </strong>" + data.message + "</p>";
-    console.log("output", output);
-  });
+  const sendMessage = () => {
+    let newMessage = message;
+    if (newMessage) {
+      socket.emit("new_message", message);
+      setMessage("");
+    }
+  };
+
   return (
-    <form id="mario-chat">
-      <h2>Mario Chat</h2>
-      <div id="chat-window">
-        <div id="output" ref={output}>
-          {output.value}
-        </div>
-      </div>
+    <div id="chat-box">
+      <ul id="message-list" ref={messageList}>
+        {messages &&
+          messages.map((message, i) => {
+            let { message: text } = message;
+            return <li key={i}>{`${text}`}</li>;
+          })}
+      </ul>
       <input
-        id="handle"
-        type="text"
-        placeholder="Handle"
+        value={message}
+        id="new-message"
         onChange={(e) => {
-          setHandle(e.target.value);
+          setMessage(e.target.value);
         }}
-      />
-      <input
-        id="message"
-        type="text"
-        placeholder="Message"
-        onChange={(e) => setMessage(e.target.value)}
-      />
+        placeholder="new message"
+      ></input>
       <button
-        id="sending"
-        onClick={function (e) {
-          socket.emit("chat", { message: message.value, handle: handle.value });
+        className="chatButton"
+        onClick={(e) => {
           e.preventDefault();
-          console.log(message);
+          sendMessage();
         }}
       >
         Send
       </button>
-    </form>
+    </div>
   );
 };
 
-export default Chat;
+const mapStateToProps = ({ messages }) => ({ messages });
+
+export default connect(mapStateToProps, null)(Chat);

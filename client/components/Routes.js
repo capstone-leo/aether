@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 // import { AnimatePresence } from 'framer-motion';
 
-import App from './App';
-import Home from './Home';
+import App from "./App";
+import Home from "./Home";
 
 export default class Routes extends Component {
   render() {
