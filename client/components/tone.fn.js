@@ -278,3 +278,55 @@ export function playAm() {
     },
   }).toDestination();
 }
+export function playBbM() {
+  const sampler = new Tone.Sampler({
+    urls: {
+      A1: "A1.mp3",
+      A2: "A2.mp3",
+    },
+    baseUrl: "https://tonejs.github.io/audio/casio/",
+    onload: () => {
+      sampler.triggerAttackRelease(["Bb2", "Bb4", "D4", "F4"], 0.5);
+    },
+  }).toDestination();
+}
+export function playEbM() {
+  const sampler = new Tone.Sampler({
+    urls: {
+      A1: "A1.mp3",
+      A2: "A2.mp3",
+    },
+    baseUrl: "https://tonejs.github.io/audio/casio/",
+    onload: () => {
+      sampler.triggerAttackRelease(["Eb2", "Eb4", "G4", "Bb4"], 0.5);
+    },
+  }).toDestination();
+}
+export function playTrumpetC4() {
+  const note = new Audio("./sounds/trumpet/C4.mp3");
+  note.play();
+}
+export function playTrumpetD4() {
+  const note = new Audio("./sounds/trumpet/D4.mp3");
+  note.play();
+}
+export function playTrumpetE4() {
+  const note = new Audio("./sounds/trumpet/E4.mp3");
+  note.play();
+}
+export function playTrumpetF4() {
+  const note = new Audio("./sounds/trumpet/F4.mp3");
+  note.play();
+}
+export function playTrumpetG4() {
+  const note = new Audio("./sounds/trumpet/G4.mp3");
+  note.play();
+}
+export function playTrumpetA4() {
+  const note = new Audio("./sounds/trumpet/A4.mp3");
+  note.play();
+}
+export function playTrumpetB4() {
+  const note = new Audio("./sounds/trumpet/B4.mp3");
+  note.play();
+}
