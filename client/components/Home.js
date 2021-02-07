@@ -31,7 +31,6 @@ const Home = () => {
   // React Hooks
   const [enableOutline, setEnableOutline] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
-  
 
   //Accessibility Handler
   const handleKeydown = (e) => {
@@ -51,55 +50,8 @@ const Home = () => {
   // JSX
   return (
     <>
-      <div style={{ textAlign: "center", marginTop: "15%", fontSize: "60px" }}>
-        <Particles
-          id="particles-js"
-          params={{
-            particles: {
-              line_linked: {
-                shadow: {
-                  enable: true,
-                  color: `${randomColor}`,
-                  blur: 2,
-                },
-              },
-              interactivity: {
-                detect_on: "canvas",
-                events: {
-                  onhover: {
-                    enable: true,
-                    mode: "grab",
-                  },
-                  resize: true,
-                },
-                modes: {
-                  grab: {
-                    distance: 400,
-                    line_linked: {
-                      opacity: 1,
-                    },
-                  },
-                },
-              },
-              move: {
-                enable: true,
-                speed: 0.6,
-                direction: "bottom-left",
-                random: false,
-                straight: false,
-                out_mode: "bounce",
-                bounce: false,
-                attract: {
-                  enable: false,
-                  rotateX: 600,
-                  rotateY: 1200,
-                },
-              },
-              retina_detect: true,
-            },
-          }}
-        />
-        <header style={{ textShadow: "0px 2px 6 rgba(218, 217, 217, 0.346)" }}>
+      <div style={{ textAlign: "center", marginTop: "12%", fontSize: "60px" }}>
+        <header style={{ textShadow: "0px 2px 6 rgba(218, 217, 217, 0.6)" }}>
           a e t h e r
         </header>
         <br />
@@ -111,7 +63,7 @@ const Home = () => {
             type="button"
             style={{ textAlign: "center", marginTop: "1%" }}
           >
-            Start Jamming {">"}
+            Enter {">"}
           </button>
         </Link>
         <br />
@@ -178,6 +130,53 @@ const Home = () => {
           </button>
         )}
         <br />
+        <Particles
+          id="particles-js"
+          params={{
+            particles: {
+              line_linked: {
+                shadow: {
+                  enable: true,
+                  color: `${randomColor}`,
+                  blur: 2,
+                },
+              },
+              interactivity: {
+                detect_on: "canvas",
+                events: {
+                  onhover: {
+                    enable: true,
+                    mode: "grab",
+                  },
+                  resize: true,
+                },
+                modes: {
+                  grab: {
+                    distance: 400,
+                    line_linked: {
+                      opacity: 1,
+                    },
+                  },
+                },
+              },
+              move: {
+                enable: true,
+                speed: 0.6,
+                direction: "bottom-left",
+                random: false,
+                straight: false,
+                out_mode: "bounce",
+                bounce: false,
+                attract: {
+                  enable: false,
+                  rotateX: 600,
+                  rotateY: 1200,
+                },
+              },
+              retina_detect: true,
+            },
+          }}
+        />
       </div>
     </>
   );

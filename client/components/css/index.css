@@ -1,130 +1,145 @@
 body {
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-.about {
-	background-color: pink;
-	position: absolute;
-	left: 30px;
-	top: 30px;
+#aboutbtn {
+  background-color: transparent;
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  color: whitesmoke;
+  border: none;
 }
 
-.about:hover {
-	cursor: pointer;
+#aboutbtn:hover {
+  cursor: pointer;
 }
+
 #slider {
-	position: absolute;
-	right: 30px;
-	top: 30px;
-	color: gray;
-	background: pink;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  color: gray;
+
 }
 #slider:hover {
-	cursor: grab;
+  cursor: grab;
 }
 .slider {
-	position: absolute;
-	right: 30px;
-	top: 30px;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  color: 'whitesmoke'
 }
 
 .tempoText {
-	font-size: 12px;
-	position: relative;
-	top: 15px;
-	right: 45px;
+  font-size: 12px;
+  position: relative;
+  top: 15px;
+  right: 45px;
 }
 
 .sliderchild {
-	font-size: 12px;
-	position: relative;
-	top: 10px;
+  font-size: 12px;
+  position: relative;
+  top: 10px;
+  color: whitesmoke;
 }
 
 .Modal {
-	position: absolute;
-	top: 40px;
-	left: 40px;
-	right: 50%;
-	bottom: 40px;
-	opacity: 80%;
-	background: whitesmoke;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 50%;
+  bottom: 40px;
+  opacity: 80%;
+  background: whitesmoke;
 }
 
 .closer {
-	position: absolute;
-	bottom: 20px;
-	left: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }
 
 .closer:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .modalTextDiv {
-	padding: 30px;
-	background-color: whitesmoke;
-}
-button.home-btn {
-	font-family: 'Source Code Pro', monospace;
-	font-size: 20%;
-	font-weight: 600;
-	background: radial-gradient(
-		circle,
-		rgb(230, 229, 223) 10%,
-		rgba(255, 255, 255, 1) 90%
-	);
-	color: #000000;
-	cursor: pointer;
-	border: 0;
-	transition: all 0.5s;
-	border-radius: 10px;
-	width: auto;
-	position: relative;
-	padding: 0.5%;
+  padding: 30px;
+  background-color: whitesmoke;
 }
 
-button.home-btn:hover {
-	font-family: 'Source Code Pro', monospace;
-	font-size: 20%;
-	font-weight: 600;
-	background: rgb(230, 229, 223) 0%;
-	color: #000000;
-	cursor: pointer;
-	border: 0;
-	transition: all 0.5s;
-	border-radius: 0px;
-	width: auto;
-	position: relative;
-	padding: 0.5%;
-}
-button.home-btn:active {
-	transform: scale(0.95);
-	transition: all 0.2s;
+#particles {
+  position:absolute;
+  width: 100%;
+  height: 100%;
 }
 
-.no-outline-on-focus {
-	outline: none;
-}
-#particles-js {
-	width: 100%;
-	height: 100%;
-	/*background-image: url('');*/
-	background-size: cover;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	position: absolute;
+#particles canvas{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  text-align: 'center'; 
+  padding-top: '8%';
+  padding-bottom: '250px';
+  font-size: '60px'; 
+  background: '#38373d';
+  color: 'whitesmoke';
+  height: '100%'
+
 }
 
-canvas {
-	display: block;
-	/* vertical-align: bottom; */
+.App {
+  position: relative;
+}
+
+#chat-box {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  background: transparent;
+  color: whitesmoke
+}
+
+ul {
+  list-style-type: none;
+}
+
+.startstop {
+  border-radius: 5px;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background: transparent;
+  color: whitesmoke;
+  border: none;
+}
+.startstop:hover {
+  cursor: pointer
+}
+
+.startstop2 {
+  border-radius: 5px;
+  position: absolute;
+  bottom: 80px;
+  right: 50px;
+  background: transparent;
+  color: whitesmoke;
+  border: none
+}
+.startstop2:hover {
+cursor: pointer
 }

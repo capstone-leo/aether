@@ -1,97 +1,31 @@
-import React, { useEffect, useState, useRef } from "react";
-import * as THREE from "three";
-import { DragControls } from "three/examples/jsm/controls/DragControls";
-import * as Tone from "tone";
-import Instrument from "./Instrument";
-import Drums from "./Drums";
-import { Slider } from "./Slider";
-import { About } from "./About";
-import Modal from "react-modal";
-import "./css/App.css";
-import Chat from "./Chat";
+import React, { useEffect, useState, useRef } from 'react';
+import * as THREE from 'three';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
+import * as Tone from 'tone';
+import Instrument from './Instrument';
+import { Slider } from './Slider';
+import { About } from './About';
+import Modal from 'react-modal';
+import './css/App.css';
+import Chat from './Chat';
+import socket from '../socket'
+import { connect } from 'react-redux'
 // import play_pause from '../../public/assets/play-pause.png';
 
-import "firebase/firestore";
-import "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "./Home";
-import { Redirect } from "react-router-dom";
-import TonePalette from "./TonePalette";
+import 'firebase/firestore';
+import 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, db } from './Home';
+import { Redirect } from 'react-router-dom';
 
 const App = () => {
+  const [redirectTo, setRedirectTo] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [hovering, setHovering] = useState(false)
   const mount = useRef(null);
   const [isAnimating, setAnimating] = useState(true);
   const controls = useRef(null);
-  const [redirectTo, setRedirectTo] = "";
-
-  //   const [user] = useAuthState(auth); //user JSON
-  // console.log('user-->', user);
-
-  // seed
-  // const citiesRef = db.collection('cities');
-  // const sceneRef = db.collection('scenes');
-
-  // async function setCities() {
-  //   return await citiesRef.doc('SF').set({
-  //     name: 'San Francisco',
-  //     state: 'CA',
-  //     country: 'USA',
-  //     capital: false,
-  //     population: 860000,
-  //   });
-  // }
-
-  // const sceneRef = db.collection('scenes');
-
-  // async function setScene() {
-  //   return await sceneRef.doc('scene').set({
-  //     scene:
-  //   })
-  // }
-  // console.log(scene)
-  // setCities();
-  // get
-  // const cityRef = db.collection('cities').doc('SF');
-
-  // async function fetchCities() {
-  //   const doc = await cityRef.get();
-  //   if (!doc.exists) {
-  //     console.log('No such document!');
-  //   } else {
-  //     console.log('Document data:', doc.data());
-  //   }
-  // }
-  // fetchCities();
-
-  // //db Collection reference
-  // const sessionRef = db.collection('Session');
-  // console.log('sessionRef-->', sessionRef);
-
-  // //query
-  // const query = async () => await sessionRef.get();
-  // console.log('query-->', query());
-
-  // const [SessionList] = useCollectionData(query);
-  // console.log('SessionList-->', SessionList);
-
-  //soundstuffs
-  // const chords = [
-  //   'A0 C1 E1',
-  //   'F0 A0 C1',
-  //   'G0 B0 D1',
-  //   'D0 F0 A0',
-  //   'E0 G0 B0',
-  // ].map(formatChords);
-
-  // Tone.Transport.scheduleRepeat(onRepeat, '16n');
-  // Tone.Transport.start();
-  // Tone.Transport.bpm.value = 90;
-  // const synth = new Tone.Synth();
-  // const gain = new Tone.Gain(0.7);
-  // synth.oscillator.type = 'sine';
-  // gain.toDestination();
-  // synth.connect(gain);
+  const hover = useRef(null)
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
@@ -141,7 +75,7 @@ const App = () => {
       wireframeLinewidth: 2,
     });
     const jamSpace = new THREE.LineLoop(jamSpaceGeometry, jamSpaceMaterial);
-    jamSpace.scale.set(20, 20, 20);
+    jamSpace.scale.set(30, 30, 30);
     scene.add(jamSpace);
 
     const hammerGeometry = new THREE.BoxGeometry(0.1, 10, 0.1);
@@ -198,7 +132,6 @@ const App = () => {
     }
 
     function addInstrument() {
-      console.log(modalOpen);
       const newInstrument = new Instrument();
       instruments.push(newInstrument);
       scene.add(newInstrument.mesh);
@@ -243,40 +176,12 @@ const App = () => {
     window.addEventListener("resize", handleResize);
 
     let sliderValue = 0.05;
-    let slider = document.getElementById("slider");
-    slider.addEventListener("input", onInput);
+    let slider = document.getElementById('slider');
+    slider.addEventListener('change', onInput);
     function onInput() {
       sliderValue = Number(slider.value);
+      console.log(slider)
     }
-
-    //FireStore
-    // const sceneRef = db.collection('scenes');
-
-    // async function setScene() {
-    //   return await sceneRef.doc('scenes').set({
-    //     scene: scene.toJSON(),
-    //   });
-    // }
-
-    // async function fetchScene() {
-    //   const doc = await sceneRef.doc('scene').get();
-    //   if (!doc.exists) {
-    //     console.log('No such document!');
-    //   } else {
-    //     console.log('Document data:', doc.data());
-    //   }
-    // }
-    // fetchScene();
-
-    //  async function setCities() {
-    //   return await citiesRef.doc('SF').set({
-    //     name: 'San Francisco',
-    //     state: 'CA',
-    //     country: 'USA',
-    //     capital: false,
-    //     population: 860000,
-    //   });
-    // }
 
     //Render & Animate Functions
     const renderScene = () => {
@@ -331,10 +236,7 @@ const App = () => {
           instrument.alreadyPlayed = false;
         }
       });
-      //if the hammer strikes the instrument, play note
-      //setScene();
       renderScene();
-      //fetchScene();
       frameId = window.requestAnimationFrame(animate);
     };
 
@@ -362,63 +264,65 @@ const App = () => {
       }
     };
   }, []);
+  
+	//Listens for Start and Stop
+	useEffect(() => {
+		if (isAnimating) {
+			controls.current.start();
+		} else {
+			controls.current.stop();
+		}
+	}, [isAnimating]);
 
-  //Listens for Start and Stop
-  useEffect(() => {
-    if (isAnimating) {
-      controls.current.start();
-    } else {
-      controls.current.stop();
-    }
-  }, [isAnimating]);
+	const endSession = () => {
+		setAnimating(false);
+		auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
+	};
 
-  const endSession = () => {
-    setAnimating(false);
-    auth.currentUser ? setRedirectTo("studio") : setRedirectTo("");
-  };
-
-  if (redirectTo) {
-    return <Redirect to={redirectTo} />;
-  }
-  return (
-    <div
-      className="App"
+	// if (redirectTo) {
+	// 	return <Redirect to={redirectTo} />;
+	// }
+	return (
+		<div
+			className='App'
       ref={mount}
-      // onClick={() => setAnimating(!isAnimating)}
-    >
-      <button onClick={() => setAnimating(!isAnimating)}>
-        {/* <img
+      style={{background: 'transparent'}}
+			// onClick={() => setAnimating(!isAnimating)}
+		>
+			<button className="startstop" onClick={() => setAnimating(!isAnimating)}>
+				{/* <img
 					src={play_pause}
 					alt='play-pause'
 					
 				/> */}
-        Play / Pause
-      </button>
-      <button
-        onClick={() => {
-          endSession;
-        }}
-      >
-        End Session
-      </button>
-      <Slider id="slider" />
-      <About toggleModal={toggleModal} />
-      <Modal className="Modal" appElement={mount.current} isOpen={modalOpen}>
-        <div className="modalTextDiv">
-          double click these shapes to adjust their sounds
-          <br />
-          single click to play a sound
-          <br />
-          jam with your friends or play by yourself <br />
-          PLACEHOLDERS
-        </div>
-        <button className="closer" onClick={() => setModalOpen(!modalOpen)}>
-          close
-        </button>
-      </Modal>
-      <TonePalette />
-    </div>
-  );
+				Play / Pause
+			</button>
+			<button className="startstop2"
+				onClick={() => {
+					endSession;
+				}}
+			>
+				End Session
+			</button>
+
+			<Slider id='slider' />
+			<About toggleModal={toggleModal} />
+			<Modal className='Modal' appElement={mount.current} isOpen={modalOpen}>
+				<div className='modalTextDiv'>
+					double click these shapes to adjust their sounds
+					<br />
+					single click to play a sound
+					<br />
+					jam with your friends or play by yourself <br />
+					PLACEHOLDERS
+				</div>
+				<button className='closer' onClick={() => setModalOpen(!modalOpen)}>
+					close
+				</button>
+			</Modal>
+      <Chat id="chatbox" />
+		</div>
+	);
 };
 
 export default App;

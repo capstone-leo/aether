@@ -1,10 +1,6 @@
 import React from 'react';
 
 export function Slider() {
-  // function updateSlider(slideAmount) {
-  //     var sliderDiv = document.getElementById("sliderAmount");
-  //     sliderDiv.innerHTML = slideAmount;
-
   return (
     <div className="slider">
       <input

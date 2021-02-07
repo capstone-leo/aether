@@ -2,18 +2,34 @@ import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import socket from '../socket';
 
+
+
+//once we start having usernames/nicknames this needs 
+//to be updated for username: message
+
+
 export const Chat = (props) => {
   const { messages } = props;
-  const [message, setMessage] = useState('');
+
+  const [message, setMessage] = useState('')
   const messageList = useRef(null);
+
+  useEffect(()=>{
+   document.querySelector('li') !== null ? setTimeout(function(){document.querySelector('li').remove()}, 3000) : null;
+})
 
   const sendMessage = () => {
     let newMessage = message;
     if (newMessage) {
       socket.emit('new_message', message);
       setMessage('');
+      // console.log(socket)
     }
   };
+
+  const removeMessage = () => {
+
+  }
 
   return (
     <div id="chat-box">
@@ -25,21 +41,24 @@ export const Chat = (props) => {
           })}
       </ul>
       <input
+        style={{background: 'transparent', color: 'whitesmoke'}}
         value={message}
         id="new-message"
         onChange={(e) => {
           setMessage(e.target.value);
         }}
-        placeholder="new message"
+        onKeyDown={(e)=>e.key === "Enter" ? sendMessage() : null}
+        placeholder="chat"
       ></input>
-      <button
+      {/* <button
+       style={{background: 'transparent', color: 'whitesmoke'}}
         onClick={(e) => {
           e.preventDefault();
           sendMessage();
         }}
-      >
-        Send
-      </button>
+      > */}
+        {/* Send
+      </button> */}
     </div>
   );
 };
