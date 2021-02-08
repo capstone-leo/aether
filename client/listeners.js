@@ -1,5 +1,5 @@
 import { receiveMessage } from './reducer/messages';
-import { hoverHighlight } from './reducer/dragndrop'
+import { hoverHighlight } from './reducer/dragndrop';
 import store from './store';
 
 export default (socket) => {
@@ -7,6 +7,6 @@ export default (socket) => {
     store.dispatch(receiveMessage(message));
   });
   socket.on('hover', (hoverHighlight) => {
-    store.dispatch(highlight(hoverHighlight))
-  })
+    store.dispatch(highlight(hoverHighlight));
+  });
 };

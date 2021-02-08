@@ -1,29 +1,29 @@
-import React, { useEffect, useState, useRef } from "react";
-import * as THREE from "three";
-import { DragControls } from "three/examples/jsm/controls/DragControls";
-import * as Tone from "tone";
-import Instrument from "./Instrument";
-import Drums from "./Drums";
-import Chords from "./Chords";
+import React, { useEffect, useState, useRef } from 'react';
+import * as THREE from 'three';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
+import * as Tone from 'tone';
+import Instrument from './Instrument';
+import Drums from './Drums';
+import Chords from './Chords';
 //import Trumpet from "./Trumpet";
-import { Slider } from "./Slider";
-import { About } from "./About";
-import Modal from "react-modal";
-import "./css/App.css";
-import Chat from "./Chat";
-import socket from "../socket";
-import { connect } from "react-redux";
+import { Slider } from './Slider';
+import { About } from './About';
+import Modal from 'react-modal';
+import './css/App.css';
+import Chat from './Chat';
+import socket from '../socket';
+import { connect } from 'react-redux';
 // import play_pause from '../../public/assets/play-pause.png';
 
-import "firebase/firestore";
-import "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "./Home";
-import { Redirect } from "react-router-dom";
-import TonePalette from "./TonePalette";
+import 'firebase/firestore';
+import 'firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, db } from './Home';
+import { Redirect } from 'react-router-dom';
+import TonePalette from './TonePalette';
 
 const App = () => {
-  const [redirectTo, setRedirectTo] = useState("");
+  const [redirectTo, setRedirectTo] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [hovering, setHovering] = useState(false);
   const mount = useRef(null);
@@ -120,7 +120,7 @@ const App = () => {
       draggableObjects.push(newChord.mesh);
       scene.add(newChord.mesh);
     }
-/*     const trumpets = [];
+    /*     const trumpets = [];
     for (let i = 0; i <= 2; i++) {
       const newTrumpet = new Trumpet();
       trumpets.push(newTrumpet);
@@ -132,7 +132,7 @@ const App = () => {
       camera,
       renderer.domElement
     );
-    dragControls.addEventListener("drag", onDrag);
+    dragControls.addEventListener('drag', onDrag);
     function onDrag() {
       renderScene();
     }
@@ -181,7 +181,7 @@ const App = () => {
         renderer.domElement
       );
     }
-/*     function addTrumpet() {
+    /*     function addTrumpet() {
       const newTrumpet = new Trumpet();
       trumpets.push(newTrumpet);
       scene.add(newTrumpet.mesh);
@@ -201,30 +201,30 @@ const App = () => {
         }
       }
     }
-    const drumIcon = document.getElementById("drumIcon");
-    drumIcon.addEventListener("click", function () {
+    const drumIcon = document.getElementById('drumIcon');
+    drumIcon.addEventListener('click', function () {
       addDrum();
     });
-    const addInstrumentIcon = document.getElementById("addInstrumentIcon");
-    addInstrumentIcon.addEventListener("click", function () {
+    const addInstrumentIcon = document.getElementById('addInstrumentIcon');
+    addInstrumentIcon.addEventListener('click', function () {
       addInstrument();
     });
-    const chordIcon = document.getElementById("chordIcon");
-    chordIcon.addEventListener("click", function () {
+    const chordIcon = document.getElementById('chordIcon');
+    chordIcon.addEventListener('click', function () {
       addChord();
     });
-/*     const trumpetIcon = document.getElementById("trumpetIcon");
+    /*     const trumpetIcon = document.getElementById("trumpetIcon");
     trumpetIcon.addEventListener("click", function () {
       addTrumpet();
     }); */
-    window.addEventListener("dblclick", addInstrument, false);
-    window.addEventListener("click", playSound, false);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('dblclick', addInstrument, false);
+    window.addEventListener('click', playSound, false);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('resize', handleResize);
 
     let sliderValue = 0.05;
-    let slider = document.getElementById("slider");
-    slider.addEventListener("change", onInput);
+    let slider = document.getElementById('slider');
+    slider.addEventListener('change', onInput);
     function onInput() {
       sliderValue = Number(slider.value);
       console.log(slider);
@@ -317,6 +317,7 @@ const App = () => {
           chord.alreadyPlayed = false;
         }
       });
+      socket.emit('update_scene');
       renderScene();
       frameId = window.requestAnimationFrame(animate);
     };
@@ -337,9 +338,9 @@ const App = () => {
     //Trash Clean up
     return () => {
       stop();
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
       mount.current.removeChild(renderer.domElement);
-      dragControls.removeEventListener("drag", onDrag);
+      dragControls.removeEventListener('drag', onDrag);
       for (let i = 0; i < scene.length; i++) {
         scene.remove(i);
       }
@@ -357,7 +358,7 @@ const App = () => {
 
   const endSession = () => {
     setAnimating(false);
-    auth.currentUser ? setRedirectTo("studio") : setRedirectTo("");
+    auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
   };
 
   // if (redirectTo) {
@@ -367,14 +368,14 @@ const App = () => {
     <div
       className="App"
       ref={mount}
-      style={{ background: "transparent" }}
+      style={{ background: 'transparent' }}
       // onClick={() => setAnimating(!isAnimating)}
     >
       <button className="startstop" onClick={() => setAnimating(!isAnimating)}>
         {/* <img
 					src={play_pause}
 					alt='play-pause'
-					
+
 				/> */}
         Play / Pause
       </button>

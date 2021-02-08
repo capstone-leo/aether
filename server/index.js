@@ -4,6 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const PORT = process.env.PORT || 5000;
 const socket = require('socket.io');
+const { broadcastScene } = require('./engine/main');
 //require('../secrets');
 app.use(morgan('dev'));
 
@@ -20,3 +21,4 @@ const server = app.listen(PORT, () => {
 //Socket setup
 const io = socket(server);
 require('./socket')(io);
+broadcastScene(io);
