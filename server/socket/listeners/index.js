@@ -33,6 +33,7 @@ Promise.promisifyAll(socket)
     Promise.all([playerRoom, user])
       .then(([dbRoom, dbuser]) => {
         let { id, name } = dbUser;
+        console.log(dbUser)
         if (foundRoom[1]) store.dispatch(addRoom({id: dbRoom.id, name: dbRoom.name}))
         let room = foundRoom[1] ? dbRoom.id : foundRoom[0].id;
 
@@ -49,7 +50,7 @@ Promise.promisifyAll(socket)
         store.dispatch(addPlayer(socket.id, player))
 
         //tell all players in room to create new object for player
-        io.sockets.in(world).emit('add_player', socket.id, player);
+        io.sockets.in(room).emit('add_player', socket.id, player);
 
         console.log(chalk.green(`adding ${player.name} (${socket.id}) to room ${room}`));
 

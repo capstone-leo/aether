@@ -7,6 +7,7 @@
     "build-client": "webpack",
     "build-client-watch": "webpack -w",
     "start": "node server",
+    "seed": "node server/db/seed.js",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "NODE_ENV='development' nodemon server -e html,js,scss --ignore public --ignore client",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -47,6 +48,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
+    "db-seed": "^1.2.0",
     "firebase-tools": "^9.3.0",
     "html-webpack-plugin": "^5.0.0",
     "nodemon": "^2.0.7",
