@@ -1,7 +1,7 @@
 const THREE = require('three');
 
 const initialState = new THREE.Scene();
-
+console.log("reeuesrs scene", initialState)
 const UPDATE_SCENE = 'UPDATE_SCENE';
 
 const updateScene = (scene) => ({
@@ -17,5 +17,6 @@ const sceneReducer = (state = initialState, action) => {
       return state;
   }
 
-  module.exports = { sceneReducer, updateScene };
+
 };
+  module.exports = { sceneReducer, updateScene };

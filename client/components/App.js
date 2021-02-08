@@ -40,7 +40,12 @@ const App = () => {
     const aspect = window.innerWidth / window.innerHeight;
     let frameId;
 
-    const scene = new THREE.Scene();
+    let { scene } = store.getState()
+    scene = scene.object
+
+  
+    console.log('scnee from the store', scene)
+
     const camera = new THREE.OrthographicCamera(
       (size * aspect) / -2,
       (size * aspect) / 2,
@@ -317,7 +322,7 @@ const App = () => {
           chord.alreadyPlayed = false;
         }
       });
-      socket.emit('update_scene');
+      socket.emit('update_scene', scene);
       renderScene();
       frameId = window.requestAnimationFrame(animate);
     };

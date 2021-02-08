@@ -24,6 +24,9 @@ const setUpListeners = (io, socket) => {
 
   console.log('new client, and their socket id is:', socket.id);
 
+      socket.on('update_scene', scene => {
+        store.dispatch(updateScene(scene))
+      })
   // socket.on('start_as_guest', data=> {
   //   let { players } = store.getState();
   //   let user = Player.create({name: data.name});

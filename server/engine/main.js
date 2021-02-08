@@ -1,9 +1,28 @@
 const store = require('../store');
 
 const broadcastScene = (io) => {
+
+  const { sceneReducer } = store.getState()
+  console.log('the scene reducer', sceneReducer)
+
+let sceneMap = objectToMap(sceneReducer)
+ 
+
   setInterval(() => {
-    io.sockets.emit('load_scene');
-  }, 1000 / 30);
+    io.sockets.emit('load_scene',  sceneMap);
+  }, 1000);
+
 };
 
 module.exports = { broadcastScene };
+
+
+const objectToMap = obj => {
+  const keys = Object.keys(obj);
+  const map = new Map();
+  for(let i = 0; i < keys.length; i++){
+     //inserting new key value pair inside map
+     map.set(keys[i], obj[keys[i]]);
+  };
+  return map;
+}
