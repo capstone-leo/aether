@@ -13,7 +13,7 @@ import Chat from './Chat';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from './Home';
+import { auth, db } from '../Firebase';
 import { Redirect } from 'react-router-dom';
 
 const App = () => {

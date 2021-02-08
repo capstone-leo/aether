@@ -1,41 +1,34 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
-
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import Loading from './Loading';
+import SignIn from './SignIn';
+import SignOut from './SignOut';
 
-// Initialize Firebase
-firebase.initializeApp({
-	apiKey: 'AIzaSyAWVIxjZTaEY90wBDSxj1v7ECUUKyG7Vb0',
-	authDomain: 'sound-collabo.firebaseapp.com',
-	projectId: 'sound-collabo',
-	storageBucket: 'sound-collabo.appspot.com',
-	messagingSenderId: '564645648142',
-	appId: '1:564645648142:web:f0b8c196f95fd2b70c295f',
-	measurementId: 'G-V44HEGZ64L'
-});
-// Initialize auth and firestore
-export const auth = firebase.auth();
-export const db = firebase.firestore();
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { firebaseApp, auth, db } from '../Firebase';
+
+import { connect } from 'react-redux';
+import { setNewUser, signOutUser } from '../reducer/user';
 
 // Main Component
-const Home = () => {
+const Home = (props) => {
 	// React Hooks
 	const [user, loading, error] = useAuthState(auth); //user JSON
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeydown);
 		console.log('user-->', user);
+		console.log('props-->', props);
+		if (user) props.setNewUser(user);
 	});
 	const [enableOutline, setEnableOutline] = useState(false);
 	const [showInstructions, setShowInstructions] = useState(false);
 	const [redirectTo, setRedirectTo] = useState('');
 
-	//Accessibility Handler
+	// Accessibility Handler
 	const handleKeydown = (e) => {
 		const isTabEvent = e.keyCode === 9;
 		if (isTabEvent) {
@@ -43,10 +36,9 @@ const Home = () => {
 		}
 	};
 
-	//Instructions Toggle
+	// Instructions Toggle
 	const showDirections = (event) => {
 		event.preventDefault();
-
 		setShowInstructions(!showInstructions);
 	};
 
@@ -62,7 +54,7 @@ const Home = () => {
 								shadow: {
 									enable: true,
 									color: `${randomColor}`,
-									blur: 2
+									blur: 1.5
 								}
 							},
 							interactivity: {
@@ -101,14 +93,14 @@ const Home = () => {
 						}
 					}}
 				/>
-				<header style={{ textShadow: '0px 2px 6 rgba(218, 217, 217, 0.346)' }}>
+				<header style={{ textShadow: '2px 6px 6 rgba(218, 217, 217, 0.346)' }}>
 					a e t h e r
 				</header>
 				<br />
 
 				{loading ? (
 					<Loading />
-				) : user ? (
+				) : props.user.displayName ? (
 					<>
 						<Link to='/sesh'>
 							<button
@@ -131,12 +123,7 @@ const Home = () => {
 						</Link>
 
 						<br />
-						<SignOut
-							user={user}
-							enableOutline={enableOutline}
-							setShowInstructions={setShowInstructions}
-							showInstructions={showInstructions}
-						/>
+						<SignOut user={user} enableOutline={enableOutline} />
 						<br />
 						{showInstructions ? (
 							<div
@@ -192,12 +179,7 @@ const Home = () => {
 							</button>
 						</Link>
 						<br />
-						<SignIn
-							user={user}
-							enableOutline={enableOutline}
-							setShowInstructions={setShowInstructions}
-							showInstructions={showInstructions}
-						/>
+						<SignIn enableOutline={enableOutline} />
 						<br />
 						{showInstructions ? (
 							<div
@@ -252,35 +234,43 @@ const Home = () => {
 };
 
 // Helper Components
-function SignIn(props) {
-	const signInWithGoogle = () => {
-		const provider = new firebase.auth.GoogleAuthProvider();
-		//instatiate new auth token
-		auth.signInWithRedirect(provider);
-		//prompts redirect to google login, then back
-	};
+// function SignIn(props) {
+// 	const signInWithGoogle = () => {
+// 		const provider = new firebase.auth.GoogleAuthProvider();
+// 		//instatiate new auth token
+// 		auth.signInWithRedirect(provider);
+// 		//prompts redirect to google login, then back
+// 	};
 
-	return (
-		<button
-			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-			onClick={signInWithGoogle}
-		>
-			Sign In with Google
-		</button>
-	);
-	// button to prompt Google login
-}
-function SignOut(props) {
-	return auth.currentUser ? (
-		<button
-			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-			onClick={() => auth.signOut()}
-		>
-			Sign Out
-		</button>
-	) : null;
-}
+// 	return (
+// 		<button
+// 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+// 			onClick={signInWithGoogle}
+// 		>
+// 			Sign In with Google
+// 		</button>
+// 	);
+// 	// button to prompt Google login
+// }
+// function SignOut(props) {
+// 	return props.user ? (
+// 		<button
+// 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+// 			onClick={() => auth.signOut()}
+// 		>
+// 			Sign Out
+// 		</button>
+// 	) : null;
+// }
 
 // Helper Function
 const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-export default Home;
+
+// Connect Redux
+const mapStateToProps = (state) => ({ user: state.user });
+const mapDispatchToProps = (dispatch) => ({
+	setNewUser: (user) => dispatch(setNewUser(user)),
+	signOutUser: (user) => dispatch(signOutUser(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
