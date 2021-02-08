@@ -11,71 +11,119 @@ body {
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-.about {
-	background-color: pink;
-	position: absolute;
-	left: 30px;
-	top: 30px;
+#aboutbtn {
+  background-color: transparent;
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  color: whitesmoke;
+  border: none;
 }
 
-.about:hover {
-	cursor: pointer;
+#aboutbtn:hover {
+  cursor: pointer;
 }
+
 #slider {
-	position: absolute;
-	right: 30px;
-	top: 30px;
-	color: gray;
-	background: pink;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  color: gray;
+
 }
 #slider:hover {
-	cursor: grab;
+  cursor: grab;
 }
 .slider {
-	position: absolute;
-	right: 30px;
-	top: 30px;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  color: 'whitesmoke'
 }
 
 .tempoText {
-	font-size: 12px;
-	position: relative;
-	top: 15px;
-	right: 45px;
+  font-size: 12px;
+  position: relative;
+  top: 15px;
+  right: 45px;
 }
 
 .sliderchild {
-	font-size: 12px;
-	position: relative;
-	top: 10px;
+  font-size: 12px;
+  position: relative;
+  top: 10px;
+  color: whitesmoke;
 }
 
 .Modal {
-	position: absolute;
-	top: 40px;
-	left: 40px;
-	right: 50%;
-	bottom: 40px;
-	opacity: 80%;
-	background: whitesmoke;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 50%;
+  bottom: 40px;
+  opacity: 80%;
+  background: whitesmoke;
 }
 
 .closer {
-	position: absolute;
-	bottom: 20px;
-	left: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }
 
 .closer:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .modalTextDiv {
-	padding: 30px;
-	background-color: whitesmoke;
+  padding: 30px;
+  background-color: whitesmoke;
+}
+
+.App {
+  position: relative;
+}
+
+#chat-box {
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  background: transparent;
+  color: whitesmoke
+}
+
+ul {
+  list-style-type: none;
+}
+
+.startstop {
+  border-radius: 5px;
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  background: transparent;
+  color: whitesmoke;
+  border: none;
+}
+.startstop:hover {
+  cursor: pointer
+}
+
+.startstop2 {
+  border-radius: 5px;
+  position: absolute;
+  bottom: 80px;
+  right: 50px;
+  background: transparent;
+  color: whitesmoke;
+  border: none
+}
+.startstop2:hover {
+cursor: pointer
 }
 button.home-btn {
 	font-family: 'Source Code Pro', monospace;
@@ -178,3 +226,4 @@ canvas {
 		transform: rotate(360deg);
 	}
 }
+

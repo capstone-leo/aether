@@ -224,44 +224,12 @@ const Home = (props) => {
 						)}
 					</>
 				)}
-
-				<br />
-
 				<br />
 			</div>
 		</>
 	);
 };
 
-// Helper Components
-// function SignIn(props) {
-// 	const signInWithGoogle = () => {
-// 		const provider = new firebase.auth.GoogleAuthProvider();
-// 		//instatiate new auth token
-// 		auth.signInWithRedirect(provider);
-// 		//prompts redirect to google login, then back
-// 	};
-
-// 	return (
-// 		<button
-// 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-// 			onClick={signInWithGoogle}
-// 		>
-// 			Sign In with Google
-// 		</button>
-// 	);
-// 	// button to prompt Google login
-// }
-// function SignOut(props) {
-// 	return props.user ? (
-// 		<button
-// 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-// 			onClick={() => auth.signOut()}
-// 		>
-// 			Sign Out
-// 		</button>
-// 	) : null;
-// }
 
 // Helper Function
 const randomColor = Math.floor(Math.random() * 16777215).toString(16);
