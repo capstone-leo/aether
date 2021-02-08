@@ -15,11 +15,12 @@ const UserAccountPage = (props) => {
 
 	// if (user) return <Redirect to='/' />;
 	return (
-		<div>
+		<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
 			{/* {!auth.currentUser ? (
 				<Redirect to='/' />
 			) : ( */}
 			<>
+				<h3>Welcome, {user.displayName}!</h3>
 				<button onClick={() => report()}>Report</button>
 				<Link to='/sesh'>
 					<button

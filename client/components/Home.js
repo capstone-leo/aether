@@ -7,6 +7,8 @@ import 'firebase/firestore';
 import 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
+import Loading from './Loading';
+
 // Initialize Firebase
 firebase.initializeApp({
 	apiKey: 'AIzaSyAWVIxjZTaEY90wBDSxj1v7ECUUKyG7Vb0',
@@ -23,12 +25,12 @@ export const db = firebase.firestore();
 
 // Main Component
 const Home = () => {
-	const [user] = useAuthState(auth); //user JSON
+	// React Hooks
+	const [user, loading, error] = useAuthState(auth); //user JSON
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeydown);
 		console.log('user-->', user);
 	});
-	// React Hooks
 	const [enableOutline, setEnableOutline] = useState(false);
 	const [showInstructions, setShowInstructions] = useState(false);
 	const [redirectTo, setRedirectTo] = useState('');
@@ -103,19 +105,21 @@ const Home = () => {
 					a e t h e r
 				</header>
 				<br />
-				<Link to='/sesh'>
-					<button
-						className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-						type='button'
-						style={{ textAlign: 'center', marginTop: '1%' }}
-					>
-						Start Jamming {'>'}
-					</button>
-				</Link>
-				<br />
 
-				{user ? (
+				{loading ? (
+					<Loading />
+				) : user ? (
 					<>
+						<Link to='/sesh'>
+							<button
+								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+								type='button'
+								style={{ textAlign: 'center', marginTop: '1%' }}
+							>
+								Start Jamming {'>'}
+							</button>
+						</Link>
+						<br />
 						<Link to='/studio'>
 							<button
 								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
@@ -125,6 +129,7 @@ const Home = () => {
 								Account Page {'>'}
 							</button>
 						</Link>
+
 						<br />
 						<SignOut
 							user={user}
@@ -132,57 +137,114 @@ const Home = () => {
 							setShowInstructions={setShowInstructions}
 							showInstructions={showInstructions}
 						/>
+						<br />
+						{showInstructions ? (
+							<div
+								style={{
+									textAlign: 'center',
+									fontSize: '15px',
+									fontFamily: 'Source Code Pro, monospace'
+								}}
+							>
+								<button
+									type='button'
+									className={
+										enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'
+									}
+									onClick={showDirections}
+									style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
+								>
+									close instructions
+								</button>
+								<h4>“One band. One Sound.”</h4>
+								<p>
+									You have the unique opportunity to collaborate in realtime with other
+									musicians
+								</p>
+								<p>Click a sound object Once to hear its sound.</p>
+								<p>Click and Drag a sound object onto the Jam-Space</p>
+								<p>When the Hammer strikes it, hear the sounds!</p>
+								<p>
+									Exlore the music you can create with your friends or match with users
+									from around the world.
+								</p>
+							</div>
+						) : (
+							<button
+								type='button'
+								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+								onClick={showDirections}
+								style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
+							>
+								view instructions
+							</button>
+						)}
 					</>
 				) : (
-					<SignIn
-						user={user}
-						enableOutline={enableOutline}
-						setShowInstructions={setShowInstructions}
-						showInstructions={showInstructions}
-					/>
+					<>
+						<Link to='/sesh'>
+							<button
+								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+								type='button'
+								style={{ textAlign: 'center', marginTop: '1%' }}
+							>
+								Start Jamming {'>'}
+							</button>
+						</Link>
+						<br />
+						<SignIn
+							user={user}
+							enableOutline={enableOutline}
+							setShowInstructions={setShowInstructions}
+							showInstructions={showInstructions}
+						/>
+						<br />
+						{showInstructions ? (
+							<div
+								style={{
+									textAlign: 'center',
+									fontSize: '15px',
+									fontFamily: 'Source Code Pro, monospace'
+								}}
+							>
+								<button
+									type='button'
+									className={
+										enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'
+									}
+									onClick={showDirections}
+									style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
+								>
+									close instructions
+								</button>
+								<h4>“One band. One Sound.”</h4>
+								<p>
+									You have the unique opportunity to collaborate in realtime with other
+									musicians
+								</p>
+								<p>Click a sound object Once to hear its sound.</p>
+								<p>Click and Drag a sound object onto the Jam-Space</p>
+								<p>When the Hammer strikes it, hear the sounds!</p>
+								<p>
+									Exlore the music you can create with your friends or match with users
+									from around the world.
+								</p>
+							</div>
+						) : (
+							<button
+								type='button'
+								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
+								onClick={showDirections}
+								style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
+							>
+								view instructions
+							</button>
+						)}
+					</>
 				)}
 
 				<br />
 
-				{showInstructions ? (
-					<div
-						style={{
-							textAlign: 'center',
-							fontSize: '15px',
-							fontFamily: 'Source Code Pro, monospace'
-						}}
-					>
-						<button
-							type='button'
-							className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-							onClick={showDirections}
-							style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
-						>
-							close instructions
-						</button>
-						<h4>“One band. One Sound.”</h4>
-						<p>
-							You have the unique opportunity to collaborate in realtime with other
-							musicians
-						</p>
-						<p>Click a sound object Once to hear its sound.</p>
-						<p>Click and Drag a sound object onto the Jam-Space</p>
-						<p>When the Hammer strikes it, hear the sounds!</p>
-						<p>
-							Exlore the music you can create with your friends or match with users from
-							around the world.
-						</p>
-					</div>
-				) : (
-					<button
-						type='button'
-						className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-						onClick={showDirections}
-						style={{ textAlign: 'center', marginTop: '1%', fontSize: '12px' }}
-					>
-						view instructions
-					</button>
-				)}
 				<br />
 			</div>
 		</>
