@@ -140,6 +140,7 @@ const App = () => {
       if (objectSelect) {
         if (objectSelect.hover) {
           objectSelect.sound();
+          console.log(objectSelect)
         }
       }
     }
