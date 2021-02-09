@@ -41,14 +41,12 @@ const App = () => {
     let frameId;
 
     let { scene } = store.getState()
-console.log("entrys scene", scene)
-   oldScene = Object.fromEntries(scene)
+    console.log("entrys scene", scene)
+    let newScene = Object.fromEntries(scene)
    
-    console.log('scnee from the store', scene)
-   let newScene = new THREE.Scene()
-   console.log('fresh scene', newScene)
-    console.log('assigned scene', Object.assign(newScene, scene))
-   
+    console.log('scene from entries', newScene)
+    scene = new THREE.Scene()
+    
     const camera = new THREE.OrthographicCamera(
       (size * aspect) / -2,
       (size * aspect) / 2,
@@ -108,7 +106,6 @@ console.log("entrys scene", scene)
     //includes random coordinates outside of jamSpace, and random sound
     const draggableObjects = [];
     const instruments = [];
-    oldScene.mesh ? ( scene.add( oldScene.mesh )) :
     for (let i = 0; i <= 2; i++) {
       const newInstrument = new Instrument();
       instruments.push(newInstrument);

@@ -10,7 +10,6 @@ console.log(Object.entries(sceneReducer))
 let sceneEntries = Object.entries(sceneReducer)
   setInterval(() => {
     io.sockets.emit('load_scene',  sceneEntries);
- console.log(sceneEntries)
   }, 1000);
 
 };
