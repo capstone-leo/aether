@@ -5,11 +5,12 @@ const broadcastScene = (io) => {
   const { sceneReducer } = store.getState()
   console.log('the scene reducer', sceneReducer)
 
-let sceneMap = objectToMap(sceneReducer)
+console.log(Object.entries(sceneReducer))
  
-
+let sceneEntries = Object.entries(sceneReducer)
   setInterval(() => {
-    io.sockets.emit('load_scene',  sceneMap);
+    io.sockets.emit('load_scene',  sceneEntries);
+ console.log(sceneEntries)
   }, 1000);
 
 };

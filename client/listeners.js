@@ -7,7 +7,7 @@ export default (socket) => {
     store.dispatch(receiveMessage(message));
   });
   socket.on('load_scene', (scene) => {
-    console.log('CLIENTthescene', scene)
+    // console.log('CLIENTthescene', scene)
     store.dispatch(loadScene(scene));
   });
 };
