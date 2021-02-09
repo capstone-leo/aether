@@ -2,7 +2,7 @@ const { pickBy } = require('lodash');
 let newState;
 
 /*----------  INITIAL STATE  ----------*/
-const initialState = {};
+const initialState = [];
 
 /*----------  ACTION TYPES  ----------*/
 const RECEIVE_ALL_INSTRUMENTS = 'RECEIVE_ALL_INSTRUMENTS';
@@ -16,8 +16,7 @@ const receiveAllInstruments = (instruments) => ({
 
 const receiveInstrument = (data) => ({
   type: RECEIVE_INSTRUMENT,
-  id: data.id,
-  position: data.position,
+  instrument: { id: data.id, position: data.position },
 });
 
 /*----------  THUNK CREATORS  ----------*/
@@ -29,7 +28,7 @@ const immutable = (state = initialState, action) => {
     case RECEIVE_ALL_INSTRUMENTS:
       return action.instruments;
     case RECEIVE_INSTRUMENT:
-      return { ...state, [action.id]: action.position };
+      return [...state, action.instrument];
     default:
       return state;
   }
@@ -40,7 +39,7 @@ const mutable = (state = initialState, action) => {
     case RECEIVE_ALL_INSTRUMENTS:
       return action.instruments;
     case RECEIVE_INSTRUMENT:
-      return { ...state, [action.id]: action.position };
+      return [...state, action.instrument];
     default:
       return state;
   }

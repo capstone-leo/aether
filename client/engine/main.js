@@ -4,15 +4,16 @@ import Drums from '../components/Drums';
 import Chords from '../components/Chords';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 
+import store from '../store';
 import socket from '../socket';
 
 let size, aspect, frameId, canvas;
 let scene, camera, renderer, light;
 let mouse, raycaster, objectSelect, dragControls;
 let hammer, hammerBox, jamSpace;
-let instruments, draggableObjects;
+let draggableObjects;
 let sliderValue;
-instruments = [];
+let { instruments } = store.getState();
 draggableObjects = [];
 
 export const init = () => {
@@ -69,11 +70,6 @@ export const init = () => {
     camera,
     renderer.domElement
   );
-  dragControls.addEventListener('drag', onDrag);
-  function onDrag() {
-    renderScene();
-  }
-
   mouse = new THREE.Vector2();
   raycaster = new THREE.Raycaster();
 
@@ -137,14 +133,7 @@ export const animate = () => {
   hammerBox.copy(hammer.geometry.boundingBox).applyMatrix4(hammer.matrixWorld);
   hammerBox.setFromObject(hammer);
 
-  dragControls = new DragControls(
-    [...draggableObjects],
-    camera,
-    renderer.domElement
-  );
-
   jamSpace.rotation.z += sliderValue;
-  console.log(instruments);
 
   if (instruments) {
     instruments.forEach((instrument) => {
@@ -177,6 +166,10 @@ export const animate = () => {
   renderScene();
   frameId = window.requestAnimationFrame(animate);
 };
+
+function onDrag() {
+  renderScene();
+}
 
 const handleResize = () => {
   const newAspect = window.innerWidth / window.innerHeight;
@@ -232,7 +225,6 @@ function addChord() {
 function playSound() {
   if (objectSelect) {
     if (objectSelect.hover) {
-      console.log(objectSelect);
       objectSelect.sound();
     }
   }
