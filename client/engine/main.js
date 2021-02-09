@@ -3,13 +3,14 @@ import Instrument from '../components/Instrument';
 import Drums from '../components/Drums';
 import Chords from '../components/Chords';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
+import { nanoid } from 'nanoid';
 
 import store from '../store';
 import socket from '../socket';
 
 let size, aspect, frameId, canvas;
 let scene, camera, renderer, light;
-let mouse, raycaster, objectSelect, dragControls;
+let mouse, mouseThree, raycaster, objectSelect, dragControls;
 let hammer, hammerBox, jamSpace;
 let draggableObjects;
 let sliderValue;
@@ -17,8 +18,8 @@ let instruments = [];
 draggableObjects = [];
 
 export const init = () => {
-  socket.emit('get_all_instruments');
   instruments = store.getState().instruments;
+  console.log('instruments on init() --> ', instruments);
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
   canvas = document.getElementById('canvas');
@@ -67,12 +68,19 @@ export const init = () => {
   hammerBox.setFromObject(hammer);
   jamSpace.add(hammer);
 
+  instruments.forEach((instrument) => {
+    draggableObjects.push(instrument.mesh);
+  });
+  console.log('draggableObjects in init()--> ', draggableObjects);
+
   dragControls = new DragControls(
     [...draggableObjects],
     camera,
     renderer.domElement
   );
+  dragControls.addEventListener('drag', onDrag);
   mouse = new THREE.Vector2();
+  mouseThree = new THREE.Vector3();
   raycaster = new THREE.Raycaster();
 
   sliderValue = 0.05;
@@ -88,7 +96,7 @@ export const init = () => {
     addDrum();
   });
   const addInstrumentIcon = document.getElementById('addInstrumentIcon');
-  addInstrumentIcon.addEventListener('click', function () {
+  addInstrumentIcon.addEventListener('click', function (e) {
     addInstrument();
   });
   const chordIcon = document.getElementById('chordIcon');
@@ -99,11 +107,6 @@ export const init = () => {
     trumpetIcon.addEventListe ner("click", function () {
       addTrumpet();
     }); */
-
-  window.addEventListener('dblclick', addInstrument, false);
-  window.addEventListener('click', playSound, false);
-  window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('resize', handleResize);
 };
 
 export const renderScene = () => {
@@ -137,12 +140,6 @@ export const animate = () => {
 
   jamSpace.rotation.z += sliderValue;
 
-  dragControls = new DragControls(
-    [...draggableObjects],
-    camera,
-    renderer.domElement
-  );
-
   if (instruments) {
     instruments.forEach((instrument) => {
       instrument.mesh.rotation.y += 0.01;
@@ -175,10 +172,6 @@ export const animate = () => {
   frameId = window.requestAnimationFrame(animate);
 };
 
-function onDrag() {
-  renderScene();
-}
-
 const handleResize = () => {
   const newAspect = window.innerWidth / window.innerHeight;
   camera.left = (size * newAspect) / -2;
@@ -193,14 +186,15 @@ function onMouseMove(event) {
   event.preventDefault();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  mouseThree = getMouse3D(event);
+  console.log(mouseThree);
 }
 
 function addInstrument() {
-  const newInstrument = new Instrument();
-  const { mesh } = newInstrument;
   socket.emit('add_instrument', {
-    id: mesh.id,
-    position: [mesh.position.x, mesh.position.y, mesh.position.z],
+    id: nanoid(),
+    position: [mouse.x, mouse.y, 0],
   });
 }
 
@@ -247,6 +241,11 @@ const stop = () => {
   cancelAnimationFrame(frameId);
   frameId = null;
 };
+
+function onDrag() {
+  console.log('hello');
+  renderScene();
+}
 
 export { start, stop, playSound, addInstrument, onMouseMove, handleResize };
 

@@ -14,10 +14,12 @@ const receiveAllInstruments = (instruments) => ({
   instruments,
 });
 
-const receiveInstrument = (data) => ({
-  type: RECEIVE_INSTRUMENT,
-  instrument: { id: data.id, position: data.position },
-});
+const receiveInstrument = (data) => {
+  return {
+    type: RECEIVE_INSTRUMENT,
+    instrument: { id: data.id, position: data.position },
+  };
+};
 
 /*----------  THUNK CREATORS  ----------*/
 

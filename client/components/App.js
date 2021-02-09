@@ -1,6 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { scene, init, animate, start, stop } from '../engine/main';
+import {
+  scene,
+  init,
+  animate,
+  start,
+  stop,
+  dragControls,
+  addInstrument,
+  playSound,
+  handleResize,
+  onMouseMove,
+} from '../engine/main';
 
 import { Slider } from './Slider';
 import { About } from './About';
@@ -34,14 +45,18 @@ const App = () => {
   useEffect(() => {
     init();
     animate();
+
     // start();
     controls.current = { start, stop };
-
+    window.addEventListener('dblclick', addInstrument, false);
+    window.addEventListener('click', playSound, false);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('resize', handleResize);
     //Trash Clean up
     return () => {
       stop();
       // window.removeEventListener('resize', handleResize);
-      // dragControls.removeEventListener('drag', onDrag);
+      //dragControls.removeEventListener('drag', onDrag);
       // for (let i = 0; i < scene.length; i++) {
       //   scene.remove(i);
       // }

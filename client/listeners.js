@@ -25,7 +25,9 @@ export default (socket) => {
     });
   });
   socket.on('spawn_instrument', (data) => {
+    console.log('data in spawn_instrument --> ', data);
     const instrument = new Instrument(data.id, data.position);
+
     instrument.init();
     store.dispatch(receiveInstrument(data));
   });
