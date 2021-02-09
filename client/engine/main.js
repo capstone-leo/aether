@@ -187,14 +187,15 @@ function onMouseMove(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-  mouseThree = getMouse3D(event);
-  console.log(mouseThree);
+  mouseThree.x = raycaster.ray.origin.x;
+  mouseThree.y = raycaster.ray.origin.y;
+  mouseThree.z = raycaster.ray.origin.z;
 }
 
 function addInstrument() {
   socket.emit('add_instrument', {
     id: nanoid(),
-    position: [mouse.x, mouse.y, 0],
+    position: [mouseThree.x, mouseThree.y, 0],
   });
 }
 
