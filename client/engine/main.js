@@ -197,7 +197,6 @@ function onMouseMove(event) {
 function addInstrument() {
   const newInstrument = new Instrument();
   const { mesh } = newInstrument;
-  instruments.push(newInstrument);
   socket.emit('add_instrument', {
     id: mesh.id,
     position: [mesh.position.x, mesh.position.y, mesh.position.z],
@@ -207,7 +206,7 @@ function addInstrument() {
 function addDrum() {
   const newDrum = new Drums();
   const { mesh } = newDrum;
-  instruments.push(newDrum);
+  //instruments.push(newDrum);
   socket.emit('add_instrument', {
     id: mesh.id,
     position: [mesh.position.x, mesh.position.y, mesh.position.z],
@@ -268,4 +267,5 @@ export {
   jamSpace,
   draggableObjects,
   hammerBox,
+  instruments,
 };

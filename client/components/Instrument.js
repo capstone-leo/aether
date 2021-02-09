@@ -1,6 +1,6 @@
 import * as three from 'three';
 import * as tone from 'tone';
-import { scene, draggableObjects, dragControls } from '../engine/main';
+import { scene, draggableObjects, instruments } from '../engine/main';
 import {
   playC4,
   playD4,
@@ -138,8 +138,9 @@ class Instrument {
     this.sound();
   };
   init = () => {
-    scene.add(this.mesh);
+    instruments.push(this);
     draggableObjects.push(this.mesh);
+    scene.add(this.mesh);
   };
 }
 
