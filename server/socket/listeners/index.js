@@ -6,6 +6,7 @@ const roomNames = require('../../roomnames');
 const { addRoom } = require('../../reducers/rooms');
 const { addPlayer, playerLeaves } = require('../../reducers/players');
 const { receiveInstrument } = require('../../reducers/instruments');
+const { receiveAllInstruments } = require('../../reducers/instruments');
 
 const getRoom = () => {
   let { rooms, players } = store.getState();
@@ -21,6 +22,10 @@ const getRoom = () => {
 };
 
 const setUpListeners = (io, socket) => {
+  socket.on('get_all_instruments', (data) => {
+    const { instrument } = store.getState();
+    socket.emit('spawn_all_instruments', instrument);
+  });
   socket.on('add_instrument', (data) => {
     store.dispatch(receiveInstrument(data));
     const { instrument } = store.getState();

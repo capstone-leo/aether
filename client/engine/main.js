@@ -13,10 +13,12 @@ let mouse, raycaster, objectSelect, dragControls;
 let hammer, hammerBox, jamSpace;
 let draggableObjects;
 let sliderValue;
-let { instruments } = store.getState();
+let instruments = [];
 draggableObjects = [];
 
 export const init = () => {
+  socket.emit('get_all_instruments');
+  instruments = store.getState().instruments;
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
   canvas = document.getElementById('canvas');
@@ -134,6 +136,12 @@ export const animate = () => {
   hammerBox.setFromObject(hammer);
 
   jamSpace.rotation.z += sliderValue;
+
+  dragControls = new DragControls(
+    [...draggableObjects],
+    camera,
+    renderer.domElement
+  );
 
   if (instruments) {
     instruments.forEach((instrument) => {
