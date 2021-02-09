@@ -17,7 +17,7 @@ import { connect } from 'react-redux';
 
 import 'firebase/firestore';
 import 'firebase/auth';
-import { auth, db } from '../Firebase';
+import { auth, db, realtimeDB } from '../Firebase';
 import { Redirect } from 'react-router-dom';
 import TonePalette from './TonePalette';
 
@@ -356,7 +356,7 @@ const App = () => {
 		}
 	}, [isAnimating]);
 
-	// FireStore retrieves scene from state
+	// FireBase retrieves scene from state
 	const sceneRef = db.collection('Session');
 
 	const setScene = async () => {

@@ -16,3 +16,4 @@ export const firebaseApp = firebase.initializeApp({
 // Initialize auth and firestore
 export const auth = firebase.auth();
 export const db = firebase.firestore();
+export const realtimeDB = firebase.database();
