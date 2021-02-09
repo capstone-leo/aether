@@ -13,20 +13,20 @@ const UserAccountPage = (props) => {
 	const [user, loading, error] = useAuthState(auth); //user JSON
 	const [currentUser, setcurrentUser] = useState(props.user);
 	useEffect(() => {
-		console.log('account user-->', user);
-		console.log('account props-->', props.user);
+		console.log('account props.user-->', props.user);
 		console.log('account current-->', currentUser);
-		if (user) props.setNewUser(user);
+		if (user) props.setNewUser(props.user);
 	});
+
 	return (
 		<>
-			{user === null ? (
-				<Redirect to='/' />
-			) : loading ? (
+			{loading ? (
 				<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
 					<h6>Welcome!</h6>
 					<Loading />
 				</div>
+			) : props.user === undefined ? (
+				<Redirect to='/' />
 			) : (
 				<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
 					<h6>Welcome, {currentUser.displayName}!</h6>
@@ -43,7 +43,7 @@ const UserAccountPage = (props) => {
 						</button>
 					</Link>
 					<br />
-					<SignOut onClick={() => setcurrentUser()} />
+					<SignOut setcurrentUser={setcurrentUser} />
 				</div>
 			)}
 		</>
