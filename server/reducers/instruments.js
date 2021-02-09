@@ -9,30 +9,27 @@ const RECEIVE_ALL_INSTRUMENTS = 'RECEIVE_ALL_INSTRUMENTS';
 const RECEIVE_INSTRUMENT = 'RECEIVE_INSTRUMENT';
 
 /*----------  ACTION CREATORS  ----------*/
-const receiveAllInstruments = instruments => ({
+const receiveAllInstruments = (instruments) => ({
   type: RECEIVE_ALL_INSTRUMENTS,
-  food
+  instruments,
 });
 
-const receiveInstrument = (id, data) => ({
+const receiveInstrument = (data) => ({
   type: RECEIVE_INSTRUMENT,
-  id,
-  data
+  id: data.id,
+  position: data.position,
 });
-
 
 /*----------  THUNK CREATORS  ----------*/
 
-
 /*----------  REDUCER  ----------*/
+
 const immutable = (state = initialState, action) => {
   switch (action.type) {
     case RECEIVE_ALL_INSTRUMENTS:
-      return action.instrument;
+      return action.instruments;
     case RECEIVE_INSTRUMENT:
-      newState = Object.assign({}, state);
-      newState[action.id] = action.data;
-      return newState;
+      return { ...state, [action.id]: action.position };
     default:
       return state;
   }
@@ -43,19 +40,20 @@ const mutable = (state = initialState, action) => {
     case RECEIVE_ALL_INSTRUMENTS:
       return action.instruments;
     case RECEIVE_INSTRUMENT:
-      state[action.id] = action.data;
-      return state;
+      return { ...state, [action.id]: action.position };
     default:
       return state;
   }
 };
 
-
-const chooseReducer = reducerMode => {
+const chooseReducer = (reducerMode) => {
   switch (reducerMode) {
-    case 'mutable': return mutable;
-    case 'immutable': return immutable;
-    default: return mutable;
+    case 'mutable':
+      return mutable;
+    case 'immutable':
+      return immutable;
+    default:
+      return mutable;
   }
 };
 
@@ -64,5 +62,5 @@ const reducer = chooseReducer('immutable');
 module.exports = {
   reducer,
   receiveAllInstruments,
-  receiveInstrument
+  receiveInstrument,
 };
