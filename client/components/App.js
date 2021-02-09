@@ -46,7 +46,7 @@ const App = () => {
    
     console.log('scene from entries', newScene)
     scene = new THREE.Scene()
-    
+
     const camera = new THREE.OrthographicCamera(
       (size * aspect) / -2,
       (size * aspect) / 2,
@@ -202,7 +202,7 @@ const App = () => {
     function playSound() {
       if (objectSelect) {
         if (objectSelect.hover) {
-          console.log(objectSelect);
+          // console.log(objectSelect);
           objectSelect.sound();
         }
       }
