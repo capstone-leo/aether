@@ -18,8 +18,8 @@ let instruments = [];
 draggableObjects = [];
 
 export const init = () => {
+  socket.emit('get_all_instruments');
   instruments = store.getState().instruments;
-  console.log('instruments on init() --> ', instruments);
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
   canvas = document.getElementById('canvas');
