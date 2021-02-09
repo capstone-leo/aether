@@ -120,7 +120,7 @@ input {
   color: whitesmoke;
 }
 
-#trumpetIcon {
+#pianoIcon {
   width: 45px;
   height: 45px;
   margin-top: 20px;
@@ -137,6 +137,13 @@ input {
   color: whitesmoke;
 }
 #chordIcon {
+  width: 60px;
+  height: 40px;
+  margin-left: -5px;
+  margin-right: -5px;
+  color: whitesmoke;
+}
+#marimbaIcon {
   width: 60px;
   height: 40px;
   margin-left: -5px;

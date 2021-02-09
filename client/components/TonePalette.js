@@ -11,8 +11,9 @@ export class TonePalette extends Component {
       <div className="TonePalette">
         <img src="./oneDie.png" id="addInstrumentIcon"></img>
         <img src="./drum-30128.png" id="drumIcon"></img>
-        <img src="./vippng.com-trompeta-png-1767976.png" id="trumpetIcon"></img>
+        <img src="./piano-icon-11854.png" id="pianoIcon"></img>
         <img src="./chord.png" id="chordIcon"></img>
+        <img src="./marimba.png" id="marimbaIcon"></img>
       </div>
     );
   }

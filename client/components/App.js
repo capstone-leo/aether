@@ -2,10 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { DragControls } from "three/examples/jsm/controls/DragControls";
 import * as Tone from "tone";
-import Instrument from "./Instrument";
-import Drums from "./Drums";
-import Chords from "./Chords";
-//import Trumpet from "./Trumpet";
+import Instrument from "./Instruments/Instrument";
+import Drums from "./Instruments/Drums";
+import Chords from "./Instruments/Chords";
+import Piano from "./Instruments/Piano";
+import Marimba from "./Instruments/Marimba";
 import { Slider } from "./Slider";
 import { About } from "./About";
 import Modal from "react-modal";
@@ -120,13 +121,20 @@ const App = () => {
       draggableObjects.push(newChord.mesh);
       scene.add(newChord.mesh);
     }
-/*     const trumpets = [];
+    const pianos = [];
     for (let i = 0; i <= 2; i++) {
-      const newTrumpet = new Trumpet();
-      trumpets.push(newTrumpet);
-      draggableObjects.push(newTrumpet.mesh);
-      scene.add(newTrumpet.mesh);
-    } */
+      const newPiano = new Piano();
+      pianos.push(newPiano);
+      draggableObjects.push(newPiano.mesh);
+      scene.add(newPiano.mesh);
+    }
+    const marimbas = [];
+    for (let i = 0; i <= 2; i++) {
+      const newMarimba = new Marimba();
+      marimbas.push(newMarimba);
+      draggableObjects.push(newMarimba.mesh);
+      scene.add(newMarimba.mesh);
+    }
     let dragControls = new DragControls(
       [...draggableObjects],
       camera,
@@ -181,17 +189,28 @@ const App = () => {
         renderer.domElement
       );
     }
-/*     function addTrumpet() {
-      const newTrumpet = new Trumpet();
-      trumpets.push(newTrumpet);
-      scene.add(newTrumpet.mesh);
-      draggableObjects.push(newTrumpet.mesh);
+    function addPiano() {
+      const newPiano = new Piano();
+      pianos.push(newPiano);
+      scene.add(newPiano.mesh);
+      draggableObjects.push(newPiano.mesh);
       dragControls = new DragControls(
         [...draggableObjects],
         camera,
         renderer.domElement
       );
-    } */
+    }
+    function addMarimba() {
+      const newMarimba = new Marimba();
+      marimbas.push(newMarimba);
+      scene.add(newMarimba.mesh);
+      draggableObjects.push(newMarimba.mesh);
+      dragControls = new DragControls(
+        [...draggableObjects],
+        camera,
+        renderer.domElement
+      );
+    }
 
     function playSound() {
       if (objectSelect) {
@@ -213,10 +232,14 @@ const App = () => {
     chordIcon.addEventListener("click", function () {
       addChord();
     });
-/*     const trumpetIcon = document.getElementById("trumpetIcon");
-    trumpetIcon.addEventListener("click", function () {
-      addTrumpet();
-    }); */
+    const pianoIcon = document.getElementById("pianoIcon");
+    pianoIcon.addEventListener("click", function () {
+      addPiano();
+    });
+    const marimbaIcon = document.getElementById("marimbaIcon");
+    marimbaIcon.addEventListener("click", function () {
+      addMarimba();
+    });
     window.addEventListener("dblclick", addInstrument, false);
     window.addEventListener("click", playSound, false);
     window.addEventListener("mousemove", onMouseMove);
@@ -315,6 +338,40 @@ const App = () => {
           }
         } else {
           chord.alreadyPlayed = false;
+        }
+      });
+      pianos.forEach((piano) => {
+        piano.mesh.rotation.y += 0.01;
+        piano.mesh.rotation.x -= 0.01;
+
+        piano.boundary
+          .copy(piano.mesh.geometry.boundingBox)
+          .applyMatrix4(piano.mesh.matrixWorld);
+
+        if (piano.boundary.intersectsBox(hammerBox)) {
+          if (piano.alreadyPlayed === false) {
+            piano.playSound();
+            piano.alreadyPlayed = true;
+          }
+        } else {
+          piano.alreadyPlayed = false;
+        }
+      });
+      marimbas.forEach((marimba) => {
+        marimba.mesh.rotation.y += 0.01;
+        marimba.mesh.rotation.x -= 0.01;
+
+        marimba.boundary
+          .copy(marimba.mesh.geometry.boundingBox)
+          .applyMatrix4(marimba.mesh.matrixWorld);
+
+        if (marimba.boundary.intersectsBox(hammerBox)) {
+          if (marimba.alreadyPlayed === false) {
+            marimba.playSound();
+            marimba.alreadyPlayed = true;
+          }
+        } else {
+          marimba.alreadyPlayed = false;
         }
       });
       renderScene();
