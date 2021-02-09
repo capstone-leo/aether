@@ -1,5 +1,7 @@
-import * as three from "three";
-import * as tone from "tone";
+import * as three from 'three';
+import * as tone from 'tone';
+import { scene } from '../engine/main';
+
 import {
   playCM7,
   playDm7,
@@ -9,7 +11,7 @@ import {
   playAm,
   playBbM,
   playEbM,
-} from "./tone.fn.js";
+} from './tone.fn.js';
 
 const chordList = [
   playCM7,
@@ -65,10 +67,10 @@ function rainbow(numOfSteps, step) {
       break;
   }
   var c =
-    "0x" +
-    ("00" + (~~(r * 255)).toString(16)).slice(-2) +
-    ("00" + (~~(g * 255)).toString(16)).slice(-2) +
-    ("00" + (~~(b * 255)).toString(16)).slice(-2);
+    '0x' +
+    ('00' + (~~(r * 255)).toString(16)).slice(-2) +
+    ('00' + (~~(g * 255)).toString(16)).slice(-2) +
+    ('00' + (~~(b * 255)).toString(16)).slice(-2);
   return c;
 }
 class Chords {
@@ -101,13 +103,16 @@ class Chords {
   }
   transportStart = () => {
     tone.Transport.start();
-    console.log("ok");
+    console.log('ok');
   };
   transportStop = () => {
     tone.Transport.stop();
   };
   playSound = () => {
     this.sound();
+  };
+  init = () => {
+    scene.add(this.mesh);
   };
 }
 

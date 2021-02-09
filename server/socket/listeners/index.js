@@ -23,9 +23,11 @@ const getRoom = () => {
 const setUpListeners = (io, socket) => {
   socket.on('add_instrument', (data) => {
     store.dispatch(receiveInstrument(data));
-
-    const { instruments } = store.getState();
-    io.sockets.emit('spawn_instrument', instruments[data.id]);
+    const { instrument } = store.getState();
+    io.sockets.emit('spawn_instrument', {
+      id: data.id,
+      position: instrument[data.id],
+    });
   });
 };
 

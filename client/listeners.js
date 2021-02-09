@@ -1,7 +1,8 @@
 import { receiveMessage } from './reducer/messages';
 import { hoverHighlight } from './reducer/dragndrop';
-import store from './store';
 import { receiveInstrument } from './reducer/instruments';
+import Instrument from './components/Instrument';
+import store from './store';
 
 export default (socket) => {
   socket.on('add_message', (message) => {
@@ -11,6 +12,8 @@ export default (socket) => {
     store.dispatch(highlight(hoverHighlight));
   });
   socket.on('spawn_instrument', (data) => {
+    const instrument = new Instrument(data.id, data.position);
+    instrument.init();
     store.dispatch(receiveInstrument(data));
   });
 };

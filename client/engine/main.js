@@ -4,6 +4,8 @@ import Drums from '../components/Drums';
 import Chords from '../components/Chords';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 
+import socket from '../socket';
+
 let size, aspect, frameId, canvas;
 let scene, camera, renderer, light;
 let mouse, raycaster, objectSelect, dragControls;
@@ -182,7 +184,7 @@ function addInstrument() {
   const newInstrument = new Instrument();
   const { mesh } = newInstrument;
   instruments.push(newInstrument);
-  scene.add(mesh);
+  newInstrument.init();
   draggableObjects.push(mesh);
   console.log('in addinstrument-- >', instruments);
   dragControls = new DragControls(
@@ -200,23 +202,21 @@ function addDrum() {
   const newDrum = new Drums();
   const { mesh } = newDrum;
   instruments.push(newDrum);
-  scene.add(mesh);
-  draggableObjects.push(mesh);
+  socket.emit('add_instrument', {
+    id: mesh.id,
+    position: [mesh.position.x, mesh.position.y, mesh.position.z],
+  });
   dragControls = new DragControls(
     [...draggableObjects],
     camera,
     renderer.domElement
   );
-  socket.emit('add_instrument', {
-    id: mesh.id,
-    position: [mesh.position.x, mesh.position.y, mesh.position.z],
-  });
 }
 function addChord() {
   const newChord = new Chords();
   const { mesh } = newChord;
   instruments.push(newChord);
-  scene.add(mesh);
+  newChord.init();
   draggableObjects.push(mesh);
   dragControls = new DragControls(
     [...draggableObjects],

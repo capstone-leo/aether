@@ -1,5 +1,6 @@
-import * as three from "three";
-import * as tone from "tone";
+import * as three from 'three';
+import * as tone from 'tone';
+import { scene, draggableObjects, dragControls } from '../engine/main';
 import {
   playC4,
   playD4,
@@ -17,7 +18,7 @@ import {
   sinF4,
   sinG4,
   //transpo,
-} from "./tone.fn.js";
+} from './tone.fn.js';
 
 const soundList = [
   playC4,
@@ -87,14 +88,14 @@ function rainbow(numOfSteps, step) {
       break;
   }
   var c =
-    "0x" +
-    ("00" + (~~(r * 255)).toString(16)).slice(-2) +
-    ("00" + (~~(g * 255)).toString(16)).slice(-2) +
-    ("00" + (~~(b * 255)).toString(16)).slice(-2);
+    '0x' +
+    ('00' + (~~(r * 255)).toString(16)).slice(-2) +
+    ('00' + (~~(g * 255)).toString(16)).slice(-2) +
+    ('00' + (~~(b * 255)).toString(16)).slice(-2);
   return c;
 }
 class Instrument {
-  constructor() {
+  constructor(id, position) {
     this.geometry = new three.BoxGeometry(50, 20, 20);
     this.material = new three.MeshLambertMaterial({
       //wireframe: true,
@@ -103,13 +104,18 @@ class Instrument {
     });
     this.mesh = new three.Mesh(this.geometry, this.material);
     //sets random X & Y coordinates where -300 >= X >= 300 & -150 >= Y >= 150 (basically it wont be in the circle)
-    this.mesh.position.setX(
-      Math.floor(Math.random() * 300 + 350) * (Math.random() < 0.5 ? -1 : 1)
-    );
-    this.mesh.position.setY(
-      Math.floor(Math.random() * 150 + 170) * (Math.random() < 0.5 ? -1 : 1)
-    );
-
+    if (!position) {
+      this.mesh.position.setX(
+        Math.floor(Math.random() * 300 + 350) * (Math.random() < 0.5 ? -1 : 1)
+      );
+      this.mesh.position.setY(
+        Math.floor(Math.random() * 150 + 170) * (Math.random() < 0.5 ? -1 : 1)
+      );
+    } else {
+      this.mesh.position.setX(position[0]);
+      this.mesh.position.setY(position[1]);
+      this.mesh.position.setZ(position[2]);
+    }
     this.boundary = new three.Box3().setFromObject(this.mesh);
     this.boundaryHelper = new three.BoxHelper(this.mesh, 0xff0000);
     this.boundaryHelper.object = this.mesh;
@@ -123,13 +129,17 @@ class Instrument {
   }
   transportStart = () => {
     tone.Transport.start();
-    console.log("ok");
+    console.log('ok');
   };
   transportStop = () => {
     tone.Transport.stop();
   };
   playSound = () => {
     this.sound();
+  };
+  init = () => {
+    scene.add(this.mesh);
+    draggableObjects.push(this.mesh);
   };
 }
 

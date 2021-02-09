@@ -34,7 +34,7 @@ const App = () => {
   useEffect(() => {
     init();
     animate();
-    start();
+    // start();
     controls.current = { start, stop };
 
     //Trash Clean up
@@ -63,7 +63,7 @@ const App = () => {
   // };
 
   // if (redirectTo) {
-  // 	return <Redirect to={redirectTo} />;
+  //   return <Redirect to={redirectTo} />;
   // }
   return (
     <div
