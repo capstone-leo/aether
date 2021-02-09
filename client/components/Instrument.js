@@ -114,7 +114,7 @@ class Instrument {
     } else {
       this.mesh.position.setX(position[0]);
       this.mesh.position.setY(position[1]);
-      this.mesh.position.setZ(position[2]);
+      //this.mesh.position.setZ(position[2]);
     }
     this.boundary = new three.Box3().setFromObject(this.mesh);
     this.boundaryHelper = new three.BoxHelper(this.mesh, 0xff0000);

@@ -64,6 +64,16 @@ export const init = () => {
   hammerBox.setFromObject(hammer);
   jamSpace.add(hammer);
 
+  dragControls = new DragControls(
+    [...draggableObjects],
+    camera,
+    renderer.domElement
+  );
+  dragControls.addEventListener('drag', onDrag);
+  function onDrag() {
+    renderScene();
+  }
+
   mouse = new THREE.Vector2();
   raycaster = new THREE.Raycaster();
 
@@ -72,7 +82,6 @@ export const init = () => {
   slider.addEventListener('change', onInput);
   function onInput() {
     sliderValue = Number(slider.value);
-    console.log(slider);
   }
 
   //USER INTERFACE
@@ -128,17 +137,22 @@ export const animate = () => {
   hammerBox.copy(hammer.geometry.boundingBox).applyMatrix4(hammer.matrixWorld);
   hammerBox.setFromObject(hammer);
 
+  dragControls = new DragControls(
+    [...draggableObjects],
+    camera,
+    renderer.domElement
+  );
+
   jamSpace.rotation.z += sliderValue;
+  console.log(instruments);
+
   if (instruments) {
-    console.log(instruments);
     instruments.forEach((instrument) => {
-      console.log(instrument);
       instrument.mesh.rotation.y += 0.01;
       instrument.mesh.rotation.x -= 0.01;
       instrument.boundary
         .copy(instrument.mesh.geometry.boundingBox)
         .applyMatrix4(instrument.mesh.matrixWorld);
-
       if (instrument.boundary.intersectsBox(hammerBox)) {
         if (instrument.alreadyPlayed === false) {
           instrument.playSound();
@@ -184,14 +198,6 @@ function addInstrument() {
   const newInstrument = new Instrument();
   const { mesh } = newInstrument;
   instruments.push(newInstrument);
-  newInstrument.init();
-  draggableObjects.push(mesh);
-  console.log('in addinstrument-- >', instruments);
-  dragControls = new DragControls(
-    [...draggableObjects],
-    camera,
-    renderer.domElement
-  );
   socket.emit('add_instrument', {
     id: mesh.id,
     position: [mesh.position.x, mesh.position.y, mesh.position.z],
@@ -206,11 +212,6 @@ function addDrum() {
     id: mesh.id,
     position: [mesh.position.x, mesh.position.y, mesh.position.z],
   });
-  dragControls = new DragControls(
-    [...draggableObjects],
-    camera,
-    renderer.domElement
-  );
 }
 function addChord() {
   const newChord = new Chords();
@@ -266,4 +267,5 @@ export {
   hammer,
   jamSpace,
   draggableObjects,
+  hammerBox,
 };
