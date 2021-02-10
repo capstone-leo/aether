@@ -7,6 +7,7 @@ import Drums from "./Instruments/Drums";
 import Chords from "./Instruments/Chords";
 import Piano from "./Instruments/Piano";
 import Marimba from "./Instruments/Marimba";
+import Keyboard from "./Instruments/Keyboard";
 import { Slider } from "./Slider";
 import { About } from "./About";
 import Modal from "react-modal";
@@ -461,6 +462,7 @@ const App = () => {
       </Modal>
       <Chat id="chatbox" />
       <TonePalette />
+      <Keyboard />
     </div>
   );
 };

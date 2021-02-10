@@ -150,3 +150,31 @@ input {
   margin-right: -5px;
   color: whitesmoke;
 }
+.piano {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 50%;
+  height: 60px;
+  bottom: 0;
+  right: 25%;
+  left: 25%;
+}
+.white-key {
+  border: 1px black solid;
+  width: 10px;
+  height: 40px;
+  background-color: white;
+  color: red;
+  text-align: center;
+}
+.black-key {
+  background-color: black;
+  width: 6px;
+  height: 25px;
+  margin-left: -3px;
+  margin-right: -3px;
+  z-index: 1;
+  color: red;
+  text-align: center;
+}
