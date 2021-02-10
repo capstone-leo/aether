@@ -24,8 +24,7 @@ import { connect } from 'react-redux';
 
 import 'firebase/firestore';
 import 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from './Home';
+import { auth, db, realtimeDB } from '../Firebase';
 import { Redirect } from 'react-router-dom';
 import TonePalette from './TonePalette';
 
@@ -94,36 +93,36 @@ const App = () => {
 					alt='play-pause'
 
 				/> */}
-        Play / Pause
-      </button>
-      <button
-        className="startstop2"
-        onClick={() => {
-          endSession;
-        }}
-      >
-        End Session
-      </button>
+				Play / Pause
+			</button>
+			<button
+				className='startstop2'
+				onClick={() => {
+					endSession();
+				}}
+			>
+				End Session
+			</button>
 
-      <Slider id="slider" />
-      <About toggleModal={toggleModal} />
-      <Modal className="Modal" appElement={mount.current} isOpen={modalOpen}>
-        <div className="modalTextDiv">
-          double click these shapes to adjust their sounds
-          <br />
-          single click to play a sound
-          <br />
-          jam with your friends or play by yourself <br />
-          PLACEHOLDERS
-        </div>
-        <button className="closer" onClick={() => setModalOpen(!modalOpen)}>
-          close
-        </button>
-      </Modal>
-      <Chat id="chatbox" />
-      <TonePalette />
-    </div>
-  );
+			<Slider id='slider' />
+			<About toggleModal={toggleModal} />
+			<Modal className='Modal' appElement={mount.current} isOpen={modalOpen}>
+				<div className='modalTextDiv'>
+					double click these shapes to adjust their sounds
+					<br />
+					single click to play a sound
+					<br />
+					jam with your friends or play by yourself <br />
+					PLACEHOLDERS
+				</div>
+				<button className='closer' onClick={() => setModalOpen(!modalOpen)}>
+					close
+				</button>
+			</Modal>
+			{/* <Chat id='chatbox' /> */}
+			<TonePalette />
+		</div>
+	);
 };
 
 export default App;

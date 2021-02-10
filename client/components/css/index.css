@@ -12,119 +12,117 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 #aboutbtn {
-  background-color: transparent;
-  position: absolute;
-  left: 30px;
-  top: 30px;
-  color: whitesmoke;
-  border: none;
+	background-color: transparent;
+	position: absolute;
+	left: 30px;
+	top: 30px;
+	color: whitesmoke;
+	border: none;
 }
 
 #aboutbtn:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 #slider {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  color: gray;
-
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	color: gray;
 }
 #slider:hover {
-  cursor: grab;
+	cursor: grab;
 }
 .slider {
-  position: absolute;
-  right: 30px;
-  top: 30px;
-  color: 'whitesmoke'
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	color: 'whitesmoke';
 }
 
 .tempoText {
-  font-size: 12px;
-  position: relative;
-  top: 15px;
-  right: 45px;
+	font-size: 12px;
+	position: relative;
+	top: 15px;
+	right: 45px;
 }
 
 .sliderchild {
-  font-size: 12px;
-  position: relative;
-  top: 10px;
-  color: whitesmoke;
+	font-size: 12px;
+	position: relative;
+	top: 10px;
+	color: whitesmoke;
 }
 
 .Modal {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 50%;
-  bottom: 40px;
-  opacity: 80%;
-  background: whitesmoke;
+	position: absolute;
+	top: 40px;
+	left: 40px;
+	right: 50%;
+	bottom: 40px;
+	opacity: 80%;
+	background: whitesmoke;
 }
 
 .closer {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
 }
 
 .closer:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .modalTextDiv {
-  padding: 30px;
-  background-color: whitesmoke;
+	padding: 30px;
+	background-color: whitesmoke;
 }
 
 .App {
-  position: relative;
+	position: relative;
 }
 
 #chat-box {
-  position: absolute;
-  bottom: 50px;
-  left: 50px;
-  background: transparent;
-  color: whitesmoke
+	position: absolute;
+	bottom: 50px;
+	left: 50px;
+	background: transparent;
+	color: whitesmoke;
 }
 
 ul {
-  list-style-type: none;
+	list-style-type: none;
 }
 
 .startstop {
-  border-radius: 5px;
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
-  background: transparent;
-  color: whitesmoke;
-  border: none;
+	border-radius: 5px;
+	position: absolute;
+	bottom: 50px;
+	right: 50px;
+	background: transparent;
+	color: whitesmoke;
+	border: none;
 }
 .startstop:hover {
-  cursor: pointer
+	cursor: pointer;
 }
 
 .startstop2 {
-  border-radius: 5px;
-  position: absolute;
-  bottom: 80px;
-  right: 50px;
-  background: transparent;
-  color: whitesmoke;
-  border: none
+	border-radius: 5px;
+	position: absolute;
+	bottom: 80px;
+	right: 50px;
+	background: transparent;
+	color: whitesmoke;
+	border: none;
 }
 .startstop2:hover {
-cursor: pointer
+	cursor: pointer;
 }
 button.home-btn {
 	font-family: 'Source Code Pro', monospace;
@@ -141,33 +139,31 @@ button.home-btn {
 	border: 0;
 	transition: all 0.5s;
 	padding: 20px;
-	border-radius: 6px;
-	width: auto;
+	border-radius: 1.5px;
+	width: 400px;
 	position: relative;
-	border: 1px solid rgba(241, 241, 241, 0.473) !important;
-
+	border: 1px solid rgba(255, 255, 255, 0.838) !important;
 }
-
 
 button.home-btn:hover {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;
 	font-weight: 600;
-	background: rgba(233, 233, 233, 0.205) !important;
+	background: rgba(255, 255, 255, 0.738) !important;
 	color: #333333ea;
+
 	cursor: pointer;
-	border: 0; 
+	border: 0;
 	transition: all 0.5s;
 	border-radius: 0px;
-	width: auto;
+	width: 400px;
 	position: relative;
-	padding: 20px;
-	border: 1px transparent !important
-	
+	padding: 21px; /*150px 21px 150px; */
+	border: 1px transparent !important;
 }
 button.home-btn:active {
 	/* transform: scale(0.9); */
-	transition: all 0.4s;
+	transition: all 0.25s;
 }
 
 .no-outline-on-focus {
@@ -227,8 +223,7 @@ canvas {
 	width: 100vw;
 	box-shadow: inset rgba(233, 233, 233, 0.726);
 	text-align: 'center';
-	 padding-top: '12%';
-	
+	padding-top: '12%';
 }
 
 header {
@@ -250,4 +245,3 @@ header {
 		transform: rotate(360deg);
 	}
 }
-
