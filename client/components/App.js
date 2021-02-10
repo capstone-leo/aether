@@ -11,6 +11,7 @@ import {
   playSound,
   handleResize,
   onMouseMove,
+  onShiftClick,
 } from '../engine/main';
 
 import { Slider } from './Slider';
@@ -49,7 +50,17 @@ const App = () => {
     // start();
     controls.current = { start, stop };
     window.addEventListener('dblclick', addInstrument, false);
-    window.addEventListener('click', playSound, false);
+    window.addEventListener(
+      'click',
+      (e) => {
+        if (e.shiftKey) {
+          onShiftClick(e);
+        } else {
+          playSound();
+        }
+      },
+      false
+    );
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('resize', handleResize);
     //Trash Clean up

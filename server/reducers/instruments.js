@@ -8,6 +8,7 @@ const initialState = [];
 const RECEIVE_ALL_INSTRUMENTS = 'RECEIVE_ALL_INSTRUMENTS';
 const RECEIVE_INSTRUMENT = 'RECEIVE_INSTRUMENT';
 const DRAG_INSTRUMENT = 'DRAG_INSTRUMENT';
+const REMOVE_INSTRUMENT = 'REMOVE_INSTRUMENT';
 
 /*----------  ACTION CREATORS  ----------*/
 const receiveAllInstruments = (instruments) => ({
@@ -26,6 +27,11 @@ const receiveInstrument = (data) => {
 const dragInstrument = (id, position) => ({
   type: DRAG_INSTRUMENT,
   instrument: { id, position },
+});
+
+const removeInstrument = (id) => ({
+  type: REMOVE_INSTRUMENT,
+  id,
 });
 
 /*----------  THUNK CREATORS  ----------*/
@@ -50,6 +56,8 @@ const immutable = (state = initialState, action) => {
         }
       });
       return newState;
+    case REMOVE_INSTRUMENT:
+      return state.filter((instrument) => instrument.id !== action.id);
     default:
       return state;
   }
@@ -95,4 +103,5 @@ module.exports = {
   receiveAllInstruments,
   receiveInstrument,
   dragInstrument,
+  removeInstrument,
 };

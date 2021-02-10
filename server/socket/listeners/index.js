@@ -9,6 +9,7 @@ const {
   receiveInstrument,
   receiveAllInstrument,
   dragInstrument,
+  removeInstrument,
 } = require('../../reducers/instruments');
 
 const getRoom = () => {
@@ -41,7 +42,14 @@ const setUpListeners = (io, socket) => {
   socket.on('drag_instrument', (data) => {
     store.dispatch(dragInstrument(data.id, data.position));
     const { instrument } = store.getState();
-    io.sockets.emit('update_instrument', {id: data.id, position: data.position});
+    io.sockets.emit('update_instrument', {
+      id: data.id,
+      position: data.position,
+    });
+  });
+  socket.on('remove_instrument', (id) => {
+    store.dispatch(removeInstrument(id));
+    io.sockets.emit('delete_instrument', id);
   });
 };
 

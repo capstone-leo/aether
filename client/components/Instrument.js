@@ -147,6 +147,11 @@ class Instrument {
     this.mesh.position.setX(newX);
     this.mesh.position.setY(newY);
   };
+  smash = (id) => {
+    instruments.filter((instrument) => instrument.mesh.reduxid !== id);
+    draggableObjects.filter((instrument) => instrument.reduxid !== id);
+    scene.remove(this.mesh);
+  };
 }
 
 export default Instrument;

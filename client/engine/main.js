@@ -246,7 +246,6 @@ const stop = () => {
 
 function onDrag(e) {
   const draggingObjectReduxId = e.object.reduxid;
-  console.log('redux id on client drag --> ', e.object.reduxid)
   store.dispatch(
     dragInstrument(draggingObjectReduxId, [
       e.object.position.x,
@@ -260,7 +259,20 @@ function onDrag(e) {
   renderScene();
 }
 
-export { start, stop, playSound, addInstrument, onMouseMove, handleResize };
+function onShiftClick() {
+  socket.emit('remove_instrument', objectSelect.reduxid);
+  store.dispatch(removeInstrument(objectSelect.reduxid));
+}
+
+export {
+  start,
+  stop,
+  playSound,
+  addInstrument,
+  onMouseMove,
+  handleResize,
+  onShiftClick,
+};
 
 export {
   size,

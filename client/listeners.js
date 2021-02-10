@@ -4,6 +4,7 @@ import {
   receiveInstrument,
   receiveAllInstruments,
   dragInstrument,
+  removeInstrument,
 } from './reducer/instruments';
 import Instrument from './components/Instrument';
 import { instruments } from './engine/main';
@@ -33,12 +34,20 @@ export default (socket) => {
   });
   socket.on('update_instrument', (instrument) => {
     store.dispatch(dragInstrument(instrument.id, instrument.position));
-    instruments.forEach((sceneInstrument, idx) => {
+    instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === instrument.id) {
         sceneInstrument.updatePosition(
           instrument.position[0],
           instrument.position[1]
         );
+      }
+    });
+  });
+  socket.on('delete_instrument', (id) => {
+    store.dispatch(removeInstrument(id));
+    instruments.forEach((sceneInstrument) => {
+      if (sceneInstrument.mesh.reduxid === id) {
+        sceneInstrument.smash(id);
       }
     });
   });
