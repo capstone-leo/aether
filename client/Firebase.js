@@ -8,3 +8,4 @@ export const firebaseApp = firebase.initializeApp(firebaseConfig.firebaseConfig)
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 export const realtimeDB = firebase.database();
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
