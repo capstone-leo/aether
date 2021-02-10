@@ -37,7 +37,7 @@ export const init = () => {
   camera.position.z = 30;
   renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x38373d, 1);
+  // renderer.setClearColor(0x38373d, 1);
   canvas.appendChild(renderer.domElement);
 
   light = new THREE.DirectionalLight(0xffffff, 1);

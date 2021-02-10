@@ -94,7 +94,7 @@ const Home = (props) => {
             },
           }}
         />
-        <header style={{ textShadow: '2px 6px 6 rgba(218, 217, 217, 0.346)' }}>
+        <header style={{ textShadow: '4px 10px 6 rgba(218, 217, 217, 0.8)', fontWeight: '1800' }}>
           a e t h e r
         </header>
         <br />
@@ -176,6 +176,7 @@ const Home = (props) => {
                   textAlign: 'center',
                   marginTop: '1%',
                   fontSize: '12px',
+                  background: 'transparent' 
                 }}
               >
                 view instructions

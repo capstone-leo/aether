@@ -107,14 +107,15 @@ input {
   position: absolute;
   float: left;
   margin-top: 10%;
-  border: 2px solid #000000;
+  /* border: 2px solid #000000; */
   height: 400px;
-  width: 50px;
+  /* width: 50px; */
   margin-left: 2px;
+  z-Index: -1;
 }
 #addInstrumentIcon {
-  width: 40px;
-  height: 40px;
+  /* width: 40px;
+  height: 40px; */
   margin-left: 5px;
   margin-right: 5px;
   color: whitesmoke;

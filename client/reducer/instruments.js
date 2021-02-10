@@ -1,4 +1,5 @@
 const { pickBy } = require('lodash');
+
 let newState;
 
 /*----------  INITIAL STATE  ----------*/
@@ -20,10 +21,10 @@ export const receiveInstrument = (id, position) => ({
   instrument: { id, position },
 });
 
-export const dragInstrument = (id ,position) => ({
-type: DRAG_INSTRUMENT,
-instrument: { id, position }
-})
+export const dragInstrument = (id, position) => ({
+  type: DRAG_INSTRUMENT,
+  instrument: { id, position },
+});
 
 // let reduxInstrument = store.getState().instruments
 // .filter((instrument)=>draggingObjectReduxId === instrument.reduxid)
@@ -36,14 +37,19 @@ export default (state = initialState, action) => {
     case RECEIVE_INSTRUMENT:
       return [...state, action.instrument];
     case DRAG_INSTRUMENT:
-      // action.instrument.id === //state[x]
-      console.log('drag reducer', state)
-//  state[action.instrument.id] : {position: action.instrument.position}]
-      return [...state, state[state.indexOf(action.instrument.id)]];
+      return state.map((instrument, index) => {
+        console.log('hehllooooo', state[index ].id)
+        // state[index].id === action.instrument.id
+          // ? [...state, { ...action.instrument }]
+          // : instrument;
+      });
+      
     default:
       return state;
   }
 };
 
-store.dispatch(dragInstrument)
+//state where the id entry is equal to action.instrument.id
+
+// store.dispatch(dragInstrument)
 //reducer at index of the object where ID === id we are given

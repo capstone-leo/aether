@@ -8,6 +8,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	height: 100vh; */
+	background: radial-gradient(#ec7777, #9198e5);
 }
 
 code {
@@ -129,11 +130,12 @@ button.home-btn {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;
 	font-weight: 600;
-	background: radial-gradient(
+	/* background: radial-gradient(
 		circle,
 		rgb(230, 229, 223) 10%,
 		rgba(255, 255, 255, 1) 90%
-	);
+	); */
+	background: 'transparent';
 	color: #000000;
 	cursor: pointer;
 	border: 0;
@@ -144,12 +146,15 @@ button.home-btn {
 	padding: 0.5%;
 }
 
+header {
+	color: #292929;
+}
 button.home-btn:hover {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;
 	font-weight: 600;
-	background: rgb(230, 229, 223) 0%;
-	color: #000000;
+	background: 'transparent';
+	color: #292929;
 	cursor: pointer;
 	border: 0;
 	transition: all 0.5s;
@@ -185,13 +190,13 @@ canvas {
 	width: 35px;
 	height: 35px;
 	border-radius: 100%;
-	background: linear-gradient(
+	/* background: linear-gradient(
 		170deg,
 		rgba(255, 255, 255, 1) 0%,
 		rgb(220, 220, 220) 90%,
 		rgb(170, 170, 170) 98%,
 		rgb(95, 95, 95) 100%
-	);
+	); */
 	position: absolute;
 	text-align: center;
 	margin-left: 50%;
