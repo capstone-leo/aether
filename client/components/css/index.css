@@ -136,7 +136,7 @@ button.home-btn {
 		rgba(255, 255, 255, 1) 90%
 	); */
 	background: transparent !important;
-	color: #414141ea;
+	color: #333333ea;
 	cursor: pointer;
 	border: 0;
 	transition: all 0.5s;
@@ -148,28 +148,25 @@ button.home-btn {
 
 }
 
-header {
-	color: #424242;
-	font-weight: '1800';
-}
+
 button.home-btn:hover {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;
 	font-weight: 600;
 	background: rgba(233, 233, 233, 0.205) !important;
-	color: #292929;
+	color: #333333ea;
 	cursor: pointer;
-	border: 0;
+	border: 0; 
 	transition: all 0.5s;
 	border-radius: 0px;
 	width: auto;
 	position: relative;
-	padding: 0.7%;
-	border: 3px transparent !important
+	padding: 20px;
+	border: 1px transparent !important
 	
 }
 button.home-btn:active {
-	transform: scale(0.9);
+	/* transform: scale(0.9); */
 	transition: all 0.4s;
 }
 
@@ -228,8 +225,18 @@ canvas {
 	background: rgba(233, 233, 233, 0.726);
 	height: 100vh;
 	width: 100vw;
+	box-shadow: inset rgba(233, 233, 233, 0.726);
+	text-align: 'center';
+	 padding-top: '12%';
+	
 }
 
+header {
+	color: #424242;
+	font-weight: '2500';
+	font-size: '70px';
+	/* text-shadow: -1px 0 rgb(51, 51, 51), 0 1px black, 1px 0 black, 0 -1px black; */
+}
 @keyframes rotate {
 	100% {
 		transform: rotate(360deg);

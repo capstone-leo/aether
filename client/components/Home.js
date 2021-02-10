@@ -46,7 +46,7 @@ const Home = (props) => {
   // JSX
   return (
     <>
-      <div id='homediv' style={{ textAlign: 'center', paddingTop: '15%', fontSize: '60px' }}>
+      <div id='homediv' style={{ textAlign: 'center', paddingTop: '12%', fontSize: '60px' }}>
         <Particles
           id="particles-js"
           params={{
@@ -94,7 +94,7 @@ const Home = (props) => {
             },
           }}
         />
-        <header style={{ textShadow: '4px 10px 6 rgba(218, 217, 217, 0.8)', fontWeight: '1800' }}>
+        <header style={{ textShadow: '4px 10px 6 rgba(218, 217, 217, 0.8)', fontSize: 80 }}>
           a e t h e r
         </header>
         <br />
@@ -109,7 +109,7 @@ const Home = (props) => {
                   enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'
                 }
                 type="button"
-                style={{ textAlign: 'center', marginTop: '1%' }}
+                style={{ textAlign: 'center', marginTop: '1%' }} 
               >
                 Start Jamming {'>'}
               </button>
