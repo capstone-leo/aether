@@ -121,8 +121,8 @@ input {
 }
 
 #pianoIcon {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   margin-top: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
@@ -137,44 +137,67 @@ input {
   color: whitesmoke;
 }
 #chordIcon {
-  width: 60px;
+  width: 30px;
   height: 40px;
-  margin-left: -5px;
-  margin-right: -5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 20px;
   color: whitesmoke;
 }
 #marimbaIcon {
-  width: 60px;
+  width: 50px;
   height: 40px;
   margin-left: -5px;
   margin-right: -5px;
+  margin-top: 20px;
   color: whitesmoke;
 }
+#harpIcon {
+  width: 50px;
+  height: 40px;
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-top: 20px;
+  color: whitesmoke;
+}
+#feedbackDelayIcon {
+  width: 40px;
+  height: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 20px;
+  color: whitesmoke;
+}
+
 .piano {
   display: flex;
   justify-content: center;
   position: absolute;
   width: 50%;
   height: 60px;
-  bottom: 0;
+  bottom: 20px;
   right: 25%;
   left: 25%;
+  box-shadow: 4px 3px 8px 1px #000000;
+  -webkit-box-shadow: 4px 3px 8px 1px #000000;
 }
 .white-key {
   border: 1px black solid;
-  width: 10px;
-  height: 40px;
-  background-color: white;
+  width: 20px;
+  height: 60px;
+  background-color: grey;
   color: red;
   text-align: center;
+  border-radius: 5px;
 }
 .black-key {
   background-color: black;
-  width: 6px;
-  height: 25px;
-  margin-left: -3px;
-  margin-right: -3px;
+  width: 12px;
+  height: 35px;
+  margin-left: -6px;
+  margin-right: -6px;
   z-index: 1;
   color: red;
   text-align: center;
+  border-radius: 5px;
 }

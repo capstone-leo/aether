@@ -8,6 +8,8 @@ import Chords from "./Instruments/Chords";
 import Piano from "./Instruments/Piano";
 import Marimba from "./Instruments/Marimba";
 import Keyboard from "./Instruments/Keyboard";
+import Harp from "./Instruments/Harp";
+import FeedbackDelay from "./Instruments/FeedbackDelay";
 import { Slider } from "./Slider";
 import { About } from "./About";
 import Modal from "react-modal";
@@ -136,6 +138,20 @@ const App = () => {
       draggableObjects.push(newMarimba.mesh);
       scene.add(newMarimba.mesh);
     }
+    const harps = [];
+    for (let i = 0; i <= 2; i++) {
+      const newHarp = new Harp();
+      harps.push(newHarp);
+      draggableObjects.push(newHarp.mesh);
+      scene.add(newHarp.mesh);
+    }
+    const feedbackDelays = [];
+    for (let i = 0; i <= 2; i++) {
+      const newfeedbackDelay = new FeedbackDelay();
+      feedbackDelays.push(newfeedbackDelay);
+      draggableObjects.push(newfeedbackDelay.mesh);
+      scene.add(newfeedbackDelay.mesh);
+    }
     let dragControls = new DragControls(
       [...draggableObjects],
       camera,
@@ -212,6 +228,28 @@ const App = () => {
         renderer.domElement
       );
     }
+    function addHarp() {
+      const newHarp = new Harp();
+      harps.push(newHarp);
+      scene.add(newHarp.mesh);
+      draggableObjects.push(newHarp.mesh);
+      dragControls = new DragControls(
+        [...draggableObjects],
+        camera,
+        renderer.domElement
+      );
+    }
+    function addfeedbackDelay() {
+      const newfeedbackDelay = new FeedbackDelay();
+      feedbackDelays.push(newfeedbackDelay);
+      scene.add(newfeedbackDelay.mesh);
+      draggableObjects.push(newfeedbackDelay.mesh);
+      dragControls = new DragControls(
+        [...draggableObjects],
+        camera,
+        renderer.domElement
+      );
+    }
 
     function playSound() {
       if (objectSelect) {
@@ -240,6 +278,14 @@ const App = () => {
     const marimbaIcon = document.getElementById("marimbaIcon");
     marimbaIcon.addEventListener("click", function () {
       addMarimba();
+    });
+    const harpIcon = document.getElementById("harpIcon");
+    harpIcon.addEventListener("click", function () {
+      addHarp();
+    });
+    const feedbackDelayIcon = document.getElementById("feedbackDelayIcon");
+    feedbackDelayIcon.addEventListener("click", function () {
+      addfeedbackDelay();
     });
     window.addEventListener("dblclick", addInstrument, false);
     window.addEventListener("click", playSound, false);
@@ -373,6 +419,40 @@ const App = () => {
           }
         } else {
           marimba.alreadyPlayed = false;
+        }
+      });
+      harps.forEach((harp) => {
+        harp.mesh.rotation.y += 0.01;
+        harp.mesh.rotation.x -= 0.01;
+
+        harp.boundary
+          .copy(harp.mesh.geometry.boundingBox)
+          .applyMatrix4(harp.mesh.matrixWorld);
+
+        if (harp.boundary.intersectsBox(hammerBox)) {
+          if (harp.alreadyPlayed === false) {
+            harp.playSound();
+            harp.alreadyPlayed = true;
+          }
+        } else {
+          harp.alreadyPlayed = false;
+        }
+      });
+      feedbackDelays.forEach((feedbackDelay) => {
+        feedbackDelay.mesh.rotation.y += 0.01;
+        feedbackDelay.mesh.rotation.x -= 0.01;
+
+        feedbackDelay.boundary
+          .copy(feedbackDelay.mesh.geometry.boundingBox)
+          .applyMatrix4(feedbackDelay.mesh.matrixWorld);
+
+        if (feedbackDelay.boundary.intersectsBox(hammerBox)) {
+          if (feedbackDelay.alreadyPlayed === false) {
+            feedbackDelay.playSound();
+            feedbackDelay.alreadyPlayed = true;
+          }
+        } else {
+          feedbackDelay.alreadyPlayed = false;
         }
       });
       renderScene();
