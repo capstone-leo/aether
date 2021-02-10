@@ -16,6 +16,7 @@ import {
 
 import { Slider } from './Slider';
 import { About } from './About';
+import Keyboard from './Instruments/Keyboard';
 import Modal from 'react-modal';
 import './css/App.css';
 import Chat from './Chat';
@@ -25,8 +26,7 @@ import { connect } from 'react-redux';
 
 import 'firebase/firestore';
 import 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, db } from './Home';
+import { auth, db, realtimeDB } from '../Firebase';
 import { Redirect } from 'react-router-dom';
 import TonePalette from './TonePalette';
 
@@ -49,20 +49,23 @@ const App = () => {
 
     // start();
     controls.current = { start, stop };
-    window.addEventListener('dblclick', addInstrument, false);
     window.addEventListener(
       'click',
       (e) => {
         if (e.shiftKey) {
           onShiftClick(e);
-        } else {
-          playSound();
         }
       },
       false
     );
+
+    window.addEventListener('dblclick', addInstrument, false);
+    window.addEventListener('click', playSound, false);
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('resize', handleResize);
+
+    controls.current = { start, stop };
+
     //Trash Clean up
     return () => {
       stop();
@@ -101,6 +104,7 @@ const App = () => {
     >
       <button className="startstop" onClick={() => setAnimating(!isAnimating)}>
         {/* <img
+
 					src={play_pause}
 					alt='play-pause'
 
@@ -133,6 +137,7 @@ const App = () => {
       </Modal>
       <Chat id="chatbox" />
       <TonePalette />
+      <Keyboard />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import {
   dragInstrument,
   removeInstrument,
 } from './reducer/instruments';
-import Instrument from './components/Instrument';
+import Instrument from './components/Instruments/Instrument';
 import { instruments } from './engine/main';
 import store from './store';
 
