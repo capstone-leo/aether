@@ -5,3 +5,5 @@ module.exports = (io) => {
     setUpListeners(io, socket);
   });
 };
+
+// broadcastState(io);

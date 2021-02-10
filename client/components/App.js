@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { DragControls } from "three/examples/jsm/controls/DragControls";
@@ -17,16 +18,17 @@ import "./css/App.css";
 import Chat from "./Chat";
 import socket from "../socket";
 import { connect } from "react-redux";
+
 // import play_pause from '../../public/assets/play-pause.png';
 
-import "firebase/firestore";
-import "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "./Home";
-import { Redirect } from "react-router-dom";
-import TonePalette from "./TonePalette";
+import 'firebase/firestore';
+import 'firebase/auth';
+import { auth, db, realtimeDB } from '../Firebase';
+import { Redirect } from 'react-router-dom';
+import TonePalette from './TonePalette';
 
 const App = () => {
+
   const [redirectTo, setRedirectTo] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -244,12 +246,14 @@ const App = () => {
       feedbackDelays.push(newfeedbackDelay);
       scene.add(newfeedbackDelay.mesh);
       draggableObjects.push(newfeedbackDelay.mesh);
+
       dragControls = new DragControls(
         [...draggableObjects],
         camera,
         renderer.domElement
       );
     }
+
 
     function playSound() {
       if (objectSelect) {
@@ -510,10 +514,12 @@ const App = () => {
     >
       <button className="startstop" onClick={() => setAnimating(!isAnimating)}>
         {/* <img
+
 					src={play_pause}
 					alt='play-pause'
 					
 				/> */}
+
         Play / Pause
       </button>
       <button
@@ -545,6 +551,7 @@ const App = () => {
       <Keyboard />
     </div>
   );
+
 };
 
 export default App;

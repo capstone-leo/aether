@@ -1,0 +1,27 @@
+module.exports = [
+    'studio 54', 
+    'bossanova civic club',
+    'matchless',
+    'bar noname',
+    'tutus',
+    'gentleman jims',
+    'cafe za',
+    'brother jimmys',
+    'lexington glassworks',
+    'shabooms',
+    'city swiggers',
+    'gael pub',
+    'bondurants',
+    'corner bistro',
+    'irenes',
+    'bar 169',
+    'tropical',
+    'alabis',
+    'capri social club',
+    'troost',
+    'brandys piano bar',
+    'pascha',
+    'karma',
+    'babys allright'
+
+]

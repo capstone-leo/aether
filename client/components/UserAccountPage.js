@@ -7,29 +7,32 @@ import { connect } from 'react-redux';
 import { auth, db } from '../Firebase';
 import Loading from './Loading';
 import SignOut from './SignOut';
+import BackgroundParticles from './Particles';
 
 //Component
 const UserAccountPage = (props) => {
 	const [user, loading, error] = useAuthState(auth); //user JSON
-	const [currentUser, setcurrentUser] = useState(props.user);
+	const [currentUser, setcurrentUser] = useState(auth.currentUser);
 	useEffect(() => {
-		console.log('account user-->', user);
-		console.log('account props-->', props.user);
-		console.log('account current-->', currentUser);
-		if (user) props.setNewUser(user);
-	});
+		console.log('account props.user-->', props.user);
+		console.log('account current-->', auth.currentUser);
+		if (auth.currentUser) props.setNewUser(user);
+	}, [currentUser]);
+
+	if (!auth.currentUser) return <Redirect to='/' />;
 	return (
 		<>
-			{user === null ? (
-				<Redirect to='/' />
-			) : loading ? (
+			{loading ? (
 				<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
+					<BackgroundParticles />
 					<h6>Welcome!</h6>
 					<Loading />
 				</div>
 			) : (
 				<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
-					<h6>Welcome, {currentUser.displayName}!</h6>
+					<BackgroundParticles />
+
+					<h6>Welcome, {auth.currentUser.displayName}!</h6>
 
 					<Link to='/sesh'>
 						<button
@@ -43,7 +46,7 @@ const UserAccountPage = (props) => {
 						</button>
 					</Link>
 					<br />
-					<SignOut onClick={() => setcurrentUser()} />
+					<SignOut setcurrentUser={setcurrentUser} />
 				</div>
 			)}
 		</>
