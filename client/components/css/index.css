@@ -135,25 +135,28 @@ button.home-btn {
 		rgb(230, 229, 223) 10%,
 		rgba(255, 255, 255, 1) 90%
 	); */
-	background: 'transparent';
-	color: #000000;
+	background: transparent !important;
+	color: #414141ea;
 	cursor: pointer;
 	border: 0;
 	transition: all 0.5s;
-	border-radius: 10px;
+	padding: 20px;
+	border-radius: 6px;
 	width: auto;
 	position: relative;
-	padding: 0.5%;
+	border: 1px solid rgba(241, 241, 241, 0.473) !important;
+
 }
 
 header {
-	color: #292929;
+	color: #424242;
+	font-weight: '1800';
 }
 button.home-btn:hover {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;
 	font-weight: 600;
-	background: 'transparent';
+	background: rgba(233, 233, 233, 0.205) !important;
 	color: #292929;
 	cursor: pointer;
 	border: 0;
@@ -161,11 +164,13 @@ button.home-btn:hover {
 	border-radius: 0px;
 	width: auto;
 	position: relative;
-	padding: 0.5%;
+	padding: 0.7%;
+	border: 3px transparent !important
+	
 }
 button.home-btn:active {
 	transform: scale(0.9);
-	transition: all 0.2s;
+	transition: all 0.4s;
 }
 
 .no-outline-on-focus {
@@ -216,6 +221,13 @@ canvas {
 		0 10px 20px 20px #ffffff40;
 	filter: blur(3px);
 	animation: 2s rotate linear infinite;
+}
+
+#homediv {
+	display: block;
+	background: rgba(233, 233, 233, 0.726);
+	height: 100vh;
+	width: 100vw;
 }
 
 @keyframes rotate {

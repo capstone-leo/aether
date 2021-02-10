@@ -46,7 +46,7 @@ const Home = (props) => {
   // JSX
   return (
     <>
-      <div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
+      <div id='homediv' style={{ textAlign: 'center', paddingTop: '15%', fontSize: '60px' }}>
         <Particles
           id="particles-js"
           params={{
