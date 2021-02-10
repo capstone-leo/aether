@@ -15,15 +15,17 @@ export const receiveAllInstruments = (instruments) => ({
   instruments,
 });
 
-export const receiveInstrument = (id, position) => ({
-  type: RECEIVE_INSTRUMENT,
+export const receiveInstrument = (instrument) => {
+  return {
+    type: RECEIVE_INSTRUMENT,
+    instrument,
+  };
+};
+
+export const dragInstrument = (id, position) => ({
+  type: DRAG_INSTRUMENT,
   instrument: { id, position },
 });
-
-export const dragInstrument = (id ,position) => ({
-type: DRAG_INSTRUMENT,
-instrument: { id, position }
-})
 
 // let reduxInstrument = store.getState().instruments
 // .filter((instrument)=>draggingObjectReduxId === instrument.reduxid)
@@ -34,16 +36,24 @@ export default (state = initialState, action) => {
     case RECEIVE_ALL_INSTRUMENTS:
       return action.instruments;
     case RECEIVE_INSTRUMENT:
-      return [...state, action.instrument];
+      newState = state.filter(
+        (instrument) => instrument.id !== action.instrument.id
+      );
+      return [...newState, action.instrument];
     case DRAG_INSTRUMENT:
-      // action.instrument.id === //state[x]
-      console.log('drag reducer', state)
-//  state[action.instrument.id] : {position: action.instrument.position}]
-      return [...state, state[state.indexOf(action.instrument.id)]];
+      return state.map((instrument) => {
+        if (instrument.id === action.instrument.id) {
+          return {
+            id: action.instrument.id,
+            position: action.instrument.position,
+          };
+        } else {
+          return instrument;
+        }
+      });
     default:
       return state;
   }
 };
 
-store.dispatch(dragInstrument)
 //reducer at index of the object where ID === id we are given

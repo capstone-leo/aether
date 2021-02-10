@@ -4,7 +4,7 @@ import Drums from '../components/Drums';
 import Chords from '../components/Chords';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { nanoid } from 'nanoid';
-import { dragInstrument } from '../reducer/instruments'
+import { dragInstrument } from '../reducer/instruments';
 import store from '../store';
 import socket from '../socket';
 
@@ -20,7 +20,6 @@ draggableObjects = [];
 export const init = () => {
   socket.emit('get_all_instruments');
   instruments = store.getState().instruments;
-  console.log('instruments after gettate', instruments)
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
   canvas = document.getElementById('canvas');
@@ -72,7 +71,6 @@ export const init = () => {
   instruments.forEach((instrument) => {
     draggableObjects.push(instrument.mesh);
   });
-  console.log('draggableObjects in init()--> ', draggableObjects);
 
   dragControls = new DragControls(
     draggableObjects,
@@ -80,8 +78,8 @@ export const init = () => {
     renderer.domElement
   );
   dragControls.addEventListener('drag', onDrag);
+  dragControls.addEventListener('dragend', onDragEnd);
 
-  console.log('draaaaaaaag', dragControls.getObjects())
   mouse = new THREE.Vector2();
   mouseThree = new THREE.Vector3();
   raycaster = new THREE.Raycaster();
@@ -192,13 +190,12 @@ function onMouseMove(event) {
 
   mouseThree.x = raycaster.ray.origin.x;
   mouseThree.y = raycaster.ray.origin.y;
-  mouseThree.z = raycaster.ray.origin.z;
 }
 
 function addInstrument() {
   socket.emit('add_instrument', {
     id: nanoid(),
-    position: [mouseThree.x, mouseThree.y, 0],
+    position: [mouseThree.x, mouseThree.y],
   });
 }
 
@@ -245,12 +242,23 @@ const stop = () => {
   cancelAnimationFrame(frameId);
   frameId = null;
 };
-
-function onDrag(e) {
-
-  const draggingObjectReduxId = e.object.reduxid
-  store.dispatch(dragInstrument(draggingObjectReduxId, {x: mouseThree.x, y: mouseThree.y}))
+function onDrag() {
   renderScene();
+}
+
+function onDragEnd(e) {
+  const draggingObjectReduxId = e.object.reduxid;
+  console.log('event!--> ', e);
+  store.dispatch(
+    dragInstrument(draggingObjectReduxId, [
+      e.object.position.x,
+      e.object.position.y,
+    ])
+  );
+  socket.emit('drag_instrument', {
+    id: draggingObjectReduxId,
+    position: [e.object.position.x, e.object.position.y],
+  });
 }
 
 export { start, stop, playSound, addInstrument, onMouseMove, handleResize };

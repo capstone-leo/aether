@@ -103,7 +103,7 @@ class Instrument {
       //wireframeLinewidth: 2,
     });
     this.mesh = new three.Mesh(this.geometry, this.material);
-    this.mesh.reduxid = id
+    this.mesh.reduxid = id;
     //sets random X & Y coordinates where -300 >= X >= 300 & -150 >= Y >= 150 (basically it wont be in the circle)
     if (!position) {
       this.mesh.position.setX(
@@ -142,6 +142,10 @@ class Instrument {
     instruments.push(this);
     draggableObjects.push(this.mesh);
     scene.add(this.mesh);
+  };
+  updatePosition = (newX, newY) => {
+    this.mesh.position.setX(newX);
+    this.mesh.position.setY(newY);
   };
 }
 
