@@ -78,7 +78,7 @@ export const init = () => {
     renderer.domElement
   );
   dragControls.addEventListener('drag', onDrag);
-  dragControls.addEventListener('dragend', onDragEnd);
+  //dragControls.addEventListener('dragend', onDragEnd);
 
   mouse = new THREE.Vector2();
   mouseThree = new THREE.Vector3();
@@ -242,13 +242,10 @@ const stop = () => {
   cancelAnimationFrame(frameId);
   frameId = null;
 };
-function onDrag() {
-  renderScene();
-}
+//function onDrag() {}
 
-function onDragEnd(e) {
+function onDrag(e) {
   const draggingObjectReduxId = e.object.reduxid;
-  console.log('event!--> ', e);
   store.dispatch(
     dragInstrument(draggingObjectReduxId, [
       e.object.position.x,
@@ -259,6 +256,7 @@ function onDragEnd(e) {
     id: draggingObjectReduxId,
     position: [e.object.position.x, e.object.position.y],
   });
+  renderScene();
 }
 
 export { start, stop, playSound, addInstrument, onMouseMove, handleResize };
