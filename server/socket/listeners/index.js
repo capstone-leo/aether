@@ -41,7 +41,7 @@ const setUpListeners = (io, socket) => {
   socket.on('drag_instrument', (data) => {
     store.dispatch(dragInstrument(data.id, data.position));
     const { instrument } = store.getState();
-    io.sockets.emit('update_instrument', instrument);
+    io.sockets.emit('update_instrument', {id: data.id, position: data.position});
   });
 };
 

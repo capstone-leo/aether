@@ -33,13 +33,14 @@ export default (socket) => {
   });
   socket.on('update_instrument', (instrument) => {
     store.dispatch(dragInstrument(instrument.id, instrument.position));
-    instruments.forEach((sceneInstrument) => {
-      if (sceneInstrument.mesh.reduxid === instrument[0].id) {
+    instruments.forEach((sceneInstrument, idx) => {
+      if (sceneInstrument.mesh.reduxid === instrument.id) {
         sceneInstrument.updatePosition(
-          instrument[0].position[0],
-          instrument[0].position[1]
+          instrument.position[0],
+          instrument.position[1]
         );
       }
+      sceneInstrument.mesh.updateMatrix()
     });
   });
 };

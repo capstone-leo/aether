@@ -246,6 +246,7 @@ const stop = () => {
 
 function onDrag(e) {
   const draggingObjectReduxId = e.object.reduxid;
+  console.log('redux id on client drag --> ', e.object.reduxid)
   store.dispatch(
     dragInstrument(draggingObjectReduxId, [
       e.object.position.x,
