@@ -7,6 +7,7 @@ const SignOut = (props) => {
 	const signOut = () => {
 		auth.signOut();
 		props.signOutUser(props.user);
+		props.setcurrentUser();
 	};
 
 	return props.user ? (
