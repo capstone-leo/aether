@@ -40,7 +40,6 @@ export default (socket) => {
           instrument.position[1]
         );
       }
-      sceneInstrument.mesh.updateMatrix()
     });
   });
 };
