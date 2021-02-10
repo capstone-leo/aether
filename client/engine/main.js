@@ -4,7 +4,7 @@ import Drums from '../components/Drums';
 import Chords from '../components/Chords';
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { nanoid } from 'nanoid';
-
+import { dragInstrument } from '../reducer/instruments'
 import store from '../store';
 import socket from '../socket';
 
@@ -20,6 +20,7 @@ draggableObjects = [];
 export const init = () => {
   socket.emit('get_all_instruments');
   instruments = store.getState().instruments;
+  console.log('instruments after gettate', instruments)
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
   canvas = document.getElementById('canvas');
@@ -74,11 +75,13 @@ export const init = () => {
   console.log('draggableObjects in init()--> ', draggableObjects);
 
   dragControls = new DragControls(
-    [...draggableObjects],
+    draggableObjects,
     camera,
     renderer.domElement
   );
   dragControls.addEventListener('drag', onDrag);
+
+  console.log('draaaaaaaag', dragControls.getObjects())
   mouse = new THREE.Vector2();
   mouseThree = new THREE.Vector3();
   raycaster = new THREE.Raycaster();
@@ -243,8 +246,10 @@ const stop = () => {
   frameId = null;
 };
 
-function onDrag() {
-  console.log('hello');
+function onDrag(e) {
+
+  const draggingObjectReduxId = e.object.reduxid
+  store.dispatch(dragInstrument(draggingObjectReduxId, {x: mouseThree.x, y: mouseThree.y}))
   renderScene();
 }
 
