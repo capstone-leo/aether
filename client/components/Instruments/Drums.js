@@ -1,5 +1,7 @@
-import * as three from "three";
-import * as tone from "tone";
+import * as three from 'three';
+import * as tone from 'tone';
+import { scene } from '../../engine/main';
+
 import {
   playSnareWav,
   playClosedHatWav,
@@ -14,7 +16,7 @@ import {
   playDrumsC6,
   playDrumsC7,
   playDrumsC8,
-} from "../tone-functions/drums.js";
+} from '../tone-functions/drums.js';
 
 const drumList = [
   playSnareWav,
@@ -78,10 +80,10 @@ function rainbow(numOfSteps, step) {
       break;
   }
   var c =
-    "0x" +
-    ("00" + (~~(r * 255)).toString(16)).slice(-2) +
-    ("00" + (~~(g * 255)).toString(16)).slice(-2) +
-    ("00" + (~~(b * 255)).toString(16)).slice(-2);
+    '0x' +
+    ('00' + (~~(r * 255)).toString(16)).slice(-2) +
+    ('00' + (~~(g * 255)).toString(16)).slice(-2) +
+    ('00' + (~~(b * 255)).toString(16)).slice(-2);
   return c;
 }
 class Drums {
@@ -114,13 +116,16 @@ class Drums {
   }
   transportStart = () => {
     tone.Transport.start();
-    console.log("ok");
+    console.log('ok');
   };
   transportStop = () => {
     tone.Transport.stop();
   };
   playSound = () => {
     this.sound();
+  };
+  init = () => {
+    scene.add(this.mesh);
   };
 }
 
