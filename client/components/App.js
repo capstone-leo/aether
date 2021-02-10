@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-
 import {
   scene,
   init,
@@ -41,7 +40,6 @@ const App = () => {
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
-
   useEffect(() => {
     init();
     animate();
@@ -104,8 +102,7 @@ const App = () => {
       >
         End Session
       </button>
-
-      <Slider id="slider" />
+      <Slider />
       <About toggleModal={toggleModal} />
       <Modal className="Modal" appElement={mount.current} isOpen={modalOpen}>
         <div className="modalTextDiv">

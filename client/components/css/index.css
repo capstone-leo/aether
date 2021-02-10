@@ -33,8 +33,6 @@ code {
   position: absolute;
   right: 30px;
   top: 30px;
-  color: gray;
-
 }
 #slider:hover {
   cursor: grab;
@@ -55,7 +53,6 @@ code {
 
 .sliderchild {
   font-size: 12px;
-  position: relative;
   top: 10px;
   color: whitesmoke;
 }
@@ -235,7 +232,7 @@ header {
 	color: #424242;
 	font-weight: '2500';
 	font-size: '70px';
-	/* text-shadow: -1px 0 rgb(51, 51, 51), 0 1px black, 1px 0 black, 0 -1px black; */
+	/* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
 @keyframes rotate {
 	100% {

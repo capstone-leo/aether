@@ -8,12 +8,11 @@ import { dragInstrument } from '../reducer/instruments'
 import store from '../store';
 import socket from '../socket';
 
-let size, aspect, frameId, canvas;
+let size, aspect, frameId, canvas, sliderValue;
 let scene, camera, renderer, light;
 let mouse, mouseThree, raycaster, objectSelect, dragControls;
 let hammer, hammerBox, jamSpace;
 let draggableObjects;
-let sliderValue;
 let instruments = [];
 draggableObjects = [];
 
@@ -88,10 +87,17 @@ export const init = () => {
 
   sliderValue = 0.05;
   let slider = document.getElementById('slider');
-  slider.addEventListener('change', onInput);
+  slider.addEventListener('input', onInput);
   function onInput() {
+    console.log('number of slider.value', Number(slider.value))
     sliderValue = Number(slider.value);
+    console.log('the slider', slider)
+    console.log('slider.value', slider.value)
+    console.log(sliderValue)
+    console.log('slidervalue', sliderValue)
+
   }
+  onInput()
 
   //USER INTERFACE
   const drumIcon = document.getElementById('drumIcon');
