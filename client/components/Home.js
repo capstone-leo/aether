@@ -3,11 +3,14 @@ import { Link, Redirect } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import socket from '../socket';
 
+import music from '../../images/musicIcon.png';
 import Loading from './Loading';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
 import BackgroundParticles from './Particles.js';
 import InstructionsToggle from './Instructions';
+import { motion } from 'framer-motion';
+import { Frame } from 'framer';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -15,6 +18,27 @@ import { firebaseApp, auth, db } from '../Firebase';
 
 import { connect } from 'react-redux';
 import { setNewUser, signOutUser } from '../reducer/user';
+
+const container = {
+	hidden: { opacity: 0 },
+	show: {
+		opacity: 1,
+		transition: {
+			delayChildren: 3.3,
+			staggerChildren: 1.1
+		}
+	}
+};
+const item = {
+	hidden: { opacity: 0, y: -20 },
+	show: { opacity: 1, y: 0 }
+};
+const style = {
+	textAlign: 'center',
+	height: '100%',
+	width: '100%',
+	backgroundColor: 'transparent'
+};
 
 // Main Component
 const Home = (props) => {
@@ -30,96 +54,152 @@ const Home = (props) => {
 	const [showInstructions, setShowInstructions] = useState(false);
 	const [redirectTo, setRedirectTo] = useState('');
 
-  // Accessibility Handler
-  const handleKeydown = (e) => {
-    const isTabEvent = e.keyCode === 9;
-    if (isTabEvent) {
-      setEnableOutline(true);
-    }
-  };
+	// Accessibility Handler
+	const handleKeydown = (e) => {
+		const isTabEvent = e.keyCode === 9;
+		if (isTabEvent) {
+			setEnableOutline(true);
+		}
+	};
 
-  // Instructions Toggle
-  const showDirections = (event) => {
-    event.preventDefault();
-    setShowInstructions(!showInstructions);
-  };
+	// Instructions Toggle
+	const showDirections = (event) => {
+		event.preventDefault();
+		setShowInstructions(!showInstructions);
+	};
 
 	// Background Animation,
 	// Conditional Auth render
 	return (
-		<>
-			<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
+		<motion.div
+			exit={{ opacity: 0.9 }}
+			animate={{ opacity: 1 }}
+			initial={{ opacity: 0.2 }}
+			transition={{ duration: 2.5 }}
+		>
+			<div
+				id='homediv'
+				style={{
+					textAlign: 'center',
+					paddingTop: '20%',
+					fontSize: '60px',
+					background: 'radial-gradient(#ec7777, #9198e5)'
+				}}
+			>
 				<BackgroundParticles />
-				<header style={{ textShadow: '2px 6px 6 rgba(218, 217, 217, 0.346)' }}>
-					a e t h e r
-				</header>
-				<br />
+				<Frame
+					variants={container}
+					initial={{ scaleX: 0.9, y: 60 }}
+					animate={{ scaleX: 1.23, y: 1 }}
+					transition={{ duration: 30 }}
+					style={style}
+				>
+					<header
+						style={{
+							textShadow: '2px 6px 6 rgba(218, 217, 217, 0.346)'
+						}}
+					>
+						a e t h e r
+					</header>
+				</Frame>
 
-				{loading ? (
-					<Loading />
-				) : auth.currentUser !== null ? (
-					<>
-						<Link to='/sesh'>
-							<button
-								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-								type='button'
-								style={{ textAlign: 'center', marginTop: '1%' }}
-							>
-								Start Jamming {'>'}
-							</button>
-						</Link>
-						<br />
-						<Link to='/studio'>
-							<button
-								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-								type='button'
-								style={{ textAlign: 'center', marginTop: '1%' }}
-							>
-								Account Page {'>'}
-							</button>
-						</Link>
-
-						<br />
-						<SignOut user={user} enableOutline={enableOutline} />
-						<br />
-						<InstructionsToggle
-							enableOutline={enableOutline}
-							showInstructions={showInstructions}
-							showDirections={showDirections}
-						/>
-					</>
-				) : (
-					<>
-						<Link to='/sesh'>
-							<button
-								className={enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
-								type='button'
-								style={{ textAlign: 'center', marginTop: '1%' }}
-							>
-								Start Jamming {'>'}
-							</button>
-						</Link>
-						<br />
-						<SignIn enableOutline={enableOutline} />
-						<br />
-						<InstructionsToggle
-							enableOutline={enableOutline}
-							showInstructions={showInstructions}
-							showDirections={showDirections}
-						/>
-					</>
-				)}
 				<br />
+				<div style={{ textAlign: 'center' }}>
+					{loading ? (
+						<Loading />
+					) : auth.currentUser !== null ? (
+						<Frame
+							variants={container}
+							initial='hidden'
+							animate='show'
+							style={{ ...style, marginTop: '8%' }}
+						>
+							<Frame variants={item} style={style}>
+								<Link to='/sesh'>
+									<button
+										className={
+											enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'
+										}
+										type='button'
+										style={{ textAlign: 'center' }}
+									>
+										start jamming {'>'}
+									</button>
+								</Link>
+							</Frame>
+							<br />
+							<Frame variants={item} style={style}>
+								<Link to='/studio'>
+									<button
+										className={
+											enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'
+										}
+										type='button'
+										style={{ textAlign: 'center', marginTop: '1%' }}
+									>
+										account {'>'}
+									</button>
+								</Link>
+							</Frame>
+							<br />
+							<Frame variants={item} style={style}>
+								<SignOut user={user} enableOutline={enableOutline} />
+							</Frame>
+							<br />
+							<Frame variants={item} style={style}>
+								<InstructionsToggle
+									enableOutline={enableOutline}
+									showInstructions={showInstructions}
+									showDirections={showDirections}
+								/>
+							</Frame>
+						</Frame>
+					) : (
+						<Frame
+							variants={container}
+							initial='hidden'
+							animate='show'
+							style={{ ...style, marginTop: '8%' }}
+						>
+							<Frame variants={item} style={style}>
+								<Link to='/sesh'>
+									<button
+										className={
+											enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'
+										}
+										type='button'
+										style={{ textAlign: 'center', marginTop: '1%' }}
+									>
+										start jamming {'>'}
+									</button>
+								</Link>
+							</Frame>
+							<br />
+							<Frame variants={item} style={style}>
+								<SignIn enableOutline={enableOutline} />
+							</Frame>
+							<br />
+							<Frame variants={item} style={style}>
+								<InstructionsToggle
+									enableOutline={enableOutline}
+									showInstructions={showInstructions}
+									showDirections={showDirections}
+								/>
+							</Frame>
+						</Frame>
+					)}
+					<br />
+				</div>
 			</div>
-		</>
+		</motion.div>
 	);
 };
 
 // Connect Redux
 const mapStateToProps = (state) => ({ user: state.user });
 const mapDispatchToProps = (dispatch) => ({
-  setNewUser: (user) => dispatch(setNewUser(user)),
-  signOutUser: (user) => dispatch(signOutUser(user)),
+	setNewUser: (user) => dispatch(setNewUser(user)),
+	signOutUser: (user) => dispatch(signOutUser(user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
