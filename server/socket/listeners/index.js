@@ -5,8 +5,12 @@ const store = require('../../store.js');
 const roomNames = require('../../roomnames');
 const { addRoom } = require('../../reducers/rooms');
 const { addPlayer, playerLeaves } = require('../../reducers/players');
-const { receiveInstrument } = require('../../reducers/instruments');
-const { receiveAllInstruments } = require('../../reducers/instruments');
+const {
+  receiveInstrument,
+  receiveAllInstrument,
+  dragInstrument,
+  removeInstrument,
+} = require('../../reducers/instruments');
 
 const getRoom = () => {
   let { rooms, players } = store.getState();
@@ -29,11 +33,23 @@ const setUpListeners = (io, socket) => {
   socket.on('add_instrument', (data) => {
     store.dispatch(receiveInstrument(data));
     const { instrument } = store.getState();
-    console.log(instrument.slice(-1)[0]);
+    console.log(instrument.slice(-1)[0].position);
     io.sockets.emit('spawn_instrument', {
       id: instrument.slice(-1)[0].id,
       position: instrument.slice(-1)[0].position,
     });
+  });
+  socket.on('drag_instrument', (data) => {
+    store.dispatch(dragInstrument(data.id, data.position));
+    const { instrument } = store.getState();
+    io.sockets.emit('update_instrument', {
+      id: data.id,
+      position: data.position,
+    });
+  });
+  socket.on('remove_instrument', (id) => {
+    store.dispatch(removeInstrument(id));
+    io.sockets.emit('delete_instrument', id);
   });
 };
 

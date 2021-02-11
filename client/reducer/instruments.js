@@ -9,21 +9,29 @@ const initialState = [];
 const RECEIVE_ALL_INSTRUMENTS = 'RECEIVE_ALL_INSTRUMENTS';
 const RECEIVE_INSTRUMENT = 'RECEIVE_INSTRUMENT';
 const DRAG_INSTRUMENT = 'DRAG_INSTRUMENT';
+const REMOVE_INSTRUMENT = 'REMOVE_INSTRUMENT';
 
 /*----------  ACTION CREATORS  ----------*/
 export const receiveAllInstruments = (instruments) => ({
-  type: RECEIVE_ALL_INSTRUMENTS,
-  instruments,
+	type: RECEIVE_ALL_INSTRUMENTS,
+	instruments
 });
 
-export const receiveInstrument = (id, position) => ({
-  type: RECEIVE_INSTRUMENT,
-  instrument: { id, position },
-});
+export const receiveInstrument = (instrument) => {
+	return {
+		type: RECEIVE_INSTRUMENT,
+		instrument
+	};
+};
 
 export const dragInstrument = (id, position) => ({
-  type: DRAG_INSTRUMENT,
-  instrument: { id, position },
+	type: DRAG_INSTRUMENT,
+	instrument: { id, position }
+});
+
+export const removeInstrument = (id) => ({
+	type: REMOVE_INSTRUMENT,
+	id
 });
 
 // let reduxInstrument = store.getState().instruments
@@ -31,22 +39,28 @@ export const dragInstrument = (id, position) => ({
 
 /*----------  REDUCER  ----------*/
 export default (state = initialState, action) => {
-  switch (action.type) {
-    case RECEIVE_ALL_INSTRUMENTS:
-      return action.instruments;
-    case RECEIVE_INSTRUMENT:
-      return [...state, action.instrument];
-    case DRAG_INSTRUMENT:
-      return state.map((instrument, index) => {
-        console.log('hehllooooo', state[index ].id)
-        // state[index].id === action.instrument.id
-          // ? [...state, { ...action.instrument }]
-          // : instrument;
-      });
-      
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case RECEIVE_ALL_INSTRUMENTS:
+			return action.instruments;
+		case RECEIVE_INSTRUMENT:
+			newState = state.filter((instrument) => instrument.id !== action.instrument.id);
+			return [...newState, action.instrument];
+		case DRAG_INSTRUMENT:
+			return state.map((instrument) => {
+				if (instrument.id === action.instrument.id) {
+					return {
+						id: action.instrument.id,
+						position: action.instrument.position
+					};
+				} else {
+					return instrument;
+				}
+			});
+		case REMOVE_INSTRUMENT:
+			return state.filter((instrument) => instrument.id !== action.instrument);
+		default:
+			return state;
+	}
 };
 
 //state where the id entry is equal to action.instrument.id

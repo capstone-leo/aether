@@ -1,10 +1,16 @@
 import * as THREE from 'three';
-import Instrument from '../components/Instrument';
-import Drums from '../components/Drums';
-import Chords from '../components/Chords';
+import Instrument from '../components/Instruments/Instrument';
+import Drums from '../components/Instruments/Drums';
+import Chords from '../components/Instruments/Chords';
+import Marimba from '../components/Instruments/Marimba';
+import Harp from '../components/Instruments/Harp';
+import Keyboard from '../components/Instruments/Harp';
+import Piano from '../components/Instruments/Harp';
+import FeedbackDelay from '../components/Instruments/FeedbackDelay';
+
 import { DragControls } from 'three/examples/jsm/controls/DragControls';
 import { nanoid } from 'nanoid';
-import { dragInstrument } from '../reducer/instruments'
+import { dragInstrument } from '../reducer/instruments';
 import store from '../store';
 import socket from '../socket';
 
@@ -20,7 +26,6 @@ draggableObjects = [];
 export const init = () => {
   socket.emit('get_all_instruments');
   instruments = store.getState().instruments;
-  console.log('instruments after gettate', instruments)
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
   canvas = document.getElementById('canvas');
@@ -72,7 +77,6 @@ export const init = () => {
   instruments.forEach((instrument) => {
     draggableObjects.push(instrument.mesh);
   });
-  console.log('draggableObjects in init()--> ', draggableObjects);
 
   dragControls = new DragControls(
     draggableObjects,
@@ -80,8 +84,8 @@ export const init = () => {
     renderer.domElement
   );
   dragControls.addEventListener('drag', onDrag);
+  //dragControls.addEventListener('dragend', onDragEnd);
 
-  console.log('draaaaaaaag', dragControls.getObjects())
   mouse = new THREE.Vector2();
   mouseThree = new THREE.Vector3();
   raycaster = new THREE.Raycaster();
@@ -106,10 +110,22 @@ export const init = () => {
   chordIcon.addEventListener('click', function () {
     addChord();
   });
-  /*     const trumpetIcon = document.getElementById("trumpetIcon");
-    trumpetIcon.addEventListe ner("click", function () {
-      addTrumpet();
-    }); */
+  const pianoIcon = document.getElementById('pianoIcon');
+  pianoIcon.addEventListener('click', function () {
+    addPiano();
+  });
+  const marimbaIcon = document.getElementById('marimbaIcon');
+  marimbaIcon.addEventListener('click', function () {
+    addMarimba();
+  });
+  const harpIcon = document.getElementById('harpIcon');
+  harpIcon.addEventListener('click', function () {
+    addHarp();
+  });
+  const feedbackDelayIcon = document.getElementById('feedbackDelayIcon');
+  feedbackDelayIcon.addEventListener('click', function () {
+    addfeedbackDelay();
+  });
 };
 
 export const renderScene = () => {
@@ -161,6 +177,74 @@ export const animate = () => {
     });
   }
 
+  // pianos.forEach((piano) => {
+  //   piano.mesh.rotation.y += 0.01;
+  //   piano.mesh.rotation.x -= 0.01;
+  //   piano.boundary
+  //     .copy(piano.mesh.geometry.boundingBox)
+  //     .applyMatrix4(piano.mesh.matrixWorld);
+
+  //   if (piano.boundary.intersectsBox(hammerBox)) {
+  //     if (piano.alreadyPlayed === false) {
+  //       piano.playSound();
+  //       piano.alreadyPlayed = true;
+  //     }
+  //   } else {
+  //     piano.alreadyPlayed = false;
+  //   }
+  // });
+  // marimbas.forEach((marimba) => {
+  //   marimba.mesh.rotation.y += 0.01;
+  //   marimba.mesh.rotation.x -= 0.01;
+
+  //   marimba.boundary
+  //     .copy(marimba.mesh.geometry.boundingBox)
+  //     .applyMatrix4(marimba.mesh.matrixWorld);
+
+  //   if (marimba.boundary.intersectsBox(hammerBox)) {
+  //     if (marimba.alreadyPlayed === false) {
+  //       marimba.playSound();
+  //       marimba.alreadyPlayed = true;
+  //     }
+  //   } else {
+  //     marimba.alreadyPlayed = false;
+  //   }
+  // });
+  // harps.forEach((harp) => {
+  //   harp.mesh.rotation.y += 0.01;
+  //   harp.mesh.rotation.x -= 0.01;
+
+  //   harp.boundary
+  //     .copy(harp.mesh.geometry.boundingBox)
+  //     .applyMatrix4(harp.mesh.matrixWorld);
+
+  //   if (harp.boundary.intersectsBox(hammerBox)) {
+  //     if (harp.alreadyPlayed === false) {
+  //       harp.playSound();
+  //       harp.alreadyPlayed = true;
+  //     }
+  //   } else {
+  //     harp.alreadyPlayed = false;
+  //   }
+  // });
+  // feedbackDelays.forEach((feedbackDelay) => {
+  //   feedbackDelay.mesh.rotation.y += 0.01;
+  //   feedbackDelay.mesh.rotation.x -= 0.01;
+
+  //   feedbackDelay.boundary
+  //     .copy(feedbackDelay.mesh.geometry.boundingBox)
+  //     .applyMatrix4(feedbackDelay.mesh.matrixWorld);
+
+  //   if (feedbackDelay.boundary.intersectsBox(hammerBox)) {
+  //     if (feedbackDelay.alreadyPlayed === false) {
+  //       feedbackDelay.playSound();
+  //       feedbackDelay.alreadyPlayed = true;
+  //     }
+  //   } else {
+  //     feedbackDelay.alreadyPlayed = false;
+  //   }
+  // });
+
   const instrumentPositions = draggableObjects.map((instrument) => {
     return {
       id: instrument.id,
@@ -192,13 +276,12 @@ function onMouseMove(event) {
 
   mouseThree.x = raycaster.ray.origin.x;
   mouseThree.y = raycaster.ray.origin.y;
-  mouseThree.z = raycaster.ray.origin.z;
 }
 
 function addInstrument() {
   socket.emit('add_instrument', {
     id: nanoid(),
-    position: [mouseThree.x, mouseThree.y, 0],
+    position: [mouseThree.x, mouseThree.y],
   });
 }
 
@@ -228,6 +311,52 @@ function addChord() {
   });
 }
 
+function addPiano() {
+  const newPiano = new Piano();
+  pianos.push(newPiano);
+  scene.add(newPiano.mesh);
+  draggableObjects.push(newPiano.mesh);
+  dragControls = new DragControls(
+    [...draggableObjects],
+    camera,
+    renderer.domElement
+  );
+}
+function addMarimba() {
+  const newMarimba = new Marimba();
+  marimbas.push(newMarimba);
+  scene.add(newMarimba.mesh);
+  draggableObjects.push(newMarimba.mesh);
+  dragControls = new DragControls(
+    [...draggableObjects],
+    camera,
+    renderer.domElement
+  );
+}
+function addHarp() {
+  const newHarp = new Harp();
+  harps.push(newHarp);
+  scene.add(newHarp.mesh);
+  draggableObjects.push(newHarp.mesh);
+  dragControls = new DragControls(
+    [...draggableObjects],
+    camera,
+    renderer.domElement
+  );
+}
+function addfeedbackDelay() {
+  const newfeedbackDelay = new FeedbackDelay();
+  feedbackDelays.push(newfeedbackDelay);
+  scene.add(newfeedbackDelay.mesh);
+  draggableObjects.push(newfeedbackDelay.mesh);
+
+  dragControls = new DragControls(
+    [...draggableObjects],
+    camera,
+    renderer.domElement
+  );
+}
+
 function playSound() {
   if (objectSelect) {
     if (objectSelect.hover) {
@@ -245,15 +374,37 @@ const stop = () => {
   cancelAnimationFrame(frameId);
   frameId = null;
 };
+//function onDrag() {}
 
 function onDrag(e) {
-
-  const draggingObjectReduxId = e.object.reduxid
-  store.dispatch(dragInstrument(draggingObjectReduxId, {x: mouseThree.x, y: mouseThree.y}))
+  const draggingObjectReduxId = e.object.reduxid;
+  store.dispatch(
+    dragInstrument(draggingObjectReduxId, [
+      e.object.position.x,
+      e.object.position.y,
+    ])
+  );
+  socket.emit('drag_instrument', {
+    id: draggingObjectReduxId,
+    position: [e.object.position.x, e.object.position.y],
+  });
   renderScene();
 }
 
-export { start, stop, playSound, addInstrument, onMouseMove, handleResize };
+function onShiftClick() {
+  socket.emit('remove_instrument', objectSelect.reduxid);
+  store.dispatch(removeInstrument(objectSelect.reduxid));
+}
+
+export {
+  start,
+  stop,
+  playSound,
+  addInstrument,
+  onMouseMove,
+  handleResize,
+  onShiftClick,
+};
 
 export {
   size,

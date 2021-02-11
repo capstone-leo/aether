@@ -10,11 +10,13 @@ import {
 	addInstrument,
 	playSound,
 	handleResize,
-	onMouseMove
+	onMouseMove,
+	onShiftClick
 } from '../engine/main';
 
 import { Slider } from './Slider';
 import { About } from './About';
+import Keyboard from './Instruments/Keyboard';
 import Modal from 'react-modal';
 import './css/App.css';
 import Chat from './Chat';

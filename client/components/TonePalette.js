@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 //import { addInstrument, addDrum } from "./App.js";
 
 //NOTES: importing and using functions on an onClick does
@@ -6,17 +6,19 @@ import React, { Component } from "react";
 //in App.js
 
 export class TonePalette extends Component {
-  render() {
-    return (
-      <div className="TonePalette">
-        <img src="./oneDie.png" id="addInstrumentIcon"></img>
-        <button id="addInstrumentIcon">+ instrument</button>
-        <img src="./drum-30128.png" id="drumIcon"></img>
-        <img src="./vippng.com-trompeta-png-1767976.png" id="trumpetIcon"></img>
-        <img src="./chord.png" id="chordIcon"></img>
-      </div>
-    );
-  }
+	render() {
+		return (
+			<div className='TonePalette'>
+				<img src='./star.png' id='addInstrumentIcon'></img>
+				<img src='./drum.png' id='drumIcon'></img>
+				<img src='./piano.png' id='pianoIcon'></img>
+				<img src='./chord2.png' id='chordIcon'></img>
+				<img src='./xylophone.png' id='marimbaIcon'></img>
+				<img src='./harp.png' id='harpIcon'></img>
+				<img src='./feedbackDelay.png' id='feedbackDelayIcon'></img>
+			</div>
+		);
+	}
 }
 
 export default TonePalette;
