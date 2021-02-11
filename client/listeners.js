@@ -1,39 +1,49 @@
-import { receiveMessage } from './reducer/messages';
-import { hoverHighlight } from './reducer/dragndrop';
+import { receiveMessage } from "./reducer/messages";
+import { hoverHighlight } from "./reducer/dragndrop";
 import {
   receiveInstrument,
   receiveAllInstruments,
   dragInstrument,
   removeInstrument,
-} from './reducer/instruments';
-import Instrument from './components/Instruments/Instrument';
-import { instruments } from './engine/main';
-import store from './store';
+} from "./reducer/instruments";
+import Instrument from "./components/Instruments/Instrument";
+import { instruments } from "./engine/main";
+import store from "./store";
 
 export default (socket) => {
-  socket.on('add_message', (message) => {
+  socket.on("add_message", (message) => {
     store.dispatch(receiveMessage(message));
   });
-  socket.on('hover', (hoverHighlight) => {
+  socket.on("hover", (hoverHighlight) => {
     store.dispatch(highlight(hoverHighlight));
   });
-  socket.on('spawn_all_instruments', (instruments) => {
+  socket.on("spawn_all_instruments", (instruments) => {
     store.dispatch(receiveAllInstruments(instruments));
     instruments.forEach((instrument) => {
-      let newInstrument = new Instrument(instrument.id, instrument.position);
+      let newInstrument = new Instrument(
+        instrument.id,
+        instrument.position,
+        instrument.type
+      );
       newInstrument.init();
       store.dispatch(
-        receiveInstrument({ id: instrument.id, position: instrument.position })
+        receiveInstrument({
+          id: instrument.id,
+          position: instrument.position,
+          type: instrument.type,
+        })
       );
     });
   });
-  socket.on('spawn_instrument', (data) => {
-    const instrument = new Instrument(data.id, data.position);
+  socket.on("spawn_instrument", (data) => {
+    const instrument = new Instrument(data.id, data.position, data.type);
     instrument.init();
     store.dispatch(receiveInstrument(data));
   });
-  socket.on('update_instrument', (instrument) => {
-    store.dispatch(dragInstrument(instrument.id, instrument.position));
+  socket.on("update_instrument", (instrument) => {
+    store.dispatch(
+      dragInstrument(instrument.id, instrument.position, instrument.type)
+    );
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === instrument.id) {
         sceneInstrument.updatePosition(
@@ -43,7 +53,7 @@ export default (socket) => {
       }
     });
   });
-  socket.on('delete_instrument', (id) => {
+  socket.on("delete_instrument", (id) => {
     store.dispatch(removeInstrument(id));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === id) {

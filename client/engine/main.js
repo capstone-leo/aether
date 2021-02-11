@@ -1,18 +1,10 @@
-import * as THREE from 'three';
-import Instrument from '../components/Instruments/Instrument';
-import Drums from '../components/Instruments/Drums';
-import Chords from '../components/Instruments/Chords';
-import Marimba from '../components/Instruments/Marimba';
-import Harp from '../components/Instruments/Harp';
-import Keyboard from '../components/Instruments/Harp';
-import Piano from '../components/Instruments/Harp';
-import FeedbackDelay from '../components/Instruments/FeedbackDelay';
+import * as THREE from "three";
 
-import { DragControls } from 'three/examples/jsm/controls/DragControls';
-import { nanoid } from 'nanoid';
-import { dragInstrument } from '../reducer/instruments';
-import store from '../store';
-import socket from '../socket';
+import { DragControls } from "three/examples/jsm/controls/DragControls";
+import { nanoid } from "nanoid";
+import { dragInstrument } from "../reducer/instruments";
+import store from "../store";
+import socket from "../socket";
 
 let size, aspect, frameId, canvas;
 let scene, camera, renderer, light;
@@ -24,11 +16,11 @@ let instruments = [];
 draggableObjects = [];
 
 export const init = () => {
-  socket.emit('get_all_instruments');
+  socket.emit("get_all_instruments");
   instruments = store.getState().instruments;
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
-  canvas = document.getElementById('canvas');
+  canvas = document.getElementById("canvas");
 
   scene = new THREE.Scene();
   camera = new THREE.OrthographicCamera(
@@ -83,7 +75,7 @@ export const init = () => {
     camera,
     renderer.domElement
   );
-  dragControls.addEventListener('drag', onDrag);
+  dragControls.addEventListener("drag", onDrag);
   //dragControls.addEventListener('dragend', onDragEnd);
 
   mouse = new THREE.Vector2();
@@ -91,40 +83,40 @@ export const init = () => {
   raycaster = new THREE.Raycaster();
 
   sliderValue = 0.05;
-  let slider = document.getElementById('slider');
-  slider.addEventListener('change', onInput);
+  let slider = document.getElementById("slider");
+  slider.addEventListener("change", onInput);
   function onInput() {
     sliderValue = Number(slider.value);
   }
 
   //USER INTERFACE
-  const drumIcon = document.getElementById('drumIcon');
-  drumIcon.addEventListener('click', function () {
-    addDrum();
+  const drumIcon = document.getElementById("drumIcon");
+  drumIcon.addEventListener("click", function () {
+    addInstrument("drums");
   });
-  const addInstrumentIcon = document.getElementById('addInstrumentIcon');
-  addInstrumentIcon.addEventListener('click', function (e) {
-    addInstrument();
+  const addInstrumentIcon = document.getElementById("addInstrumentIcon");
+  addInstrumentIcon.addEventListener("click", function (e) {
+    addInstrument("tones");
   });
-  const chordIcon = document.getElementById('chordIcon');
-  chordIcon.addEventListener('click', function () {
-    addChord();
+  const chordIcon = document.getElementById("chordIcon");
+  chordIcon.addEventListener("click", function () {
+    addInstrument("chords");
   });
-  const pianoIcon = document.getElementById('pianoIcon');
-  pianoIcon.addEventListener('click', function () {
-    addPiano();
+  const pianoIcon = document.getElementById("pianoIcon");
+  pianoIcon.addEventListener("click", function () {
+    addInstrument("pianos");
   });
-  const marimbaIcon = document.getElementById('marimbaIcon');
-  marimbaIcon.addEventListener('click', function () {
-    addMarimba();
+  const marimbaIcon = document.getElementById("marimbaIcon");
+  marimbaIcon.addEventListener("click", function () {
+    addInstrument("marimbas");
   });
-  const harpIcon = document.getElementById('harpIcon');
-  harpIcon.addEventListener('click', function () {
-    addHarp();
+  const harpIcon = document.getElementById("harpIcon");
+  harpIcon.addEventListener("click", function () {
+    addInstrument("harps");
   });
-  const feedbackDelayIcon = document.getElementById('feedbackDelayIcon');
-  feedbackDelayIcon.addEventListener('click', function () {
-    addfeedbackDelay();
+  const feedbackDelayIcon = document.getElementById("feedbackDelayIcon");
+  feedbackDelayIcon.addEventListener("click", function () {
+    addInstrument("feedbackDelays");
   });
 };
 
@@ -278,10 +270,11 @@ function onMouseMove(event) {
   mouseThree.y = raycaster.ray.origin.y;
 }
 
-function addInstrument() {
-  socket.emit('add_instrument', {
+function addInstrument(type) {
+  socket.emit("add_instrument", {
     id: nanoid(),
     position: [mouseThree.x, mouseThree.y],
+    type
   });
 }
 
@@ -289,7 +282,7 @@ function addDrum() {
   const newDrum = new Drums();
   const { mesh } = newDrum;
   //instruments.push(newDrum);
-  socket.emit('add_instrument', {
+  socket.emit("add_instrument", {
     id: mesh.id,
     position: [mesh.position.x, mesh.position.y, mesh.position.z],
   });
@@ -305,7 +298,7 @@ function addChord() {
     camera,
     renderer.domElement
   );
-  socket.emit('add_instrument', {
+  socket.emit("add_instrument", {
     id: mesh.id,
     position: [mesh.position.x, mesh.position.y, mesh.position.z],
   });
@@ -360,6 +353,7 @@ function addfeedbackDelay() {
 function playSound() {
   if (objectSelect) {
     if (objectSelect.hover) {
+      console.log(objectSelect)
       objectSelect.sound();
     }
   }
@@ -384,7 +378,7 @@ function onDrag(e) {
       e.object.position.y,
     ])
   );
-  socket.emit('drag_instrument', {
+  socket.emit("drag_instrument", {
     id: draggingObjectReduxId,
     position: [e.object.position.x, e.object.position.y],
   });
@@ -392,7 +386,7 @@ function onDrag(e) {
 }
 
 function onShiftClick() {
-  socket.emit('remove_instrument', objectSelect.reduxid);
+  socket.emit("remove_instrument", objectSelect.reduxid);
   store.dispatch(removeInstrument(objectSelect.reduxid));
 }
 
