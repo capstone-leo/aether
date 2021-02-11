@@ -1,66 +1,60 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import socket from '../socket';
+import store from '../store'
+import receiveMessage from '../reducer/messages'
+import { nanoid } from 'nanoid'
+// import nanoid from 'nanoid'
 
 //once we start having usernames/nicknames this needs
 //to be updated for username: message
 
 export const Chat = (props) => {
   const { messages } = props;
+  const [message, setMessage] = useState('')
 
-  const [message, setMessage] = useState('');
-  const messageList = useRef(null);
 
   useEffect(() => {
     document.querySelector('li') !== null
       ? setTimeout(function () {
           document.querySelector('li').remove();
-        }, 3000)
+
+        }, 5000)
       : null;
   });
 
   const sendMessage = () => {
-    let newMessage = message;
-    if (newMessage) {
-      socket.emit('new_message', message);
-      setMessage('');
+      socket.emit('add_message', message);
+      setMessage('')
+      console.log(nanoid())
+      console.log(store.getState().messages)
+      document.getElementById('new-message').value=''
     }
-  };
+  const messageList = 
+  store.getState().messages.map((message, i)=>
+  <li key={i}>{message}</li>)
 
   const removeMessage = () => {};
 
   return (
     <div id="chat-box">
-      <ul id="message-list" ref={messageList}>
-        {messages &&
-          messages.map((message, i) => {
-            let { message: text } = message;
-            return <li key={i}>{`${text}`}</li>;
-          })}
+      <ul id="message-list">
+        {messageList}
       </ul>
       <input
         style={{ background: 'transparent', color: 'whitesmoke' }}
-        value={message}
+        // value={message}
         id="new-message"
-        onChange={(e) => {
+        onInput={(e) => {
           setMessage(e.target.value);
         }}
         onKeyDown={(e) => (e.key === 'Enter' ? sendMessage() : null)}
         placeholder="chat"
       ></input>
-      {/* <button
-       style={{background: 'transparent', color: 'whitesmoke'}}
-        onClick={(e) => {
-          e.preventDefault();
-          sendMessage();
-        }}
-      > */}
-      {/* Send
-      </button> */}
     </div>
   );
 };
 
-const mapStateToProps = ({ messages }) => ({ messages });
+const mapStateToProps = (messages) => (messages);
 
 export default connect(mapStateToProps, null)(Chat);

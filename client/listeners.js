@@ -11,7 +11,8 @@ import { instruments } from './engine/main';
 import store from './store';
 
 export default (socket) => {
-  socket.on('add_message', (message) => {
+  socket.on('new_message', (message) => {
+    console.log("YOOO", message)
     store.dispatch(receiveMessage(message));
   });
   socket.on('hover', (hoverHighlight) => {

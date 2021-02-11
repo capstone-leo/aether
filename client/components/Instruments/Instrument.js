@@ -101,6 +101,9 @@ class Instrument {
       //wireframe: true,
       color: Math.random() * 0xffffff,
       //wireframeLinewidth: 2,
+      polygonOffset: true,
+      polygonOffsetUnits: 1,
+      polygonOffsetFactor: 0
     });
     this.mesh = new three.Mesh(this.geometry, this.material);
     this.mesh.reduxid = id;
