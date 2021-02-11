@@ -1,14 +1,14 @@
-const { pickBy } = require("lodash");
+const { pickBy } = require('lodash');
 let newState;
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = [];
 
 /*----------  ACTION TYPES  ----------*/
-const RECEIVE_ALL_INSTRUMENTS = "RECEIVE_ALL_INSTRUMENTS";
-const RECEIVE_INSTRUMENT = "RECEIVE_INSTRUMENT";
-const DRAG_INSTRUMENT = "DRAG_INSTRUMENT";
-const REMOVE_INSTRUMENT = "REMOVE_INSTRUMENT";
+const RECEIVE_ALL_INSTRUMENTS = 'RECEIVE_ALL_INSTRUMENTS';
+const RECEIVE_INSTRUMENT = 'RECEIVE_INSTRUMENT';
+const DRAG_INSTRUMENT = 'DRAG_INSTRUMENT';
+const REMOVE_INSTRUMENT = 'REMOVE_INSTRUMENT';
 
 /*----------  ACTION CREATORS  ----------*/
 const receiveAllInstruments = (instruments) => ({
@@ -17,16 +17,16 @@ const receiveAllInstruments = (instruments) => ({
 });
 
 const receiveInstrument = (data) => {
-  console.log("data server --> ", data);
+  console.log('data server --> ', data);
   return {
     type: RECEIVE_INSTRUMENT,
     instrument: { id: data.id, position: data.position, type: data.type },
   };
 };
 
-const dragInstrument = (id, position, type) => ({
+const dragInstrument = (id, position, type, soundIndex) => ({
   type: DRAG_INSTRUMENT,
-  instrument: { id, position, type },
+  instrument: { id, position, type, soundIndex },
 });
 
 const removeInstrument = (id) => ({
@@ -51,6 +51,7 @@ const immutable = (state = initialState, action) => {
             id: action.instrument.id,
             position: action.instrument.position,
             type: action.instrument.type,
+            soundIndex: action.instrument.soundIndex,
           };
         } else {
           return instrument;
@@ -77,6 +78,7 @@ const mutable = (state = initialState, action) => {
             id: action.instrument.id,
             position: action.instrument.position,
             type: action.instrument.type,
+            soundIndex: action.instrument.soundIndex,
           };
         } else {
           return instrument;
@@ -114,16 +116,16 @@ const mutable = (state = initialState, action) => {
 
 const chooseReducer = (reducerMode) => {
   switch (reducerMode) {
-    case "mutable":
+    case 'mutable':
       return mutable;
-    case "immutable":
+    case 'immutable':
       return immutable;
     default:
       return mutable;
   }
 };
 
-const reducer = chooseReducer("immutable");
+const reducer = chooseReducer('immutable');
 
 module.exports = {
   reducer,
