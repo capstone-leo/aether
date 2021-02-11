@@ -3,12 +3,10 @@ import { Link, Redirect } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import socket from '../socket';
 
-import music from '../../images/musicIcon.png';
 import Loading from './Loading';
 import SignIn from './SignIn';
 import SignOut from './SignOut';
 import BackgroundParticles from './Particles.js';
-import InstructionsToggle from './Instructions';
 import { motion } from 'framer-motion';
 import { Frame } from 'framer';
 
@@ -51,7 +49,6 @@ const Home = (props) => {
 		if (user) props.setNewUser(user);
 	}, [user]);
 	const [enableOutline, setEnableOutline] = useState(false);
-	const [showInstructions, setShowInstructions] = useState(false);
 	const [redirectTo, setRedirectTo] = useState('');
 
 	// Accessibility Handler
@@ -60,12 +57,6 @@ const Home = (props) => {
 		if (isTabEvent) {
 			setEnableOutline(true);
 		}
-	};
-
-	// Instructions Toggle
-	const showDirections = (event) => {
-		event.preventDefault();
-		setShowInstructions(!showInstructions);
 	};
 
 	// Background Animation,
@@ -82,8 +73,7 @@ const Home = (props) => {
 				style={{
 					textAlign: 'center',
 					paddingTop: '20%',
-					fontSize: '60px',
-					background: 'radial-gradient(#ec7777, #9198e5)'
+					fontSize: '60px'
 				}}
 			>
 				<BackgroundParticles />
@@ -146,13 +136,6 @@ const Home = (props) => {
 								<SignOut user={user} enableOutline={enableOutline} />
 							</Frame>
 							<br />
-							<Frame variants={item} style={style}>
-								<InstructionsToggle
-									enableOutline={enableOutline}
-									showInstructions={showInstructions}
-									showDirections={showDirections}
-								/>
-							</Frame>
 						</Frame>
 					) : (
 						<Frame
@@ -179,13 +162,6 @@ const Home = (props) => {
 								<SignIn enableOutline={enableOutline} />
 							</Frame>
 							<br />
-							<Frame variants={item} style={style}>
-								<InstructionsToggle
-									enableOutline={enableOutline}
-									showInstructions={showInstructions}
-									showDirections={showDirections}
-								/>
-							</Frame>
 						</Frame>
 					)}
 					<br />

@@ -9,6 +9,7 @@ import { auth, db } from '../Firebase';
 import Loading from './Loading';
 import SignOut from './SignOut';
 import BackgroundParticles from './Particles';
+import SoundShape from './SoundShape';
 
 //Component
 const UserAccountPage = (props) => {
@@ -20,14 +21,14 @@ const UserAccountPage = (props) => {
 		if (auth.currentUser) props.setNewUser(user);
 	}, [currentUser]);
 
-	if (!auth.currentUser) return <Redirect to='/' />;
+	// if (!auth.currentUser) return <Redirect to='/' />;
 	return (
-		<motion.div
-			exit={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			initial={{ opacity: 0 }}
-			transition={{ duration: 1.5 }}
-		>
+		// <motion.div
+		// 	exit={{ opacity: 0 }}
+		// 	animate={{ opacity: 1 }}
+		// 	initial={{ opacity: 0 }}
+		// 	transition={{ duration: 1.5 }}
+		<div>
 			{loading ? (
 				<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
 					<BackgroundParticles />
@@ -37,8 +38,9 @@ const UserAccountPage = (props) => {
 			) : (
 				<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
 					<BackgroundParticles />
-
 					<h6>Welcome, {auth.currentUser.displayName}!</h6>
+
+					<SoundShape />
 
 					<Link to='/sesh'>
 						<button
@@ -55,7 +57,7 @@ const UserAccountPage = (props) => {
 					<SignOut setcurrentUser={setcurrentUser} />
 				</div>
 			)}
-		</motion.div>
+		</div>
 	);
 };
 
