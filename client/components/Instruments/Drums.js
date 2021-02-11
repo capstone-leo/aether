@@ -1,92 +1,11 @@
 import * as three from 'three';
 import * as tone from 'tone';
 import { scene } from '../../engine/main';
+import Instrument from './Instrument';
 
-import {
-  playSnareWav,
-  playClosedHatWav,
-  playKickWav,
-  playClapWav,
-  playToneHanddrum,
-  playDrumsC1,
-  playDrumsC2,
-  playDrumsC3,
-  playDrumsC4,
-  playDrumsC5,
-  playDrumsC6,
-  playDrumsC7,
-  playDrumsC8,
-} from '../tone-functions/drums.js';
 
-const drumList = [
-  playSnareWav,
-  playClosedHatWav,
-  playKickWav,
-  playKickWav,
-  playKickWav,
-  playKickWav,
-  playClapWav,
-  playToneHanddrum,
-  playDrumsC1,
-  playDrumsC2,
-  playDrumsC3,
-  playDrumsC4,
-  playDrumsC5,
-  playDrumsC6,
-  playDrumsC7,
-  playDrumsC8,
-];
-function rainbow(numOfSteps, step) {
-  // This function generates vibrant, "evenly spaced" colours (i.e. no clustering). This is ideal for creating easily distinguishable vibrant markers in Google Maps and other apps.
-  // Adam Cole, 2011-Sept-14
-  // HSV to RBG adapted from: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
-  var r, g, b;
-  var h = step / numOfSteps;
-  var i = ~~(h * 6);
-  var f = h * 6 - i;
-  var q = 1 - f;
-  switch (i % 6) {
-    case 0:
-      r = 1;
-      g = f;
-      b = 0;
-      break;
-    case 1:
-      r = q;
-      g = 1;
-      b = 0;
-      break;
-    case 2:
-      r = 0;
-      g = 1;
-      b = f;
-      break;
-    case 3:
-      r = 0;
-      g = q;
-      b = 1;
-      break;
-    case 4:
-      r = f;
-      g = 0;
-      b = 1;
-      break;
-    case 5:
-      r = 1;
-      g = 0;
-      b = q;
-      break;
-    default:
-      break;
-  }
-  var c =
-    '0x' +
-    ('00' + (~~(r * 255)).toString(16)).slice(-2) +
-    ('00' + (~~(g * 255)).toString(16)).slice(-2) +
-    ('00' + (~~(b * 255)).toString(16)).slice(-2);
-  return c;
-}
-class Drums {
+
+/* class Drums {
   constructor() {
     this.geometry = new three.BoxGeometry(50, 20, 20);
     this.material = new three.MeshLambertMaterial({
@@ -128,5 +47,15 @@ class Drums {
     scene.add(this.mesh);
   };
 }
+ */
 
+/* class Drums extends Instrument{
+  constructor(id, position){
+    super(){
+      
+    }
+
+  }
+}
 export default Drums;
+ */

@@ -1,14 +1,14 @@
-const { pickBy } = require('lodash');
+const { pickBy } = require("lodash");
 let newState;
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = [];
 
 /*----------  ACTION TYPES  ----------*/
-const RECEIVE_ALL_INSTRUMENTS = 'RECEIVE_ALL_INSTRUMENTS';
-const RECEIVE_INSTRUMENT = 'RECEIVE_INSTRUMENT';
-const DRAG_INSTRUMENT = 'DRAG_INSTRUMENT';
-const REMOVE_INSTRUMENT = 'REMOVE_INSTRUMENT';
+const RECEIVE_ALL_INSTRUMENTS = "RECEIVE_ALL_INSTRUMENTS";
+const RECEIVE_INSTRUMENT = "RECEIVE_INSTRUMENT";
+const DRAG_INSTRUMENT = "DRAG_INSTRUMENT";
+const REMOVE_INSTRUMENT = "REMOVE_INSTRUMENT";
 
 /*----------  ACTION CREATORS  ----------*/
 export const receiveAllInstruments = (instruments) => ({
@@ -17,15 +17,16 @@ export const receiveAllInstruments = (instruments) => ({
 });
 
 export const receiveInstrument = (instrument) => {
+  console.log("instrument in client side reducer the hammer!!", instrument);
   return {
     type: RECEIVE_INSTRUMENT,
     instrument,
   };
 };
 
-export const dragInstrument = (id, position) => ({
+export const dragInstrument = (id, position, type, soundIndex) => ({
   type: DRAG_INSTRUMENT,
-  instrument: { id, position },
+  instrument: { id, position, type, soundIndex },
 });
 
 export const removeInstrument = (id) => ({
@@ -52,6 +53,8 @@ export default (state = initialState, action) => {
           return {
             id: action.instrument.id,
             position: action.instrument.position,
+            type: action.instrument.type,
+            soundIndex: action.instrument.soundIndex,
           };
         } else {
           return instrument;
