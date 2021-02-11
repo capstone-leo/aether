@@ -24,15 +24,15 @@ export const Chat = (props) => {
   });
 
   const sendMessage = () => {
-      socket.emit('add_message', {message: message, id: nanoid()});
+      socket.emit('add_message', message);
       setMessage('')
       console.log(nanoid())
       console.log(store.getState().messages)
       document.getElementById('new-message').value=''
     }
-  const messageList = 'whatup yo'
-  // store.getState().messages.map((message, i)=>
-  // <li key={i}>{message}</li>)
+  const messageList = 
+  store.getState().messages.map((message, i)=>
+  <li key={i}>{message}</li>)
 
   const removeMessage = () => {};
 
