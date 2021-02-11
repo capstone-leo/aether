@@ -1,23 +1,23 @@
-import { receiveMessage } from './reducer/messages';
-import { hoverHighlight } from './reducer/dragndrop';
+import { receiveMessage } from "./reducer/messages";
+import { hoverHighlight } from "./reducer/dragndrop";
 import {
   receiveInstrument,
   receiveAllInstruments,
   dragInstrument,
   removeInstrument,
-} from './reducer/instruments';
-import Instrument from './components/Instruments/Instrument';
-import { instruments } from './engine/main';
-import store from './store';
+} from "./reducer/instruments";
+import Instrument from "./components/Instruments/Instrument";
+import { instruments } from "./engine/main";
+import store from "./store";
 
 export default (socket) => {
-  socket.on('add_message', (message) => {
+  socket.on("add_message", (message) => {
     store.dispatch(receiveMessage(message));
   });
-  socket.on('hover', (hoverHighlight) => {
+  socket.on("hover", (hoverHighlight) => {
     store.dispatch(highlight(hoverHighlight));
   });
-  socket.on('spawn_all_instruments', (instruments) => {
+  socket.on("spawn_all_instruments", (instruments) => {
     store.dispatch(receiveAllInstruments(instruments));
     instruments.forEach((instrument) => {
       let newInstrument = new Instrument(
@@ -37,7 +37,8 @@ export default (socket) => {
       );
     });
   });
-  socket.on('spawn_instrument', (data) => {
+  socket.on("spawn_instrument", (data) => {
+    console.log("data", data);
     const instrument = new Instrument(
       data.id,
       data.position,
@@ -47,7 +48,7 @@ export default (socket) => {
     instrument.init();
     store.dispatch(receiveInstrument(data));
   });
-  socket.on('update_instrument', (instrument) => {
+  socket.on("update_instrument", (instrument) => {
     const { id, position, type, soundIndex } = instrument;
     store.dispatch(dragInstrument(id, position, type, soundIndex));
     instruments.forEach((sceneInstrument) => {
@@ -59,7 +60,7 @@ export default (socket) => {
       }
     });
   });
-  socket.on('delete_instrument', (id) => {
+  socket.on("delete_instrument", (id) => {
     store.dispatch(removeInstrument(id));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === id) {

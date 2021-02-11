@@ -59,7 +59,7 @@ const App = () => {
       false
     );
 
-    window.addEventListener("dblclick", addInstrument, false);
+    window.addEventListener("dblclick", () => addInstrument(), false);
     window.addEventListener("click", playSound, false);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("resize", handleResize);

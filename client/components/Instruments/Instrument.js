@@ -1,6 +1,6 @@
-import * as three from 'three';
-import * as tone from 'tone';
-import { scene, draggableObjects, instruments } from '../../engine/main';
+import * as three from "three";
+import * as tone from "tone";
+import { scene, draggableObjects, instruments } from "../../engine/main";
 import {
   drumList,
   chordList,
@@ -9,7 +9,7 @@ import {
   marimbaList,
   pianoList,
   toneList,
-} from '../tone-functions';
+} from "../tone-functions";
 
 class Instrument {
   constructor(id, position, type, soundIndex) {
@@ -24,6 +24,8 @@ class Instrument {
     this.mesh.reduxid = id;
     //sets random X & Y coordinates where -300 >= X >= 300 & -150 >= Y >= 150 (basically it wont be in the circle)
     if (!position) {
+      console.log('position', position
+      )
       this.mesh.position.setX(
         Math.floor(Math.random() * 300 + 350) * (Math.random() < 0.5 ? -1 : 1)
       );
@@ -51,7 +53,7 @@ class Instrument {
   }
   transportStart = () => {
     tone.Transport.start();
-    console.log('ok');
+    console.log("ok");
   };
   transportStop = () => {
     tone.Transport.stop();
@@ -75,25 +77,25 @@ class Instrument {
   };
   getSound = (type) => {
     switch (type) {
-      case 'drums':
+      case "drums":
         return drumList[this.soundIndex];
 
-      case 'chords':
+      case "chords":
         return chordList[this.soundIndex];
 
-      case 'feedbackDelays':
+      case "feedbackDelays":
         return feedbackDelayList[this.soundIndex];
 
-      case 'harps':
+      case "harps":
         return harpList[this.soundIndex];
 
-      case 'marimbas':
+      case "marimbas":
         return marimbaList[this.soundIndex];
 
-      case 'pianos':
+      case "pianos":
         return pianoList[this.soundIndex];
 
-      case 'tones':
+      case "tones":
         return toneList[this.soundIndex];
       default:
         return toneList[this.soundIndex];
@@ -101,25 +103,25 @@ class Instrument {
   };
   getSoundIdx = (type) => {
     switch (type) {
-      case 'drums':
+      case "drums":
         return Math.floor(Math.random() * drumList.length);
 
-      case 'chords':
+      case "chords":
         return Math.floor(Math.random() * chordList.length);
 
-      case 'feedbackDelays':
+      case "feedbackDelays":
         return Math.floor(Math.random() * feedbackDelayList.length);
 
-      case 'harps':
+      case "harps":
         return Math.floor(Math.random() * harpList.length);
 
-      case 'marimbas':
+      case "marimbas":
         return Math.floor(Math.random() * marimbaList.length);
 
-      case 'pianos':
+      case "pianos":
         return Math.floor(Math.random() * pianoList.length);
 
-      case 'tones':
+      case "tones":
         return Math.floor(Math.random() * toneList.length);
       default:
         return Math.floor(Math.random() * toneList.length);
