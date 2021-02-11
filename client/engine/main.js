@@ -35,7 +35,7 @@ export const init = () => {
   camera.position.z = 30;
   renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x38373d, 1);
+  
   canvas.appendChild(renderer.domElement);
 
   light = new THREE.DirectionalLight(0xffffff, 1);
@@ -45,18 +45,19 @@ export const init = () => {
   //create Jam Space and the Hammer
   let jamSpaceGeometry = new THREE.RingGeometry(10, 10, 32);
   let jamSpaceMaterial = new THREE.MeshBasicMaterial({
-    color: 0x1be322,
+    color: 0x5e5a5d,
     side: THREE.DoubleSide,
     wireframe: true,
     wireframeLinewidth: 2,
   });
   jamSpace = new THREE.LineLoop(jamSpaceGeometry, jamSpaceMaterial);
-  jamSpace.scale.set(30, 30, 30);
+  jamSpace.scale.set(34, 34, 34);
+  jamSpace.position.setY(70)
   scene.add(jamSpace);
 
   let hammerGeometry = new THREE.BoxGeometry(0.1, 10, 0.1);
   let hammerMaterial = new THREE.MeshBasicMaterial({
-    color: 0x1be322,
+    color: 0x5e5a5d,
     side: THREE.DoubleSide,
     wireframe: false,
   });
@@ -87,6 +88,7 @@ export const init = () => {
   let slider = document.getElementById("slider");
   slider.addEventListener("change", onInput);
   function onInput() {
+    console.log(slider.value)
     sliderValue = Number(slider.value);
   }
 

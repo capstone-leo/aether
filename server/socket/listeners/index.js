@@ -1,10 +1,5 @@
-const Promise = require("bluebird");
-const { forOwn, size, pickBy, random, find } = require("lodash");
-const { Player, Room } = require("../../db");
-const store = require("../../store.js");
-const roomNames = require("../../roomnames");
-const { addRoom } = require("../../reducers/rooms");
-const { addPlayer, playerLeaves } = require("../../reducers/players");
+const store = require('../../store.js');
+const { receiveMessage } = require ('../../reducers/messages')
 const {
   receiveInstrument,
   receiveAllInstrument,
@@ -54,6 +49,12 @@ const setUpListeners = (io, socket) => {
       type: data.type,
       soundIndex: data.soundIndex,
     });
+  });
+  socket.on('add_message', (data) => {
+    store.dispatch(receiveMessage(data));
+    io.sockets.emit('new_message',
+    store.getState().messageReducer.slice(-1)[0]);
+    console.log(store.getState().messageReducer)
   });
   socket.on("remove_instrument", (id) => {
     store.dispatch(removeInstrument(id));

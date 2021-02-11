@@ -48,7 +48,7 @@ const Home = (props) => {
   // Conditional Auth render
   return (
     <>
-      <div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
+      <div id='homediv' style={{ textAlign: 'center', paddingTop: '12%', fontSize: '60px' }}>
         <BackgroundParticles />
         <header style={{ textShadow: '2px 6px 6 rgba(218, 217, 217, 0.346)' }}>
           a e t h e r
