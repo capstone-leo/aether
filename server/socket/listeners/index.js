@@ -5,6 +5,7 @@ const store = require('../../store.js');
 const roomNames = require('../../roomnames');
 const { addRoom } = require('../../reducers/rooms');
 const { addPlayer, playerLeaves } = require('../../reducers/players');
+const { receiveMessage } = require ('../../reducers/messages')
 const {
   receiveInstrument,
   receiveAllInstrument,
@@ -38,6 +39,13 @@ const setUpListeners = (io, socket) => {
       id: instrument.slice(-1)[0].id,
       position: instrument.slice(-1)[0].position,
     });
+  });
+  socket.on('add_message', (data) => {
+    console.log('message data', data)
+    store.dispatch(receiveMessage(data));
+   console.log('store after message', store.getState().messageReducer)
+    io.sockets.emit('new_message', store.getState().messageReducer.slice(-1));
+    // console.log(store.getState())
   });
   socket.on('drag_instrument', (data) => {
     store.dispatch(dragInstrument(data.id, data.position));

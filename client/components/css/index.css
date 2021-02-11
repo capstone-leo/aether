@@ -25,22 +25,41 @@ code {
 #aboutbtn:hover {
   cursor: pointer;
 }
+@keyframes slide
+{
+  0% { left: 10px; }
+  50% { left: 160px; }
+  100% { left: 10px; }
+}
 
 #slider {
-  position: absolute;
   right: 30px;
   top: 30px;
   color: gray;
-
+  z-index: 1;
+  /* appearance: slider-horizontal;
+    color: -internal-light-dark(rgb(16, 16, 16), rgb(255, 255, 255)); */
+  padding: 0;  
+  transition: all 1s ease;
+   /* animation-name: slide;
+   animation-duration: .2s; */
+   /* animation-iteration-count: 1;
+   animation-delay: 1s;  */
+   /* padding-top: 15px; */
+   transition: all 2s ease;
 }
+
 #slider:hover {
   cursor: grab;
 }
 .slider {
   position: absolute;
   right: 30px;
-  top: 30px;
-  color: 'whitesmoke'
+
+  width: 110px;
+  z-index: 1;
+  color: 'whitesmoke';
+  padding-top: 25px;
 }
 
 .tempoText {
@@ -55,6 +74,8 @@ code {
   position: relative;
   top: 10px;
   color: whitesmoke;
+  padding-bottom: 20px !important;
+  transition: all 2s ease;
 }
 
 .Modal {
@@ -171,6 +192,7 @@ button.home-btn:active {
 	box-shadow: inset rgba(233, 233, 233, 0.726);
 	text-align: 'center';
 	 padding-top: '12%';
+
 	
 }
 

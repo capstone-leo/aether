@@ -59,7 +59,7 @@ export const init = () => {
   });
   jamSpace = new THREE.LineLoop(jamSpaceGeometry, jamSpaceMaterial);
   jamSpace.scale.set(34, 34, 34);
-  jamSpace.position.setY(60)
+  jamSpace.position.setY(70)
   scene.add(jamSpace);
 
   let hammerGeometry = new THREE.BoxGeometry(0.1, 10, 0.1);
@@ -95,6 +95,7 @@ export const init = () => {
   let slider = document.getElementById('slider');
   slider.addEventListener('change', onInput);
   function onInput() {
+    console.log(slider.value)
     sliderValue = Number(slider.value);
   }
 

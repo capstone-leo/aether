@@ -10,12 +10,10 @@ export const receiveMessages = (messages) => ({
 	messages
 });
 
-export const receiveMessage = (message) => {
-	return {
+export const receiveMessage = (message) => ({
 		type: RECEIVE_MESSAGE,
 		message
-	};
-};
+});
 
 // Reducer
 export default (state = initialState, action) => {
