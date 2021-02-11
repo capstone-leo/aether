@@ -74,8 +74,8 @@ const Home = (props) => {
 		<motion.div
 			exit={{ opacity: 0.9 }}
 			animate={{ opacity: 1 }}
-			initial={{ opacity: 0.2 }}
-			transition={{ duration: 2.5 }}
+			initial={{ opacity: 0.6 }}
+			transition={{ duration: 0.5 }}
 		>
 			<div
 				id='homediv'
@@ -91,7 +91,7 @@ const Home = (props) => {
 					variants={container}
 					initial={{ scaleX: 0.9, y: 60 }}
 					animate={{ scaleX: 1.23, y: 1 }}
-					transition={{ duration: 30 }}
+					transition={{ duration: 20 }}
 					style={style}
 				>
 					<header
