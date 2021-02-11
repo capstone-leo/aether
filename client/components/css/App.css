@@ -106,11 +106,12 @@ input {
   flex-direction: column;
   position: absolute;
   float: left;
-  margin-top: 10%;
-  border: 2px solid #000000;
+  margin-top: 6%;
   height: 400px;
   width: 50px;
   margin-left: 2px;
+  z-index: -1;
+  color: #5e5a5d;
 }
 #addInstrumentIcon {
   width: 40px;
@@ -175,17 +176,17 @@ input {
   position: absolute;
   width: 50%;
   height: 60px;
-  bottom: 20px;
-  right: 25%;
-  left: 25%;
-  box-shadow: 4px 3px 8px 1px #000000;
-  -webkit-box-shadow: 4px 3px 8px 1px #000000;
+  bottom: 40px;
+  right: 20%;
+  left: 30%;
+  box-shadow: 4px 3px 8px 1px #5e5a5d;
+  -webkit-box-shadow: 4px 3px 8px 1px #5e5a5d;
 }
 .white-key {
-  border: 1px black solid;
+  border: 1px solid #5e5a5d;
   width: 20px;
   height: 60px;
-  background-color: grey;
+  background-color: transparent;
   color: red;
   text-align: center;
   border-radius: 5px;

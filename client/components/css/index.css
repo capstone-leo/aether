@@ -4,10 +4,8 @@ body {
 		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	/* display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh; */
+	background: radial-gradient(#f07e7ee0, #7a81c7);
+
 }
 
 code {
@@ -91,7 +89,7 @@ code {
 #chat-box {
   position: absolute;
   bottom: 50px;
-  left: 50px;
+  left: 95px;
   background: transparent;
   color: whitesmoke
 }
@@ -129,38 +127,51 @@ button.home-btn {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;
 	font-weight: 600;
-	background: radial-gradient(
+	/* background: radial-gradient(
 		circle,
 		rgb(230, 229, 223) 10%,
 		rgba(255, 255, 255, 1) 90%
-	);
-	color: #000000;
+	); */
+	background: transparent !important;
+	color: #333333ea;
 	cursor: pointer;
 	border: 0;
 	transition: all 0.5s;
-	border-radius: 10px;
+	padding: 20px;
+	border-radius: 6px;
 	width: auto;
 	position: relative;
-	padding: 0.5%;
+	border: 1px solid rgba(241, 241, 241, 0.473) !important;
 }
 
 button.home-btn:hover {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;
 	font-weight: 600;
-	background: rgb(230, 229, 223) 0%;
-	color: #000000;
+	background: rgba(233, 233, 233, 0.205) !important;
+	color: #333333ea;
 	cursor: pointer;
-	border: 0;
+	border: 0; 
 	transition: all 0.5s;
 	border-radius: 0px;
 	width: auto;
 	position: relative;
-	padding: 0.5%;
+	padding: 20px;
+	border: 1px transparent !important
 }
 button.home-btn:active {
-	transform: scale(0.9);
-	transition: all 0.2s;
+	transition: all 0.4s;
+}
+
+#homediv {
+	display: block;
+	background: rgba(233, 233, 233, 0.726);
+	height: 100vh;
+	width: 100vw;
+	box-shadow: inset rgba(233, 233, 233, 0.726);
+	text-align: 'center';
+	 padding-top: '12%';
+	
 }
 
 .no-outline-on-focus {
