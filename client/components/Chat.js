@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import socket from '../socket';
 import store from '../store'
 import receiveMessage from '../reducer/messages'
+import { nanoid } from 'nanoid'
 // import nanoid from 'nanoid'
 
 //once we start having usernames/nicknames this needs
@@ -17,22 +18,21 @@ export const Chat = (props) => {
     document.querySelector('li') !== null
       ? setTimeout(function () {
           document.querySelector('li').remove();
-        }, 3000)
+
+        }, 5000)
       : null;
   });
 
   const sendMessage = () => {
-    console.log({message})
-    console.log('messages from the store bakc in the frontend', store.getState().messages)
-      socket.emit('add_message', message);
-      // setMessage('');
-      // store.dispatch(receiveMessage(message))
+      socket.emit('add_message', {message: message, id: nanoid()});
       setMessage('')
-      // console.log(newMessage)
-      console.log('store on send', store.getState())
+      console.log(nanoid())
+      console.log(store.getState().messages)
+      document.getElementById('new-message').value=''
     }
-  const messageList = store.getState().messages.map((message, i)=>
-  <li key={i}>{message}</li>)
+  const messageList = 'whatup yo'
+  // store.getState().messages.map((message, i)=>
+  // <li key={i}>{message}</li>)
 
   const removeMessage = () => {};
 
@@ -47,7 +47,6 @@ export const Chat = (props) => {
         id="new-message"
         onInput={(e) => {
           setMessage(e.target.value);
-          console.log(messageList)
         }}
         onKeyDown={(e) => (e.key === 'Enter' ? sendMessage() : null)}
         placeholder="chat"

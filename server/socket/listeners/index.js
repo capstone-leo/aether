@@ -41,11 +41,10 @@ const setUpListeners = (io, socket) => {
     });
   });
   socket.on('add_message', (data) => {
-    console.log('message data', data)
     store.dispatch(receiveMessage(data));
-   console.log('store after message', store.getState().messageReducer)
-    io.sockets.emit('new_message', store.getState().messageReducer.slice(-1));
-    // console.log(store.getState())
+    io.sockets.emit('new_message', 
+    store.getState().messageReducer.slice(-1)[0]);
+    console.log(store.getState().messageReducer)
   });
   socket.on('drag_instrument', (data) => {
     store.dispatch(dragInstrument(data.id, data.position));

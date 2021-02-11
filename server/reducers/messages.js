@@ -3,7 +3,7 @@ const initialState = [];
 // Action Type
 const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
 const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
-
+const REMOVE_MESSAGE = 'REMOVE_MESSAGE'
 // Action Creators
  const receiveMessages = (messages) => ({
 	type: RECEIVE_MESSAGES,
@@ -22,6 +22,8 @@ const messageReducer = (state = initialState, action) => {
 			return action.messages;
 		case RECEIVE_MESSAGE:
 			return [...state, action.message];
+        case REMOVE_MESSAGE:
+            return state.filter((message)=>message.id !== action.message.id)
 		default:
 			return state;
 	}

@@ -43,11 +43,10 @@ const App = () => {
     setModalOpen(!modalOpen);
   };
 
+  
   useEffect(() => {
     init();
     animate();
-
-    // start();
     controls.current = { start, stop };
     window.addEventListener(
       'click',
@@ -122,7 +121,7 @@ const App = () => {
 
       <Slider id="slider" />
       <About toggleModal={toggleModal} />
-      <Modal className="Modal" appElement={mount.current} isOpen={modalOpen}>
+      <Modal id="Modal" className="Modal" appElement={mount.current} isOpen={modalOpen}>
         <div className="modalTextDiv">
           double click these shapes to adjust their sounds
           <br />
