@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { setNewUser } from '../reducer/user';
 import { connect } from 'react-redux';
+import { motion } from 'framer-motion';
 
 import { auth, db } from '../Firebase';
 import Loading from './Loading';
@@ -21,7 +22,12 @@ const UserAccountPage = (props) => {
 
 	if (!auth.currentUser) return <Redirect to='/' />;
 	return (
-		<>
+		<motion.div
+			exit={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			initial={{ opacity: 0 }}
+			transition={{ duration: 1.5 }}
+		>
 			{loading ? (
 				<div style={{ textAlign: 'center', marginTop: '15%', fontSize: '60px' }}>
 					<BackgroundParticles />
@@ -49,7 +55,7 @@ const UserAccountPage = (props) => {
 					<SignOut setcurrentUser={setcurrentUser} />
 				</div>
 			)}
-		</>
+		</motion.div>
 	);
 };
 
