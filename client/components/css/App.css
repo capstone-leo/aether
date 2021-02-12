@@ -172,32 +172,35 @@ input {
 
 .piano {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   position: absolute;
-  width: 50%;
-  height: 60px;
-  bottom: 40px;
-  right: 17%;
-  left: 33%;
+  width: 45%;
+  height: 45px;
+  bottom: 0.5%;
+  right: 27.5%;
+  left: 27.5%;
   box-shadow: 4px 3px 8px 1px #5e5a5d;
   -webkit-box-shadow: 4px 3px 8px 1px #5e5a5d;
+  flex-grow: 1;
 }
 .white-key {
+  display: flex;
+  flex-direction: row;
   border: 1px solid #5e5a5d;
-  width: 20px;
-  height: 60px;
+  width: 1.4%;
+  height: 45px;
   background-color: transparent;
-  color: red;
-  text-align: center;
   border-radius: 5px;
+  flex-grow: 1;
 }
 .black-key {
   background-color: black;
-  width: 12px;
-  height: 35px;
-  margin-left: -6px;
-  margin-right: -6px;
-  color: red;
-  text-align: center;
+  width: 1%;
+  height: 30px;
+  margin-left: -4.5px;
+  margin-right: -4.5px;
   border-radius: 5px;
+  z-index: 1;
+  flex-grow: 2;
 }
