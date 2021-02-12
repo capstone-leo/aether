@@ -211,7 +211,7 @@ function onMouseMove(event) {
 function addInstrument(soundType = 'tone', random) {
   let newInstrument;
   if (random) {
-    newInstrument = new Instrument(nanoid(), soundType, soundType);
+    newInstrument = new Instrument(nanoid(), undefined, soundType);
   } else {
     newInstrument = new Instrument(
       nanoid(),
@@ -229,7 +229,10 @@ function addInstrument(soundType = 'tone', random) {
 
 function playSound() {
   if (objectSelect) {
-    objectSelect.sound();
+    if (objectSelect.hover) {
+      console.log(objectSelect);
+      objectSelect.playSound();
+    }
   }
 }
 
