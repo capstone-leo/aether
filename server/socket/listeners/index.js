@@ -28,6 +28,7 @@ const setUpListeners = (io, socket) => {
   socket.on('add_instrument', (data) => {
     store.dispatch(receiveInstrument(data));
     const { instrument } = store.getState();
+    console.log(instrument);
     const { id, position, soundType, soundIndex } = instrument.slice(-1)[0];
     io.sockets.emit('spawn_instrument', {
       id,
