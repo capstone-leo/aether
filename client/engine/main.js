@@ -167,7 +167,6 @@ export const animate = () => {
       if (instrument.boundary.intersectsBox(hammerBox)) {
         if (instrument.alreadyPlayed === false) {
           instrument.playSound();
-          console.log(instrument.type);
           instrument.alreadyPlayed = true;
         }
       } else {
