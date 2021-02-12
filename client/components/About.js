@@ -14,7 +14,7 @@ export function About(props) {
         // }}
         onClick={() => toggleModal()}
       >
-        about
+        instructions
       </button>
     </div>
   );

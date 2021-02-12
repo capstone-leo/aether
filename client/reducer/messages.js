@@ -3,6 +3,7 @@ const initialState = [];
 // Action Type
 const RECEIVE_MESSAGES = 'RECEIVE_MESSAGES';
 const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 
 // Action Creators
 export const receiveMessages = (messages) => ({
@@ -10,12 +11,15 @@ export const receiveMessages = (messages) => ({
 	messages
 });
 
-export const receiveMessage = (message) => {
-	return {
+export const receiveMessage = (message) => ({
 		type: RECEIVE_MESSAGE,
 		message
-	};
-};
+});
+
+export const removeMessage = (id) => ({
+	type: REMOVE_MESSAGE,
+	id,
+})
 
 // Reducer
 export default (state = initialState, action) => {
@@ -24,6 +28,9 @@ export default (state = initialState, action) => {
 			return action.messages;
 		case RECEIVE_MESSAGE:
 			return [...state, action.message];
+		case REMOVE_MESSAGE:
+			console.log('front mmoooovoer state', state, 'action', action.id.slice(-1)[0].id)
+			return state.filter((message) => message.id !== action.id.slice(-1)[0].id);
 		default:
 			return state;
 	}

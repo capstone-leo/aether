@@ -1,66 +1,82 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import socket from '../socket';
+import store from '../store';
+import receiveMessage, { deleteMessage } from '../reducer/messages';
+import { nanoid } from 'nanoid';
+// import nanoid from 'nanoid'
 
 //once we start having usernames/nicknames this needs
 //to be updated for username: message
 
 export const Chat = (props) => {
   const { messages } = props;
-
   const [message, setMessage] = useState('');
-  const messageList = useRef(null);
+  const [name, setName] = useState('');
+  const [isNameSet, setIsNameSet] = useState(false);
 
-  useEffect(() => {
-    document.querySelector('li') !== null
-      ? setTimeout(function () {
-          document.querySelector('li').remove();
-        }, 3000)
-      : null;
-  });
+  //  useEffect(() => { //props.messages.length ?
+  //   // document.querySelector('li') !== null ?
+  //   //   // ? setTimeout(function () {
+  //   //       removeMessage()
+  //   //       //document.querySelector('li').remove();
+  //   //       // setTimeOut(function () {
+  //   //       //   removeMessage()
+  //   //     // }, 1000)
+  //   //   : null
+  // });
 
   const sendMessage = () => {
-    let newMessage = message;
-    if (newMessage) {
-      socket.emit('new_message', message);
-      setMessage('');
-    }
+    socket.emit('add_message', { message: message, id: nanoid() });
+    setMessage('');
+    console.log('first store', store.getState().messages);
+    document.getElementById('new-message').value = '';
+    setTimeout(function () {
+      removeMessage(message, store.getState().messages);
+    }, 4000);
   };
 
-  const removeMessage = () => {};
+  const onNameSubmit = () => {
 
-  return (
-    <div id="chat-box">
-      <ul id="message-list" ref={messageList}>
-        {messages &&
-          messages.map((message, i) => {
-            let { message: text } = message;
-            return <li key={i}>{`${text}`}</li>;
-          })}
-      </ul>
+    setIsNameSet(true);
+    document.getElementById('new-message').value = '';
+  };
+
+  const messageList = store
+    .getState()
+    .messages.map((message, i) => <li key={i}>{message.message}</li>);
+
+  const removeMessage = (message, id) => {
+    socket.emit('remove_message', id);
+  };
+
+  return isNameSet ? (
+    <div id='chat-box'>
+      <ul id='message-list'>{messageList}</ul>
       <input
         style={{ background: 'transparent', color: 'whitesmoke' }}
-        value={message}
-        id="new-message"
-        onChange={(e) => {
-          setMessage(e.target.value);
+        id='new-message'
+        onInput={(e) => {
+          setMessage(`${name}: ` + e.target.value);
         }}
         onKeyDown={(e) => (e.key === 'Enter' ? sendMessage() : null)}
-        placeholder="chat"
+        placeholder='chat'
       ></input>
-      {/* <button
-       style={{background: 'transparent', color: 'whitesmoke'}}
-        onClick={(e) => {
-          e.preventDefault();
-          sendMessage();
-        }}
-      > */}
-      {/* Send
-      </button> */}
+    </div>
+  ) : (
+    <div id='chat-box'>
+      <ul id='message-list'>{messageList}</ul>
+      <input
+        style={{ background: 'transparent', color: 'whitesmoke' }}
+        id='new-message'
+        onChange={(e)=>setName(e.target.value)}
+        onKeyDown={(e) => (e.key === 'Enter' ? onNameSubmit() : null)}
+        placeholder='enter name to start chat'
+      ></input>
     </div>
   );
 };
 
-const mapStateToProps = ({ messages }) => ({ messages });
+const mapStateToProps = (messages) => messages;
 
 export default connect(mapStateToProps, null)(Chat);

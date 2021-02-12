@@ -8,10 +8,11 @@ import {
 } from './reducer/instruments';
 import Instrument from './components/Instruments/Instrument';
 import { instruments } from './engine/main';
+import { removeMessage } from './reducer/messages'
 import store from './store';
 
 export default (socket) => {
-  socket.on('add_message', (message) => {
+  socket.on('new_message', (message) => {
     store.dispatch(receiveMessage(message));
   });
   socket.on('hover', (hoverHighlight) => {
@@ -20,20 +21,36 @@ export default (socket) => {
   socket.on('spawn_all_instruments', (instruments) => {
     store.dispatch(receiveAllInstruments(instruments));
     instruments.forEach((instrument) => {
-      let newInstrument = new Instrument(instrument.id, instrument.position);
+      let newInstrument = new Instrument(
+        instrument.id,
+        instrument.position,
+        instrument.soundType,
+        instrument.soundIndex
+      );
       newInstrument.init();
       store.dispatch(
-        receiveInstrument({ id: instrument.id, position: instrument.position })
+        receiveInstrument({
+          id: instrument.id,
+          position: instrument.position,
+          soundType: instrument.soundType,
+          soundIndex: instrument.soundIndex,
+        })
       );
     });
   });
   socket.on('spawn_instrument', (data) => {
-    const instrument = new Instrument(data.id, data.position);
+    const instrument = new Instrument(
+      data.id,
+      data.position,
+      data.soundType,
+      data.soundIndex
+    );
     instrument.init();
     store.dispatch(receiveInstrument(data));
   });
   socket.on('update_instrument', (instrument) => {
-    store.dispatch(dragInstrument(instrument.id, instrument.position));
+    const { id, position, soundType, soundIndex } = instrument;
+    store.dispatch(dragInstrument(id, position, soundType, soundIndex));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === instrument.id) {
         sceneInstrument.updatePosition(
@@ -51,4 +68,10 @@ export default (socket) => {
       }
     });
   });
+  socket.on('delete_message', (id) => {
+console.log('front store,before', store.getState(), 'id', id)
+    store.dispatch(removeMessage(id));
+    console.log('eeeeeeek frontend after remove', store.getState())
+    
+  })
 };

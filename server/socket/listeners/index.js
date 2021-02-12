@@ -1,10 +1,5 @@
-const Promise = require('bluebird');
-const { forOwn, size, pickBy, random, find } = require('lodash');
-const { Player, Room } = require('../../db');
 const store = require('../../store.js');
-const roomNames = require('../../roomnames');
-const { addRoom } = require('../../reducers/rooms');
-const { addPlayer, playerLeaves } = require('../../reducers/players');
+const { receiveMessage, deleteMessage } = require('../../reducers/messages');
 const {
   receiveInstrument,
   receiveAllInstrument,
@@ -26,26 +21,45 @@ const getRoom = () => {
 };
 
 const setUpListeners = (io, socket) => {
-  socket.on('get_all_instruments', (data) => {
+  socket.on('get_all_instruments', () => {
     const { instrument } = store.getState();
     socket.emit('spawn_all_instruments', instrument);
   });
   socket.on('add_instrument', (data) => {
     store.dispatch(receiveInstrument(data));
     const { instrument } = store.getState();
-    console.log(instrument.slice(-1)[0].position);
+    const { id, position, soundType, soundIndex } = instrument.slice(-1)[0];
     io.sockets.emit('spawn_instrument', {
-      id: instrument.slice(-1)[0].id,
-      position: instrument.slice(-1)[0].position,
+      id,
+      position,
+      soundType,
+      soundIndex,
     });
   });
   socket.on('drag_instrument', (data) => {
-    store.dispatch(dragInstrument(data.id, data.position));
-    const { instrument } = store.getState();
+    store.dispatch(
+      dragInstrument(data.id, data.position, data.soundType, data.soundIndex)
+    );
     io.sockets.emit('update_instrument', {
       id: data.id,
       position: data.position,
+      soundType: data.soundType,
+      soundIndex: data.soundIndex,
     });
+  });
+  socket.on('add_message', (data) => {
+    store.dispatch(receiveMessage(data));
+    io.sockets.emit(
+      'new_message',
+      store.getState().messageReducer.slice(-1)[0]
+    );
+    console.log('yooo', store.getState().messageReducer);
+  });
+  socket.on('remove_message', (id) => {
+    console.log('backend before', store.getState().messageReducer);
+    store.dispatch(deleteMessage(id.slice(-1)[0].id));
+    console.log('backend after', store.getState().messageReducer);
+    io.sockets.emit('delete_message', id);
   });
   socket.on('remove_instrument', (id) => {
     store.dispatch(removeInstrument(id));
