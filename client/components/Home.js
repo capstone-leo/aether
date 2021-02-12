@@ -49,7 +49,7 @@ const Home = (props) => {
   return (
     <>
       <div id='homediv' style={{ textAlign: 'center', paddingTop: '12%', fontSize: '60px' }}>
-        <BackgroundParticles />
+        <Particles />
         <header style={{ textShadow: '2px 6px 6 rgba(218, 217, 217, 0.346)' }}>
           a e t h e r
         </header>

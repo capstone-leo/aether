@@ -211,7 +211,7 @@ function onMouseMove(event) {
 function addInstrument(soundType = 'tone', random) {
   let newInstrument;
   if (random) {
-    newInstrument = new Instrument(nanoid(), soundType, soundType);
+    newInstrument = new Instrument(nanoid(), undefined, soundType, soundType);
   } else {
     newInstrument = new Instrument(
       nanoid(),
