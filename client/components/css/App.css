@@ -203,6 +203,9 @@ input {
   -webkit-box-shadow: 4px 3px 8px 1px #5e5a5d;
   flex-grow: 1;
 }
+.piano:hover {
+  cursor: pointer;
+}
 .white-key {
   display: flex;
   flex-direction: row;
