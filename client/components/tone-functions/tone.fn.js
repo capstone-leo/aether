@@ -110,7 +110,6 @@ export default [
     let chord = chords[chordIdx],
       note = chord[step % chord.length];
     synth.triggerAttackRelease(note, '16n', time);
-    console.log('step', step % chord.length);
     step++;
   },
   function sinB4() {

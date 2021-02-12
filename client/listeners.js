@@ -8,11 +8,11 @@ import {
 } from './reducer/instruments';
 import Instrument from './components/Instruments/Instrument';
 import { instruments } from './engine/main';
+import { removeMessage } from './reducer/messages'
 import store from './store';
 
 export default (socket) => {
   socket.on('new_message', (message) => {
-    console.log('YOOO', message);
     store.dispatch(receiveMessage(message));
   });
   socket.on('hover', (hoverHighlight) => {
@@ -24,7 +24,7 @@ export default (socket) => {
       let newInstrument = new Instrument(
         instrument.id,
         instrument.position,
-        instrument.type,
+        instrument.soundType,
         instrument.soundIndex
       );
       newInstrument.init();
@@ -32,26 +32,25 @@ export default (socket) => {
         receiveInstrument({
           id: instrument.id,
           position: instrument.position,
-          type: instrument.type,
+          soundType: instrument.soundType,
           soundIndex: instrument.soundIndex,
         })
       );
     });
   });
   socket.on('spawn_instrument', (data) => {
-    console.log('data', data);
     const instrument = new Instrument(
       data.id,
       data.position,
-      data.type,
+      data.soundType,
       data.soundIndex
     );
     instrument.init();
     store.dispatch(receiveInstrument(data));
   });
   socket.on('update_instrument', (instrument) => {
-    const { id, position, type, soundIndex } = instrument;
-    store.dispatch(dragInstrument(id, position, type, soundIndex));
+    const { id, position, soundType, soundIndex } = instrument;
+    store.dispatch(dragInstrument(id, position, soundType, soundIndex));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === instrument.id) {
         sceneInstrument.updatePosition(
@@ -69,4 +68,10 @@ export default (socket) => {
       }
     });
   });
+  socket.on('delete_message', (id) => {
+console.log('front store,before', store.getState(), 'id', id)
+    store.dispatch(removeMessage(id));
+    console.log('eeeeeeek frontend after remove', store.getState())
+    
+  })
 };

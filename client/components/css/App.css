@@ -110,7 +110,6 @@ input {
   height: 400px;
   width: 50px;
   margin-left: 2px;
-  z-index: -1;
   color: #5e5a5d;
 }
 #addInstrumentIcon {
