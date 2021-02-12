@@ -9,5 +9,5 @@ module.exports = combineReducers({
   rooms,
   playerReducer,
   instrument,
-  messageReducer
+  messageReducer,
 });
