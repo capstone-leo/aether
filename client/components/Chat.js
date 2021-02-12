@@ -14,13 +14,15 @@ export const Chat = (props) => {
   const [message, setMessage] = useState('')
 
 
-  useEffect(() => {
-    document.querySelector('li') !== null
-      ? setTimeout(function () {
-          document.querySelector('li').remove();
-          removeMessage()
-        }, 1000)
-      : null;
+   useEffect(() => { //props.messages.length ?
+    // document.querySelector('li') !== null ?
+    //   // ? setTimeout(function () {
+    //       removeMessage()
+    //       //document.querySelector('li').remove();
+    //       // setTimeOut(function () {
+    //       //   removeMessage()
+    //     // }, 1000)
+    //   : null
   });
 
   const sendMessage = () => {
@@ -30,27 +32,27 @@ export const Chat = (props) => {
       document.getElementById('new-message').value=''
       setTimeout(function () {
         removeMessage(message, store.getState().messages)
-      }, 1000)
+      }, 4000)
     }
   
 
   const messageList = 
   store.getState().messages.map((message, i)=>
-  <li key={i}>{message}</li>)
+  <li key={i}>{message.message}</li>)
 
   const removeMessage = (message, id) => {
     socket.emit('remove_message', id)
-    setTimeout(function () {
-      // document.querySelector('li').remove();
-      console.log('latemessages', store.getState().messages)
-    }, 3000)
+    // setTimeout(function () {
+    //   // document.querySelector('li').remove();
+    //   console.log('latemessages', store.getState().messages)
+    // }, 3000)
   }
   
 
   return (
     <div id="chat-box">
       <ul id="message-list">
-        {/* {messageList} */}
+        {messageList}
       </ul>
       <input
         style={{ background: 'transparent', color: 'whitesmoke' }}

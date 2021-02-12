@@ -13,7 +13,6 @@ import store from './store';
 
 export default (socket) => {
   socket.on('new_message', (message) => {
-    console.log('YOOO', message);
     store.dispatch(receiveMessage(message));
   });
   socket.on('hover', (hoverHighlight) => {
@@ -71,7 +70,7 @@ export default (socket) => {
     });
   });
   socket.on('delete_message', (id) => {
-console.log('front store,before', store.getState())
+console.log('front store,before', store.getState(), 'id', id)
     store.dispatch(removeMessage(id));
     console.log('eeeeeeek frontend after remove', store.getState())
     
