@@ -1,6 +1,6 @@
-import * as three from "three";
-import * as tone from "tone";
-import { scene, draggableObjects, instruments } from "../../engine/main";
+import * as three from 'three';
+import * as tone from 'tone';
+import { scene, draggableObjects, instruments } from '../../engine/main';
 import {
   drumList,
   chordList,
@@ -9,11 +9,10 @@ import {
   marimbaList,
   pianoList,
   toneList,
-} from "../tone-functions";
+} from '../tone-functions';
 
 class Instrument {
-  constructor(id, position, type, soundIndex) {
-    this.type = type;
+  constructor(id, position, soundType, soundIndex) {
     this.geometry = new three.BoxGeometry(50, 20, 20);
     this.material = new three.MeshLambertMaterial({
       //wireframe: true,
@@ -21,14 +20,14 @@ class Instrument {
       //wireframeLinewidth: 2,
       polygonOffset: true,
       polygonOffsetUnits: 1,
-      polygonOffsetFactor: 0
+      polygonOffsetFactor: 0,
     });
     this.mesh = new three.Mesh(this.geometry, this.material);
     this.mesh.reduxid = id;
+    this.soundType = soundType;
+    this.mesh.soundType = this.soundType;
     //sets random X & Y coordinates where -300 >= X >= 300 & -150 >= Y >= 150 (basically it wont be in the circle)
     if (!position) {
-      console.log('position', position
-      )
       this.mesh.position.setX(
         Math.floor(Math.random() * 300 + 350) * (Math.random() < 0.5 ? -1 : 1)
       );
@@ -44,9 +43,9 @@ class Instrument {
     this.boundaryHelper = new three.BoxHelper(this.mesh, 0xff0000);
     this.boundaryHelper.object = this.mesh;
 
-    this.soundIndex = soundIndex || this.getSoundIdx(this.type);
-    this.sound = this.getSound(this.type);
-
+    this.soundIndex = soundIndex || this.getSoundIdx(this.soundType);
+    this.sound = this.getSound(this.soundType);
+    this.mesh.soundIndex = this.soundIndex;
     this.mesh.sound = this.sound;
     this.mesh.playSound = () => {
       this.mesh.sound();
@@ -56,7 +55,7 @@ class Instrument {
   }
   transportStart = () => {
     tone.Transport.start();
-    console.log("ok");
+    console.log('ok');
   };
   transportStop = () => {
     tone.Transport.stop();
@@ -78,53 +77,53 @@ class Instrument {
     draggableObjects.filter((instrument) => instrument.reduxid !== id);
     scene.remove(this.mesh);
   };
-  getSound = (type) => {
-    switch (type) {
-      case "drums":
+  getSound = (soundType) => {
+    switch (soundType) {
+      case 'drums':
         return drumList[this.soundIndex];
 
-      case "chords":
+      case 'chords':
         return chordList[this.soundIndex];
 
-      case "feedbackDelays":
+      case 'feedbackDelays':
         return feedbackDelayList[this.soundIndex];
 
-      case "harps":
+      case 'harps':
         return harpList[this.soundIndex];
 
-      case "marimbas":
+      case 'marimbas':
         return marimbaList[this.soundIndex];
 
-      case "pianos":
+      case 'pianos':
         return pianoList[this.soundIndex];
 
-      case "tones":
+      case 'tones':
         return toneList[this.soundIndex];
       default:
         return toneList[this.soundIndex];
     }
   };
-  getSoundIdx = (type) => {
-    switch (type) {
-      case "drums":
+  getSoundIdx = (soundType) => {
+    switch (soundType) {
+      case 'drums':
         return Math.floor(Math.random() * drumList.length);
 
-      case "chords":
+      case 'chords':
         return Math.floor(Math.random() * chordList.length);
 
-      case "feedbackDelays":
+      case 'feedbackDelays':
         return Math.floor(Math.random() * feedbackDelayList.length);
 
-      case "harps":
+      case 'harps':
         return Math.floor(Math.random() * harpList.length);
 
-      case "marimbas":
+      case 'marimbas':
         return Math.floor(Math.random() * marimbaList.length);
 
-      case "pianos":
+      case 'pianos':
         return Math.floor(Math.random() * pianoList.length);
 
-      case "tones":
+      case 'tones':
         return Math.floor(Math.random() * toneList.length);
       default:
         return Math.floor(Math.random() * toneList.length);

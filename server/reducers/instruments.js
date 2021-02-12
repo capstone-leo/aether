@@ -1,37 +1,38 @@
-const { pickBy } = require("lodash");
+const { pickBy } = require('lodash');
 let newState;
 
 /*----------  INITIAL STATE  ----------*/
 const initialState = [];
 
 /*----------  ACTION TYPES  ----------*/
-const RECEIVE_ALL_INSTRUMENTS = "RECEIVE_ALL_INSTRUMENTS";
-const RECEIVE_INSTRUMENT = "RECEIVE_INSTRUMENT";
-const DRAG_INSTRUMENT = "DRAG_INSTRUMENT";
-const REMOVE_INSTRUMENT = "REMOVE_INSTRUMENT";
+const RECEIVE_ALL_INSTRUMENTS = 'RECEIVE_ALL_INSTRUMENTS';
+const RECEIVE_INSTRUMENT = 'RECEIVE_INSTRUMENT';
+const DRAG_INSTRUMENT = 'DRAG_INSTRUMENT';
+const REMOVE_INSTRUMENT = 'REMOVE_INSTRUMENT';
 
 /*----------  ACTION CREATORS  ----------*/
-const receiveAllInstruments = (instruments) => ({
-  type: RECEIVE_ALL_INSTRUMENTS,
-  instruments,
-});
+const receiveAllInstruments = (instruments) => {
+  return {
+    type: RECEIVE_ALL_INSTRUMENTS,
+    instruments,
+  };
+};
 
 const receiveInstrument = (data) => {
-  console.log("data server --> ", data);
   return {
     type: RECEIVE_INSTRUMENT,
     instrument: {
       id: data.id,
       position: data.position,
-      type: data.type,
+      soundType: data.soundType,
       soundIndex: data.soundIndex,
     },
   };
 };
 
-const dragInstrument = (id, position, type, soundIndex) => ({
+const dragInstrument = (id, position, soundType, soundIndex) => ({
   type: DRAG_INSTRUMENT,
-  instrument: { id, position, type, soundIndex },
+  instrument: { id, position, soundType, soundIndex },
 });
 
 const removeInstrument = (id) => ({
@@ -55,7 +56,7 @@ const immutable = (state = initialState, action) => {
           return {
             id: action.instrument.id,
             position: action.instrument.position,
-            type: action.instrument.type,
+            soundType: action.instrument.soundType,
             soundIndex: action.instrument.soundIndex,
           };
         } else {
@@ -82,7 +83,7 @@ const mutable = (state = initialState, action) => {
           return {
             id: action.instrument.id,
             position: action.instrument.position,
-            type: action.instrument.type,
+            soundType: action.instrument.soundType,
             soundIndex: action.instrument.soundIndex,
           };
         } else {
@@ -121,16 +122,16 @@ const mutable = (state = initialState, action) => {
 
 const chooseReducer = (reducerMode) => {
   switch (reducerMode) {
-    case "mutable":
+    case 'mutable':
       return mutable;
-    case "immutable":
+    case 'immutable':
       return immutable;
     default:
       return mutable;
   }
 };
 
-const reducer = chooseReducer("immutable");
+const reducer = chooseReducer('immutable');
 
 module.exports = {
   reducer,
