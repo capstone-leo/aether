@@ -1,5 +1,5 @@
 const store = require('../../store.js');
-const { receiveMessage } = require ('../../reducers/messages')
+const { receiveMessage, deleteMessage } = require ('../../reducers/messages')
 const {
   receiveInstrument,
   receiveAllInstrument,
@@ -54,8 +54,14 @@ const setUpListeners = (io, socket) => {
     store.dispatch(receiveMessage(data));
     io.sockets.emit('new_message',
     store.getState().messageReducer.slice(-1)[0]);
-    console.log(store.getState().messageReducer)
+    console.log('yooo',store.getState().messageReducer)
   });
+  socket.on('remove_message', (id) => {
+    console.log('backend before', store.getState().messageReducer)
+    store.dispatch(deleteMessage(id.slice(-1)[0].id))
+    console.log('backend after', store.getState().messageReducer)
+    io.sockets.emit('delete_message', id)
+  })
   socket.on("remove_instrument", (id) => {
     store.dispatch(removeInstrument(id));
     io.sockets.emit("delete_instrument", id);

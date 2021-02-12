@@ -8,6 +8,7 @@ import {
 } from './reducer/instruments';
 import Instrument from './components/Instruments/Instrument';
 import { instruments } from './engine/main';
+import { removeMessage } from './reducer/messages'
 import store from './store';
 
 export default (socket) => {
@@ -69,4 +70,10 @@ export default (socket) => {
       }
     });
   });
+  socket.on('delete_message', (id) => {
+console.log('front store,before', store.getState())
+    store.dispatch(removeMessage(id));
+    console.log('eeeeeeek frontend after remove', store.getState())
+    
+  })
 };

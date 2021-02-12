@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import socket from '../socket';
 import store from '../store'
-import receiveMessage from '../reducer/messages'
+import receiveMessage, { deleteMessage } from '../reducer/messages'
 import { nanoid } from 'nanoid'
 // import nanoid from 'nanoid'
 
@@ -18,28 +18,39 @@ export const Chat = (props) => {
     document.querySelector('li') !== null
       ? setTimeout(function () {
           document.querySelector('li').remove();
-
-        }, 5000)
+          removeMessage()
+        }, 1000)
       : null;
   });
 
   const sendMessage = () => {
-      socket.emit('add_message', message);
+      socket.emit('add_message', {message: message, id: nanoid()});
       setMessage('')
-      console.log(nanoid())
-      console.log(store.getState().messages)
+      console.log('first store', store.getState().messages)
       document.getElementById('new-message').value=''
+      setTimeout(function () {
+        removeMessage(message, store.getState().messages)
+      }, 1000)
     }
+  
+
   const messageList = 
   store.getState().messages.map((message, i)=>
   <li key={i}>{message}</li>)
 
-  const removeMessage = () => {};
+  const removeMessage = (message, id) => {
+    socket.emit('remove_message', id)
+    setTimeout(function () {
+      // document.querySelector('li').remove();
+      console.log('latemessages', store.getState().messages)
+    }, 3000)
+  }
+  
 
   return (
     <div id="chat-box">
       <ul id="message-list">
-        {messageList}
+        {/* {messageList} */}
       </ul>
       <input
         style={{ background: 'transparent', color: 'whitesmoke' }}
@@ -47,6 +58,7 @@ export const Chat = (props) => {
         id="new-message"
         onInput={(e) => {
           setMessage(e.target.value);
+         
         }}
         onKeyDown={(e) => (e.key === 'Enter' ? sendMessage() : null)}
         placeholder="chat"
