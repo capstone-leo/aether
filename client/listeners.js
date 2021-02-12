@@ -39,7 +39,6 @@ export default (socket) => {
     });
   });
   socket.on('spawn_instrument', (data) => {
-    console.log('spawn_instrument data ==>', data);
     const instrument = new Instrument(
       data.id,
       data.position,

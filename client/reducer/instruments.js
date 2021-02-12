@@ -17,7 +17,6 @@ export const receiveAllInstruments = (instruments) => ({
 });
 
 export const receiveInstrument = (instrument) => {
-  console.log('instrument in client side reducer the hammer!!', instrument);
   return {
     type: RECEIVE_INSTRUMENT,
     instrument,
@@ -49,7 +48,6 @@ export default (state = initialState, action) => {
       return [...newState, action.instrument];
     case DRAG_INSTRUMENT:
       return state.map((instrument) => {
-        console.log(instrument);
         if (instrument.id === action.instrument.id) {
           return {
             id: action.instrument.id,

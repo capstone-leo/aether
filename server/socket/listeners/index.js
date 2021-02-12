@@ -23,11 +23,9 @@ const getRoom = () => {
 const setUpListeners = (io, socket) => {
   socket.on('get_all_instruments', () => {
     const { instrument } = store.getState();
-    console.log('instrument in get all --> ', instrument);
     socket.emit('spawn_all_instruments', instrument);
   });
   socket.on('add_instrument', (data) => {
-    console.log('listener index data', data);
     store.dispatch(receiveInstrument(data));
     const { instrument } = store.getState();
     const { id, position, soundType, soundIndex } = instrument.slice(-1)[0];
