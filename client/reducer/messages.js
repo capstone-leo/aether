@@ -16,9 +16,9 @@ export const receiveMessage = (message) => ({
 		message
 });
 
-export const removeMessage = (message) => ({
+export const removeMessage = (id) => ({
 	type: REMOVE_MESSAGE,
-	message
+	id,
 })
 
 // Reducer
@@ -28,6 +28,9 @@ export default (state = initialState, action) => {
 			return action.messages;
 		case RECEIVE_MESSAGE:
 			return [...state, action.message];
+		case REMOVE_MESSAGE:
+			console.log('front mmoooovoer state', state, 'action', action.id.slice(-1)[0].id)
+			return state.filter((message) => message.id !== action.id.slice(-1)[0].id);
 		default:
 			return state;
 	}

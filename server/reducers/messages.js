@@ -15,6 +15,11 @@ const receiveMessage = (message) => ({
 		message
 });
 
+const deleteMessage = (id) => ({
+    type: REMOVE_MESSAGE,
+    id
+})
+
 // Reducer
 const messageReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -23,10 +28,10 @@ const messageReducer = (state = initialState, action) => {
 		case RECEIVE_MESSAGE:
 			return [...state, action.message];
         case REMOVE_MESSAGE:
-            return state.filter((message)=>message.id !== action.message.id)
+            return state.filter((message)=>message.id !== action.id)
 		default:
 			return state;
 	}
 };
 
-module.exports = {messageReducer, receiveMessage, receiveMessages}
+module.exports = {messageReducer, receiveMessage, receiveMessages, deleteMessage}
