@@ -68,20 +68,13 @@ const Home = (props) => {
 			initial={{ opacity: 0.6 }}
 			transition={{ duration: 0.5 }}
 		>
-			<div
-				id='homediv'
-				style={{
-					textAlign: 'center',
-					paddingTop: '20%',
-					fontSize: '60px'
-				}}
-			>
+			<div id='homediv'>
 				<BackgroundParticles />
 				<Frame
 					variants={container}
-					initial={{ scaleX: 0.9, y: 60 }}
-					animate={{ scaleX: 1.23, y: 1 }}
-					transition={{ duration: 20 }}
+					initial={{ scaleX: 0.9, y: 30 }}
+					animate={{ scaleX: 1.19, y: 1 }}
+					transition={{ duration: 9, yoyo: Infinity }}
 					style={style}
 				>
 					<header

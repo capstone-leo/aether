@@ -227,20 +227,22 @@ canvas {
 
 #homediv {
 	display: block;
-	background: rgba(233, 233, 233, 0.466);
+	/* background: rgba(233, 233, 233, 0.466); */
 	height: 100%;
 	width: 100%;
 	box-shadow: inset rgba(233, 233, 233, 0.726);
-	text-align: 'center';
+	text-align: center;
 	position: fixed;
 	top: 0;
 	left: 0;
+	padding-top: 11%;
+	font-size: 55px;
 }
 
 header {
 	color: #000000;
-	font-weight: '2500';
-	font-size: '70px';
+	font-weight: 2500;
+	font-size: 70px;
 	/* text-shadow: -1px 0 rgb(51, 51, 51), 0 1px black, 1px 0 black, 0 -1px black; */
 }
 @keyframes rotate {
