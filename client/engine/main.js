@@ -1,14 +1,15 @@
-import * as THREE from "three";
+import * as THREE from 'three';
 
-import Instrument from "../components/Instruments/Instrument";
-import { DragControls } from "three/examples/jsm/controls/DragControls";
-import { nanoid } from "nanoid";
-import { dragInstrument } from "../reducer/instruments";
-import store from "../store";
-import socket from "../socket";
+import Instrument from '../components/Instruments/Instrument';
+import { DragControls } from 'three/examples/jsm/controls/DragControls';
+import { nanoid } from 'nanoid';
+import { dragInstrument } from '../reducer/instruments';
+import store from '../store';
+import socket from '../socket';
 
 let size, aspect, frameId, canvas;
-let scene, camera, renderer, light;
+let scene, camera, renderer;
+let directionalLight, pointLight;
 let mouse, mouseThree, raycaster, objectSelect, dragControls;
 let hammer, hammerBox, jamSpace;
 let draggableObjects;
@@ -17,11 +18,11 @@ let instruments = [];
 draggableObjects = [];
 
 export const init = () => {
-  socket.emit("get_all_instruments");
+  socket.emit('get_all_instruments');
   instruments = store.getState().instruments;
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
-  canvas = document.getElementById("canvas");
+  canvas = document.getElementById('canvas');
 
   scene = new THREE.Scene();
   camera = new THREE.OrthographicCamera(
@@ -35,24 +36,23 @@ export const init = () => {
   camera.position.z = 30;
   renderer = new THREE.WebGLRenderer({ alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  
+
   canvas.appendChild(renderer.domElement);
 
-  light = new THREE.DirectionalLight(0xffffff, 1);
-  light.position.set(1, 1, 1).normalize();
-  scene.add(light);
+  directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  directionalLight.position.set(1, 1, 1).normalize();
+  scene.add(directionalLight);
 
   //create Jam Space and the Hammer
-  let jamSpaceGeometry = new THREE.RingGeometry(10, 10, 32);
-  let jamSpaceMaterial = new THREE.MeshBasicMaterial({
+  let jamSpaceGeometry = new THREE.TorusGeometry(10, 0.25, 256, 128);
+  let jamSpaceMaterial = new THREE.MeshPhongMaterial({
     color: 0x5e5a5d,
     side: THREE.DoubleSide,
-    wireframe: true,
-    wireframeLinewidth: 2,
   });
+
   jamSpace = new THREE.LineLoop(jamSpaceGeometry, jamSpaceMaterial);
   jamSpace.scale.set(34, 34, 34);
-  jamSpace.position.setY(70)
+  jamSpace.position.setY(70);
   scene.add(jamSpace);
 
   let hammerGeometry = new THREE.BoxGeometry(0.1, 10, 0.1);
@@ -77,49 +77,48 @@ export const init = () => {
     camera,
     renderer.domElement
   );
-  dragControls.addEventListener("drag", onDrag);
-
+  dragControls.addEventListener('drag', onDrag);
 
   mouse = new THREE.Vector2();
   mouseThree = new THREE.Vector3();
   raycaster = new THREE.Raycaster();
 
   sliderValue = 0.05;
-  let slider = document.getElementById("slider");
-  slider.addEventListener("change", onInput);
+  let slider = document.getElementById('slider');
+  slider.addEventListener('change', onInput);
   function onInput() {
-    console.log(slider.value)
+    console.log(slider.value);
     sliderValue = Number(slider.value);
   }
 
   //USER INTERFACE
-  const drumIcon = document.getElementById("drumIcon");
-  drumIcon.addEventListener("click", function () {
-    addInstrument("drums", "random");
+  const drumIcon = document.getElementById('drumIcon');
+  drumIcon.addEventListener('click', function () {
+    addInstrument('drums', 'random');
   });
-  const addInstrumentIcon = document.getElementById("addInstrumentIcon");
-  addInstrumentIcon.addEventListener("click", function (e) {
-    addInstrument("tones", "random");
+  const addInstrumentIcon = document.getElementById('addInstrumentIcon');
+  addInstrumentIcon.addEventListener('click', function (e) {
+    addInstrument('tones', 'random');
   });
-  const chordIcon = document.getElementById("chordIcon");
-  chordIcon.addEventListener("click", function () {
-    addInstrument("chords", "random");
+  const chordIcon = document.getElementById('chordIcon');
+  chordIcon.addEventListener('click', function () {
+    addInstrument('chords', 'random');
   });
-  const pianoIcon = document.getElementById("pianoIcon");
-  pianoIcon.addEventListener("click", function () {
-    addInstrument("pianos", "random");
+  const pianoIcon = document.getElementById('pianoIcon');
+  pianoIcon.addEventListener('click', function () {
+    addInstrument('pianos', 'random');
   });
-  const marimbaIcon = document.getElementById("marimbaIcon");
-  marimbaIcon.addEventListener("click", function () {
-    addInstrument("marimbas", "random");
+  const marimbaIcon = document.getElementById('marimbaIcon');
+  marimbaIcon.addEventListener('click', function () {
+    addInstrument('marimbas', 'random');
   });
-  const harpIcon = document.getElementById("harpIcon");
-  harpIcon.addEventListener("click", function () {
-    addInstrument("harps", "random");
+  const harpIcon = document.getElementById('harpIcon');
+  harpIcon.addEventListener('click', function () {
+    addInstrument('harps', 'random');
   });
-  const feedbackDelayIcon = document.getElementById("feedbackDelayIcon");
-  feedbackDelayIcon.addEventListener("click", function () {
-    addInstrument("feedbackDelays", "random");
+  const feedbackDelayIcon = document.getElementById('feedbackDelayIcon');
+  feedbackDelayIcon.addEventListener('click', function () {
+    addInstrument('feedbackDelays', 'random');
   });
 };
 
@@ -172,8 +171,6 @@ export const animate = () => {
     });
   }
 
-  
-
   const instrumentPositions = draggableObjects.map((instrument) => {
     return {
       id: instrument.id,
@@ -207,37 +204,28 @@ function onMouseMove(event) {
   mouseThree.y = raycaster.ray.origin.y;
 }
 
-function addInstrument(type, random) {
- console.log('TYPE',type)
- let newInstrument;
- if(random){
-   newInstrument = new Instrument(nanoid(), undefined, type)
- }else{
-
-   newInstrument = new Instrument(
-     nanoid(),
-     [mouseThree.x, mouseThree.y],
-     type,
-   )   
- }
-  
-  console.log("new instr .soundIdx", newInstrument.soundIndex);
-  socket.emit("add_instrument", {
+function addInstrument(soundType = 'tone', random) {
+  let newInstrument;
+  if (random) {
+    newInstrument = new Instrument(nanoid(), undefined, soundType);
+  } else {
+    newInstrument = new Instrument(
+      nanoid(),
+      [mouseThree.x, mouseThree.y],
+      soundType
+    );
+  }
+  socket.emit('add_instrument', {
     id: newInstrument.mesh.reduxid,
     position: [newInstrument.mesh.position.x, newInstrument.mesh.position.y],
-    type,
+    soundType,
     soundIndex: newInstrument.soundIndex,
   });
 }
 
-
-
 function playSound() {
   if (objectSelect) {
-    if (objectSelect.hover) {
-      console.log(objectSelect);
-      objectSelect.sound();
-    }
+    objectSelect.sound();
   }
 }
 
@@ -251,24 +239,20 @@ const stop = () => {
   frameId = null;
 };
 
-
 function onDrag(e) {
-  const draggingObjectReduxId = e.object.reduxid;
-  store.dispatch(
-    dragInstrument(draggingObjectReduxId, [
-      e.object.position.x,
-      e.object.position.y,
-    ])
-  );
-  socket.emit("drag_instrument", {
-    id: draggingObjectReduxId,
-    position: [e.object.position.x, e.object.position.y],
+  const { reduxId, position, soundType, soundIndex } = e.object.reduxid;
+  store.dispatch(dragInstrument(reduxId, position, soundType, soundIndex));
+  socket.emit('drag_instrument', {
+    id: reduxId,
+    position,
+    soundType,
+    soundIndex,
   });
   renderScene();
 }
 
 function onShiftClick() {
-  socket.emit("remove_instrument", objectSelect.reduxid);
+  socket.emit('remove_instrument', objectSelect.reduxid);
   store.dispatch(removeInstrument(objectSelect.reduxid));
 }
 
@@ -290,7 +274,8 @@ export {
   scene,
   camera,
   renderer,
-  light,
+  directionalLight,
+  pointLight,
   mouse,
   raycaster,
   objectSelect,

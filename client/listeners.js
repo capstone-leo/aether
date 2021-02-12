@@ -24,7 +24,7 @@ export default (socket) => {
       let newInstrument = new Instrument(
         instrument.id,
         instrument.position,
-        instrument.type,
+        instrument.soundType,
         instrument.soundIndex
       );
       newInstrument.init();
@@ -32,26 +32,26 @@ export default (socket) => {
         receiveInstrument({
           id: instrument.id,
           position: instrument.position,
-          type: instrument.type,
+          soundType: instrument.soundType,
           soundIndex: instrument.soundIndex,
         })
       );
     });
   });
   socket.on('spawn_instrument', (data) => {
-    console.log('data', data);
+    console.log('spawn_instrument data ==>', data);
     const instrument = new Instrument(
       data.id,
       data.position,
-      data.type,
+      data.soundType,
       data.soundIndex
     );
     instrument.init();
     store.dispatch(receiveInstrument(data));
   });
   socket.on('update_instrument', (instrument) => {
-    const { id, position, type, soundIndex } = instrument;
-    store.dispatch(dragInstrument(id, position, type, soundIndex));
+    const { id, position, soundType, soundIndex } = instrument;
+    store.dispatch(dragInstrument(id, position, soundType, soundIndex));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === instrument.id) {
         sceneInstrument.updatePosition(
