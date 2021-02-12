@@ -12,8 +12,7 @@ import {
 } from '../tone-functions';
 
 class Instrument {
-  constructor(id, position, type, soundIndex) {
-    this.type = type;
+  constructor(id, position, soundType, soundIndex) {
     this.geometry = new three.BoxGeometry(50, 20, 20);
     this.material = new three.MeshLambertMaterial({
       //wireframe: true,
@@ -25,6 +24,8 @@ class Instrument {
     });
     this.mesh = new three.Mesh(this.geometry, this.material);
     this.mesh.reduxid = id;
+    this.soundType = soundType;
+    this.mesh.soundType = this.soundType;
     //sets random X & Y coordinates where -300 >= X >= 300 & -150 >= Y >= 150 (basically it wont be in the circle)
     if (!position) {
       this.mesh.position.setX(
@@ -42,9 +43,9 @@ class Instrument {
     this.boundaryHelper = new three.BoxHelper(this.mesh, 0xff0000);
     this.boundaryHelper.object = this.mesh;
 
-    this.soundIndex = soundIndex || this.getSoundIdx(this.type);
-    this.sound = this.getSound(this.type);
-
+    this.soundIndex = soundIndex || this.getSoundIdx(this.soundType);
+    this.sound = this.getSound(this.soundType);
+    this.mesh.soundIndex = this.soundIndex;
     this.mesh.sound = this.sound;
     this.mesh.playSound = () => {
       this.mesh.sound();
@@ -76,8 +77,8 @@ class Instrument {
     draggableObjects.filter((instrument) => instrument.reduxid !== id);
     scene.remove(this.mesh);
   };
-  getSound = (type) => {
-    switch (type) {
+  getSound = (soundType) => {
+    switch (soundType) {
       case 'drums':
         return drumList[this.soundIndex];
 
@@ -102,8 +103,8 @@ class Instrument {
         return toneList[this.soundIndex];
     }
   };
-  getSoundIdx = (type) => {
-    switch (type) {
+  getSoundIdx = (soundType) => {
+    switch (soundType) {
       case 'drums':
         return Math.floor(Math.random() * drumList.length);
 

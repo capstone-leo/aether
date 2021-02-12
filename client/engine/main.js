@@ -39,9 +39,13 @@ export const init = () => {
 
   canvas.appendChild(renderer.domElement);
 
+  pointLight = new THREE.PointLight(0xff0000, 2, 0);
+  pointLight.position.set(1000, 100, 1);
+  scene.add(pointLight);
   directionalLight = new THREE.DirectionalLight(0xffffff, 1);
   directionalLight.position.set(1, 1, 1).normalize();
   scene.add(directionalLight);
+  scene.fog = new THREE.Fog(0x040306, 10, 300);
 
   //create Jam Space and the Hammer
   let jamSpaceGeometry = new THREE.TorusGeometry(10, 0.25, 256, 128);
@@ -163,6 +167,7 @@ export const animate = () => {
       if (instrument.boundary.intersectsBox(hammerBox)) {
         if (instrument.alreadyPlayed === false) {
           instrument.playSound();
+          console.log(instrument.type);
           instrument.alreadyPlayed = true;
         }
       } else {
@@ -207,7 +212,7 @@ function onMouseMove(event) {
 function addInstrument(soundType = 'tone', random) {
   let newInstrument;
   if (random) {
-    newInstrument = new Instrument(nanoid(), undefined, soundType);
+    newInstrument = new Instrument(nanoid(), soundType, soundType);
   } else {
     newInstrument = new Instrument(
       nanoid(),
@@ -240,13 +245,20 @@ const stop = () => {
 };
 
 function onDrag(e) {
-  const { reduxId, position, soundType, soundIndex } = e.object.reduxid;
-  store.dispatch(dragInstrument(reduxId, position, soundType, soundIndex));
+  const draggingObjectReduxId = e.object.reduxid;
+  store.dispatch(
+    dragInstrument(
+      draggingObjectReduxId,
+      [e.object.position.x, e.object.position.y],
+      e.object.soundType,
+      e.object.soundIndex
+    )
+  );
   socket.emit('drag_instrument', {
-    id: reduxId,
-    position,
-    soundType,
-    soundIndex,
+    id: draggingObjectReduxId,
+    position: [e.object.position.x, e.object.position.y],
+    soundType: e.object.soundType,
+    soundIndex: e.object.soundIndex,
   });
   renderScene();
 }
