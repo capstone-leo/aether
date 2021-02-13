@@ -14,7 +14,7 @@
 }
 header {
   text-align: center;
-  font-family: "Source Code Pro", monospace;
+  font-family: 'Source Code Pro', monospace;
 }
 .App-header {
   background-color: #282c34;
@@ -106,24 +106,15 @@ input {
   flex-direction: column;
   position: absolute;
   float: left;
-<<<<<<< HEAD
-  margin-top: 10%;
-  /* border: 2px solid #000000; */
-=======
   margin-top: 6%;
->>>>>>> 9e8ed9f7d87e93c72d730176a8d9d124d170f27e
   height: 400px;
-  /* width: 50px; */
+  width: 50px;
   margin-left: 2px;
-<<<<<<< HEAD
-  z-Index: -1;
-=======
   color: #5e5a5d;
->>>>>>> 9e8ed9f7d87e93c72d730176a8d9d124d170f27e
 }
 #addInstrumentIcon {
-  /* width: 40px;
-  height: 40px; */
+  width: 40px;
+  height: 40px;
   margin-left: 5px;
   margin-right: 5px;
   color: whitesmoke;

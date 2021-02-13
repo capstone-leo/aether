@@ -3,10 +3,18 @@ import * as THREE from 'three'
 import Instrument from '../components/Instruments/Instrument'
 import {DragControls} from 'three/examples/jsm/controls/DragControls'
 import {nanoid} from 'nanoid'
-import {dragInstrument} from '../reducer/instruments'
+import {
+  dragInstrument,
+  receiveAllInstruments,
+  receiveInstrument,
+  removeInstrument,
+} from '../reducer/instruments'
 import store from '../store'
 import socket from '../socket'
 
+import {auth, fetchScene, sceneRef, setScene} from '../Firebase'
+
+let singlePlayerSession
 let size, aspect, frameId, canvas
 let scene, camera, renderer
 let directionalLight, pointLight
@@ -17,14 +25,45 @@ let sliderValue
 let instruments = []
 draggableObjects = []
 
-export const init = () => {
-  socket.emit('get_all_instruments')
-  instruments = store.getState().instruments
+let data
+async function load() {
+  data = await fetchScene().scene
+  return data
+}
+// if (auth.currentUser) {
+load()
+// }
+
+// Initializes the Scene
+export const init = (sessionType) => {
+  scene = new THREE.Scene()
+  singlePlayerSession = sessionType
+
+  if (singlePlayerSession) {
+    const instru = store.getState().instruments
+    console.log('instru', instru)
+    instru.forEach((element) => {
+      console.log('element-->', element)
+      const newInstrument = new Instrument(
+        element.id,
+        element.position,
+        element.soundType,
+        element.soundIndex
+      )
+      newInstrument.init()
+      // console.log('scene-->', scene)
+    })
+    // console.log('instruments-->', instruments)
+  } else {
+    socket.emit('get_all_instruments')
+    instruments = store.getState().instruments
+  }
+  console.log('store.get st instru', store.getState().instruments)
+
   size = 1000
   aspect = window.innerWidth / window.innerHeight
   canvas = document.getElementById('canvas')
 
-  scene = new THREE.Scene()
   camera = new THREE.OrthographicCamera(
     (size * aspect) / -2,
     (size * aspect) / 2,
@@ -206,7 +245,7 @@ function onMouseMove(event) {
 function addInstrument(soundType = 'tone', random) {
   let newInstrument
   if (random) {
-    newInstrument = new Instrument(nanoid(), soundType, soundType)
+    newInstrument = new Instrument(nanoid(), undefined, soundType)
   } else {
     newInstrument = new Instrument(
       nanoid(),
@@ -214,12 +253,28 @@ function addInstrument(soundType = 'tone', random) {
       soundType
     )
   }
-  socket.emit('add_instrument', {
-    id: newInstrument.mesh.reduxid,
-    position: [newInstrument.mesh.position.x, newInstrument.mesh.position.y],
-    soundType,
-    soundIndex: newInstrument.soundIndex,
-  })
+  if (singlePlayerSession) {
+    store.dispatch(
+      receiveInstrument({
+        id: newInstrument.mesh.reduxid,
+        position: [
+          newInstrument.mesh.position.x,
+          newInstrument.mesh.position.y,
+        ],
+        soundType,
+        soundIndex: newInstrument.soundIndex,
+      })
+    )
+    // instruments.push(newInstrument)
+    newInstrument.init()
+  } else {
+    socket.emit('add_instrument', {
+      id: newInstrument.mesh.reduxid,
+      position: [newInstrument.mesh.position.x, newInstrument.mesh.position.y],
+      soundType,
+      soundIndex: newInstrument.soundIndex,
+    })
+  }
 }
 
 function playSound() {
@@ -240,26 +295,52 @@ const stop = () => {
 
 function onDrag(e) {
   const draggingObjectReduxId = e.object.reduxid
-  store.dispatch(
-    dragInstrument(
-      draggingObjectReduxId,
-      [e.object.position.x, e.object.position.y],
-      e.object.soundType,
-      e.object.soundIndex
+  if (singlePlayerSession) {
+    store.dispatch(
+      dragInstrument(
+        draggingObjectReduxId,
+        [e.object.position.x, e.object.position.y],
+        e.object.soundType,
+        e.object.soundIndex
+      )
     )
-  )
-  socket.emit('drag_instrument', {
-    id: draggingObjectReduxId,
-    position: [e.object.position.x, e.object.position.y],
-    soundType: e.object.soundType,
-    soundIndex: e.object.soundIndex,
-  })
+    instruments.forEach((sceneInstrument) => {
+      if (sceneInstrument.mesh.reduxid === draggingObjectReduxId) {
+        sceneInstrument.updatePosition(e.object.position.x, e.object.position.y)
+      }
+    })
+  } else {
+    store.dispatch(
+      dragInstrument(
+        draggingObjectReduxId,
+        [e.object.position.x, e.object.position.y],
+        e.object.soundType,
+        e.object.soundIndex
+      )
+    )
+    socket.emit('drag_instrument', {
+      id: draggingObjectReduxId,
+      position: [e.object.position.x, e.object.position.y],
+      soundType: e.object.soundType,
+      soundIndex: e.object.soundIndex,
+    })
+  }
+
   renderScene()
 }
 
 function onShiftClick() {
-  socket.emit('remove_instrument', objectSelect.reduxid)
-  store.dispatch(removeInstrument(objectSelect.reduxid))
+  if (singlePlayerSession) {
+    store.dispatch(removeInstrument(objectSelect.reduxid))
+    instruments.forEach((sceneInstrument) => {
+      if (sceneInstrument.mesh.reduxid === objectSelect.reduxid) {
+        sceneInstrument.smash(objectSelect.reduxid)
+      }
+    })
+  } else {
+    socket.emit('remove_instrument', objectSelect.reduxid)
+    store.dispatch(removeInstrument(objectSelect.reduxid))
+  }
 }
 
 export {

@@ -45,7 +45,7 @@ const Home = (props) => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeydown)
     console.log('user-->', user)
-    console.log('props-->', props)
+    console.log('current user-->', auth.currentUser)
     if (user) props.setNewUser(user)
   }, [user])
   const [enableOutline, setEnableOutline] = useState(false)

@@ -1,4 +1,4 @@
-const {pickBy} = require('lodash')
+import {fetchScene} from '../Firebase'
 
 let newState
 
@@ -33,9 +33,17 @@ export const removeInstrument = (id) => ({
   type: REMOVE_INSTRUMENT,
   id,
 })
-
-// let reduxInstrument = store.getState().instruments
-// .filter((instrument)=>draggingObjectReduxId === instrument.reduxid)
+// THUNK
+export const loadScene = () => {
+  return async (dispatch) => {
+    try {
+      const {scene} = await fetchScene()
+      dispatch(receiveAllInstruments(scene))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 
 /*----------  REDUCER  ----------*/
 export default (state = initialState, action) => {

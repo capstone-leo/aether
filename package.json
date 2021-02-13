@@ -38,6 +38,8 @@
     "react-scripts": "^4.0.2",
     "recorderjs": "^1.0.1",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "sequelize": "^6.5.0",
     "socket.io": "^3.1.1",
