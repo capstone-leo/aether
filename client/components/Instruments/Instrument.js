@@ -12,12 +12,12 @@ import {
 } from '../tone-functions';
 
 class Instrument {
-  constructor(id, position, soundType, soundIndex) {
+  constructor(id, position, soundType, soundIndex, color) {
     this.geometry = new three.BoxGeometry(50, 20, 20);
     this.material = new three.MeshLambertMaterial({
       //wireframe: true,
       color: Math.random() * 0xffffff,
-      //wireframeLinewidth: 2,
+      
       polygonOffset: true,
       polygonOffsetUnits: 1,
       polygonOffsetFactor: 0,
@@ -47,6 +47,9 @@ class Instrument {
     this.sound = this.getSound(this.soundType);
     this.mesh.soundIndex = this.soundIndex;
     this.mesh.sound = this.sound;
+    this.mesh.color = this.getColor(this.soundType);
+    this.mesh.material.color = new three.Color(this.getColor(soundType));
+
     this.mesh.playSound = () => {
       this.mesh.sound();
     };
@@ -130,8 +133,8 @@ class Instrument {
     }
   };
 
-  getColor = (color) => {
-    switch (color) {
+  getColor = (soundType) => {
+    switch (soundType) {
       case 'drums':
         return 0xff0404; /*red*/
 
@@ -156,6 +159,33 @@ class Instrument {
         return Math.random() * 0xffffff;
     }
   };
+
+  // getGeometry = (geometry) => {
+  //   switch (geometry) {
+  //     case 'drums':
+  //       return 0xff0404; /*red*/
+
+  //     case 'chords':
+  //       return 0xfd7b02; /*orange*/
+
+  //     case 'feedbackDelays':
+  //       return 0xff00c8; /*pinky*/
+
+  //     case 'harps':
+  //       return 0x1b7500; /*green*/
+
+  //     case 'marimbas':
+  //       return 0x0420c4; /*blue*/
+
+  //     case 'pianos':
+  //       return 0x8303fa; /*purp*/
+
+  //     case 'tones':
+  //       return Math.random() * 0xffffff;
+  //     default:
+  //       return Math.random() * 0xffffff;
+  //   }
+  // };
 }
 
 export default Instrument;
