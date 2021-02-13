@@ -112,21 +112,33 @@ input {
   margin-left: 2px;
   color: #5e5a5d;
 }
+
 #addInstrumentIcon {
   width: 40px;
   height: 40px;
   margin-left: 5px;
   margin-right: 5px;
-  color: whitesmoke;
+  color: #ffd900;
+  /* filter: invert(75%) sepia(79%) saturate(540%) hue-rotate(357deg) brightness(100%) contrast(106%); */
 }
+#addInstrumentIcon:hover {
+  cursor: pointer;
+  filter: invert(80%) sepia(51%) saturate(1304%) hue-rotate(358deg) brightness(102%) contrast(105%);
 
+  /* add instrument (star) color: #ffd900; */
+}
 #pianoIcon {
   width: 40px;
   height: 40px;
   margin-top: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
-  color: whitesmoke;
+  color: #8303fa;
+}
+#pianoIcon:hover {
+  cursor: pointer;
+  filter: invert(9%) sepia(99%) saturate(6262%) hue-rotate(274deg) brightness(110%) contrast(112%);
+  /* piano color save this color: #8303fa;*/
 }
 #drumIcon {
   width: 40px;
@@ -134,7 +146,12 @@ input {
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 20px;
-  color: whitesmoke;
+  color: #ff0404;
+}
+#drumIcon:hover {
+  cursor: pointer;
+  filter: invert(16%) sepia(97%) saturate(6501%) hue-rotate(359deg) brightness(110%) contrast(113%);
+  /* drum color don't delete color: #ff0404;*/
 }
 #chordIcon {
   width: 30px;
@@ -144,6 +161,11 @@ input {
   margin-top: 20px;
   color: whitesmoke;
 }
+#chordIcon:hover {
+  cursor: pointer;
+  filter: invert(73%) sepia(74%) saturate(6081%) hue-rotate(3deg) brightness(107%) contrast(98%);
+  /* #fd7b02; chord color do not delete */
+}
 #marimbaIcon {
   width: 50px;
   height: 40px;
@@ -151,6 +173,11 @@ input {
   margin-right: -5px;
   margin-top: 20px;
   color: whitesmoke;
+}
+#marimbaIcon:hover {
+  cursor: pointer;
+  filter: invert(19%) sepia(59%) saturate(4540%) hue-rotate(231deg) brightness(74%) contrast(127%);
+  /*#0420c4; marimba color do not delete */
 }
 #harpIcon {
   width: 50px;
@@ -160,13 +187,23 @@ input {
   margin-top: 20px;
   color: whitesmoke;
 }
+#harpIcon:hover {
+  cursor: pointer;
+  filter: invert(46%) sepia(84%) saturate(1306%) hue-rotate(77deg) brightness(101%) contrast(107%);
+  /*harp color do not delete #1b7500 */
+}
 #feedbackDelayIcon {
   width: 40px;
   height: 30px;
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 20px;
-  color: whitesmoke;
+  color: #ff00c8;
+}
+#feedbackDelayIcon:hover {
+  cursor: pointer;
+  filter: invert(26%) sepia(96%) saturate(5458%) hue-rotate(301deg) brightness(99%) contrast(123%);
+  /* color: #ff00c8; */
 }
 
 .piano {
@@ -176,12 +213,15 @@ input {
   position: absolute;
   width: 65%;
   height: 55px;
-  bottom: 0.5%;
+  bottom: 1.5%;
   right: 17.5%;
   left: 17.5%;
   box-shadow: 4px 3px 8px 1px #5e5a5d;
   -webkit-box-shadow: 4px 3px 8px 1px #5e5a5d;
   flex-grow: 1;
+}
+.piano:hover {
+  cursor: pointer;
 }
 .white-key {
   display: flex;
@@ -193,6 +233,9 @@ input {
   border-radius: 5px;
   flex-grow: 1;
 }
+.white-key:hover {
+  background-color:rgba(255, 255, 255, 0.733)
+}
 .black-key {
   background-color: black;
   width: 2%;
@@ -203,4 +246,6 @@ input {
   z-index: 2;
   flex-grow: 2;
 }
+
 /* test test test */
+

@@ -108,8 +108,9 @@ const App = () => {
 					alt='play-pause'
 
 				/> */}
-        Play / Pause
+        Play
       </button>
+  
       <button
         className="startstop2"
         onClick={() => {

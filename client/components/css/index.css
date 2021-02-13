@@ -108,42 +108,43 @@ code {
 }
 
 #chat-box {
-  position: absolute;
-  bottom: 50px;
-  left: 95px;
-  background: transparent;
-  color: whitesmoke
-}
+	position: absolute;
+	bottom: 100px;
+	right: 60px;
+	background: transparent;
+	color: whitesmoke
+  }
 
 ul {
   list-style-type: none;
 }
 
 .startstop {
-  border-radius: 5px;
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
-  background: transparent;
-  color: whitesmoke;
-  border: none;
-}
-.startstop:hover {
+	border-radius: 5px;
+	position: absolute;
+	bottom: 30px;
+	left: 68px;
+	background: transparent;
+	color: whitesmoke;
+	border: none;
+  }
+  .startstop:hover {
+	cursor: pointer
+  }
+  
+  .startstop2 {
+	border-radius: 5px;
+	position: absolute;
+	bottom: 60px;
+	left: 68px;
+	background: transparent;
+	color: whitesmoke;
+	border: none
+  }
+  .startstop2:hover {
   cursor: pointer
-}
+  }
 
-.startstop2 {
-  border-radius: 5px;
-  position: absolute;
-  bottom: 80px;
-  right: 50px;
-  background: transparent;
-  color: whitesmoke;
-  border: none
-}
-.startstop2:hover {
-cursor: pointer
-}
 button.home-btn {
 	font-family: 'Source Code Pro', monospace;
 	font-size: 20%;

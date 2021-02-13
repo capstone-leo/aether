@@ -129,6 +129,33 @@ class Instrument {
         return Math.floor(Math.random() * toneList.length);
     }
   };
+
+  getColor = (color) => {
+    switch (color) {
+      case 'drums':
+        return 0xff0404; /*red*/
+
+      case 'chords':
+        return 0xfd7b02; /*orange*/
+
+      case 'feedbackDelays':
+        return 0xff00c8; /*pinky*/
+
+      case 'harps':
+        return 0x1b7500; /*green*/
+
+      case 'marimbas':
+        return 0x0420c4; /*blue*/
+
+      case 'pianos':
+        return 0x8303fa; /*purp*/
+
+      case 'tones':
+        return Math.random() * 0xffffff;
+      default:
+        return Math.random() * 0xffffff;
+    }
+  };
 }
 
 export default Instrument;

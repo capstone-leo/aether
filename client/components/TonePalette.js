@@ -9,7 +9,8 @@ export class TonePalette extends Component {
   render() {
     return (
       <div className="TonePalette">
-        <img src="./star.png" id="addInstrumentIcon"></img>
+        <div id='instrumenticon'>
+        <img src="./star.png" id="addInstrumentIcon"></img></div>
         <img src="./drum.png" id="drumIcon"></img>
         <img src="./piano.png" id="pianoIcon"></img>
         <img src="./chord2.png" id="chordIcon"></img>
