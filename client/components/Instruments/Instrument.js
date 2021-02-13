@@ -214,6 +214,7 @@ class Instrument {
 
           target.set(x, y, z).multiplyScalar(7)
         }
+        //comment here
         const slices = 50
         const stacks = 50
         return new three.ParametricGeometry(klein, slices, stacks)
