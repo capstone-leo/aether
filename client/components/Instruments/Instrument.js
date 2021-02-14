@@ -164,11 +164,18 @@ class Instrument {
   getGeometry = (soundType) => {
     switch (soundType) {
       case 'drums':
-        new three.OctahedronGeometry(120, 1)
-      case 'chords':
-        const radius = 40;  
+        const drumRadius = 30;  
 
-       return new three.DodecahedronGeometry(radius);
+const drumHeight = 75;  
+
+const drumRadialSegments = 16;  
+
+return new three.ConeGeometry(drumRadius, drumHeight, drumRadialSegments);
+
+      case 'chords':
+  
+
+       return new three.TorusKnotGeometry( 24, 8, 100, 40 );
 
 
       case 'feedbackDelays':
@@ -212,9 +219,8 @@ class Instrument {
 
           const y = -2 * (1 - Math.cos(u) / 2) * Math.sin(v)
 
-          target.set(x, y, z).multiplyScalar(7)
+          target.set(x, y, z).multiplyScalar(6.5)
         }
-        //comment here
         const slices = 50
         const stacks = 50
         return new three.ParametricGeometry(klein, slices, stacks)
@@ -248,7 +254,7 @@ class Instrument {
           toneRadialSegments
         )
       default:
-        return new three.BoxGeometry(50, 20, 20)
+        return new three.BoxGeometry(50, 25, 25)
         
         // new three.CylinderGeometry(
         //   radiusTop,
