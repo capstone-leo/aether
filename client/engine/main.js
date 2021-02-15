@@ -282,6 +282,10 @@ function addInstrument(soundType = 'tone', random) {
 function playSound() {
   if (objectSelect) {
     objectSelect.sound()
+    if (objectSelect.hover) {
+      console.log(objectSelect)
+      objectSelect.playSound()
+    }
   }
 }
 
