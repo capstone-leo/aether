@@ -164,13 +164,16 @@ class Instrument {
   getGeometry = (soundType) => {
     switch (soundType) {
       case 'drums':
-        const drumRadius = 30;  
-
-const drumHeight = 75;  
-
-const drumRadialSegments = 16;  
-
-return new three.ConeGeometry(drumRadius, drumHeight, drumRadialSegments);
+        const drumRadiusTop = 4
+        const drumRadiusBottom = 26
+        const drumHeight = 60
+        const drumToneRadialSegments = 22
+        return new three.CylinderGeometry(
+          drumRadiusTop,
+          drumRadiusBottom,
+          drumHeight,
+          drumToneRadialSegments
+        )
 
       case 'chords':
   
@@ -219,7 +222,7 @@ return new three.ConeGeometry(drumRadius, drumHeight, drumRadialSegments);
 
           const y = -2 * (1 - Math.cos(u) / 2) * Math.sin(v)
 
-          target.set(x, y, z).multiplyScalar(6.5)
+          target.set(x, y, z).multiplyScalar(5.5)
         }
         const slices = 50
         const stacks = 50
