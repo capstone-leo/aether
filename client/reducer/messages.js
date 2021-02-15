@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
 			return [...state, action.message];
 		case REMOVE_MESSAGE:
 			console.log('front mmoooovoer state', state, 'action', action.id.slice(-1)[0].id)
-			return state.filter((message) => message.id !== action.id.slice(-1)[0].id);
+			return state.filter((message) => message.id !== action.id[0].id);
 		default:
 			return state;
 	}
