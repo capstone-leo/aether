@@ -55,12 +55,12 @@ export const init = (sessionType) => {
       newInstrument.init()
       // console.log('scene-->', scene)
     })
-    // console.log('instruments-->', instruments)
   } else {
     socket.emit('get_all_instruments')
-    instruments = store.getState().instruments
+    // instruments = store.getState().instruments
+    console.log('instruments no solo-->', instruments)
   }
-  console.log('store.get st instru', store.getState().instruments)
+  // console.log('store.get st instru', store.getState().instruments)
 
   size = 1000
   aspect = window.innerWidth / window.innerHeight
