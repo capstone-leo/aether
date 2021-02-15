@@ -17,8 +17,7 @@ import {firebaseApp, auth, db} from '../Firebase'
 import {connect} from 'react-redux'
 import {setNewUser, signOutUser} from '../reducer/user'
 
-
-const darkBlue = Color("#0055FF")
+const darkBlue = Color('#0055FF')
 const blue = Color.lighten(darkBlue, 10)
 
 const container = {
@@ -39,7 +38,7 @@ const style = {
   textAlign: 'center',
   height: '100%',
   width: '100%',
-  backgroundColor: 'transparent'+'!important',
+  backgroundColor: 'transparent' + '!important',
 }
 
 // Main Component
@@ -73,8 +72,8 @@ const Home = (props) => {
       transition={{duration: 0.5}}
       // background={Color.toHexString(blue)}
     >
-       <div id="homediv"> 
-        <BackgroundParticles />
+      <BackgroundParticles />
+      <div id="homediv">
         <Frame
           variants={container}
           initial={{scaleX: 0.9, y: 30}}
@@ -98,7 +97,7 @@ const Home = (props) => {
             <Loading />
           ) : auth.currentUser !== null ? (
             <Frame
-            // background={Color.toHexString(blue)}
+              // background={Color.toHexString(blue)}
               variants={container}
               initial="hidden"
               animate="show"
