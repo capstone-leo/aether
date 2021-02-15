@@ -12,16 +12,17 @@ import {
   handleResize,
   onMouseMove,
   onShiftClick,
-} from '../engine/main'
 
-import {Slider} from './Slider'
-import {About} from './About'
-import Keyboard from './Instruments/Keyboard'
-import Modal from 'react-modal'
-import './css/App.css'
-import Chat from './Chat'
-import socket from '../socket'
-import {connect} from 'react-redux'
+} from "../engine/main";
+import { Slider } from "./Slider";
+import { About } from "./About";
+import Keyboard from "./Instruments/Keyboard";
+import Modal from "react-modal";
+import "./css/App.css";
+import Chat from "./Chat";
+import socket from "../socket";
+import { connect } from "react-redux";
+
 // import play_pause from '../../public/assets/play-pause.png';
 import {motion} from 'framer-motion'
 import store from '../store'

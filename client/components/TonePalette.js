@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 //in App.js
 
 export class TonePalette extends Component {
+
 	render() {
 		return (
 			<div className='TonePalette'>
