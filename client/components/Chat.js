@@ -33,7 +33,7 @@ export const Chat = (props) => {
     document.getElementById('new-message').value = '';
     setTimeout(function () {
       removeMessage(message, store.getState().messages);
-    }, 4000);
+    }, 6000);
   };
 
   const onNameSubmit = () => {
