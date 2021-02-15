@@ -290,4 +290,7 @@ input {
   z-index: 1;
 }
 
+#App {
+  position: absolute;
+}
 /* test test test */

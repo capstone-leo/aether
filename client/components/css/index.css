@@ -12,6 +12,7 @@ body {
   background-size: cover;
 }
 
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -42,6 +43,7 @@ code {
 }
 
 #slider {
+	position: absolute;
   right: 30px;
   top: 30px;
   color: gray;
@@ -73,14 +75,14 @@ code {
 
 .tempoText {
   font-size: 12px;
-  position: relative;
+  position: absolute;
   top: 15px;
   right: 45px;
 }
 
 .sliderchild {
   font-size: 12px;
-  position: relative;
+  position: absolute;
   top: 10px;
   color: whitesmoke;
   padding-bottom: 20px !important;
@@ -114,7 +116,7 @@ code {
 }
 
 .App {
-  position: relative;
+  /* position: relative; */
 }
 
 #chat-box {
