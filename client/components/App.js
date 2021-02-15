@@ -13,7 +13,6 @@ import {
   onMouseMove,
   onShiftClick,
 } from "../engine/main";
-
 import { Slider } from "./Slider";
 import { About } from "./About";
 import Keyboard from "./Instruments/Keyboard";
