@@ -83,19 +83,19 @@ export default [
   function playStopOscillator() {
     const source = new Tone.Oscillator().toDestination();
     source.start();
-    source.stop('+3.5'); // stops the source 3.5 seconds from now
+    source.stop('+2'); // stops the source 3.5 seconds from now
   },
 
   //same thing as above but you specify the note
   function playDurationOscillator() {
     const source = new Tone.Oscillator('C2').toDestination();
     source.start();
-    source.stop('+6'); // IF this is not included the tone renders infinitely
+    source.stop('+2'); // IF this is not included the tone renders infinitely
   },
 
   function playChord() {
     const synth = new Tone.PolySynth().toDestination();
-    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], 3);
+    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], .5);
   },
 
   function playDetunedChord() {
@@ -103,7 +103,7 @@ export default [
     // set the attributes across all the voices using 'set'
     synth.set({ detune: -1200 });
     // play a chord
-    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], 3);
+    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], .5);
   },
 
   function onRepeat(time) {

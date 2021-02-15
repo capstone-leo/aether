@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef} from 'react'
 
 import {
   scene,
@@ -12,8 +12,8 @@ import {
   handleResize,
   onMouseMove,
   onShiftClick,
-} from "../engine/main";
 
+} from "../engine/main";
 import { Slider } from "./Slider";
 import { About } from "./About";
 import Keyboard from "./Instruments/Keyboard";
@@ -22,83 +22,98 @@ import "./css/App.css";
 import Chat from "./Chat";
 import socket from "../socket";
 import { connect } from "react-redux";
+
 // import play_pause from '../../public/assets/play-pause.png';
+import {motion} from 'framer-motion'
+import store from '../store'
 
-import "firebase/firestore";
-import "firebase/auth";
-import { auth, db, realtimeDB } from "../Firebase";
-import { Redirect } from "react-router-dom";
-import TonePalette from "./TonePalette";
+import 'firebase/firestore'
+import 'firebase/auth'
+import {auth, db, sceneRef, fetchScene, setScene} from '../Firebase'
+import {Redirect} from 'react-router-dom'
+import TonePalette from './TonePalette'
 
-const App = () => {
-  const [redirectTo, setRedirectTo] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
-  const [hovering, setHovering] = useState(false);
-  const mount = useRef(null);
-  const [isAnimating, setAnimating] = useState(true);
-  const controls = useRef(null);
-  const hover = useRef(null);
+const App = (props) => {
+  const [redirectTo, setRedirectTo] = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
+  const [hovering, setHovering] = useState(false)
+  const mount = useRef(null)
+  const [isAnimating, setAnimating] = useState(true)
+  const controls = useRef(null)
+  const hover = useRef(null)
 
   const toggleModal = () => {
-    setModalOpen(!modalOpen);
-  };
+    setModalOpen(!modalOpen)
+  }
+  const refresh = () => {
+    // it re-renders the component
+    window.location.reload()
+  }
 
-  
   useEffect(() => {
-    init();
-    animate();
-    controls.current = { start, stop };
+    console.log('props-->', props)
+
+    props.singleSession ? init(true) : init(false)
+    animate()
+    controls.current = {start, stop}
     window.addEventListener(
-      "click",
+      'click',
       (e) => {
         if (e.shiftKey) {
-          onShiftClick(e);
+          onShiftClick(e)
         }
       },
       false
-    );
+    )
 
-    window.addEventListener("dblclick", () => addInstrument(), false);
-    window.addEventListener("click", playSound, false);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('dblclick', () => addInstrument(), false)
+    window.addEventListener('click', playSound, false)
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('resize', handleResize)
 
-    controls.current = { start, stop };
+    controls.current = {start, stop}
 
     //Trash Clean up
     return () => {
-      stop();
-      // window.removeEventListener('resize', handleResize);
-      //dragControls.removeEventListener('drag', onDrag);
-      // for (let i = 0; i < scene.length; i++) {
-      //   scene.remove(i);
-      // }
-    };
-  }, []);
+      stop()
+      window.removeEventListener('dblclick', () => addInstrument(), false)
+      window.removeEventListener('click', playSound, false)
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('resize', handleResize)
+      for (let i = 0; i < scene.length; i++) {
+        scene.remove(i)
+      }
+    }
+  }, [])
 
   //Listens for Start and Stop
   useEffect(() => {
     if (isAnimating) {
-      controls.current.start();
+      controls.current.start()
     } else {
-      controls.current.stop();
+      controls.current.stop()
     }
-  }, [isAnimating]);
+  }, [isAnimating])
 
-  // const endSession = () => {
-  //   setAnimating(false);
-  //   auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
-  // };
+  const LoadConfig = () => {
+    return fetchScene()
+  }
 
-  // if (redirectTo) {
-  //   return <Redirect to={redirectTo} />;
-  // }
+  const SaveConfig = () => {
+    setAnimating(false)
+    auth.currentUser ? setRedirectTo('studio') : setRedirectTo('')
+    return setScene()
+  }
+
+  if (redirectTo) {
+    return <Redirect to={redirectTo} />
+  }
   return (
     <div
       className="App"
       id="canvas"
       ref={mount}
-      style={{ background: "transparent" }}
+      style={{background: 'transparent'}}
       // onClick={() => setAnimating(!isAnimating)}
     >
       <button className="startstop" onClick={() => setAnimating(!isAnimating)}>
@@ -106,22 +121,35 @@ const App = () => {
 
 					src={play_pause}
 					alt='play-pause'
-
+          
 				/> */}
         Play / Pause
       </button>
       <button
         className="startstop2"
         onClick={() => {
-          endSession;
+          SaveConfig()
         }}
       >
-        End Session
+        Save your configuration
       </button>
+      {/* <button
+        className="startstop2"
+        onClick={() => {
+          LoadConfig()
+        }}
+      >
+        console your configuration
+      </button> */}
 
       <Slider id="slider" />
       <About toggleModal={toggleModal} />
-      <Modal id="Modal" className="Modal" appElement={mount.current} isOpen={modalOpen}>
+      <Modal
+        id="Modal"
+        className="Modal"
+        appElement={mount.current}
+        isOpen={modalOpen}
+      >
         <div className="modalTextDiv">
           double click these shapes to adjust their sounds
           <br />
@@ -138,7 +166,7 @@ const App = () => {
       <TonePalette />
       <Keyboard />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

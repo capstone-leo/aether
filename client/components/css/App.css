@@ -136,9 +136,11 @@ input {
   transition: transform 0.3s ease-in-out;
 }
 #addInstrumentIcon:hover {
+  cursor: pointer;
+  filter: invert(80%) sepia(51%) saturate(1304%) hue-rotate(358deg) brightness(102%) contrast(105%);
   transform: scale(1.5);
+  /* add instrument (star) color: #ffd900; */
 }
-
 #pianoIcon {
   width: 40px;
   height: 40px;
@@ -149,7 +151,10 @@ input {
   transition: transform 0.3s ease-in-out;
 }
 #pianoIcon:hover {
+  cursor: pointer;
+  filter: invert(9%) sepia(99%) saturate(6262%) hue-rotate(274deg) brightness(110%) contrast(112%); 
   transform: scale(1.5);
+  /* piano color save this color: #8303fa;*/
 }
 #drumIcon {
   width: 40px;
@@ -161,7 +166,10 @@ input {
   transition: transform 0.3s ease-in-out;
 }
 #drumIcon:hover {
+  cursor: pointer;
+  filter: invert(16%) sepia(97%) saturate(6501%) hue-rotate(359deg) brightness(110%) contrast(113%);
   transform: scale(1.5);
+  /* drum color don't delete color: #ff0404;*/
 }
 #chordIcon {
   width: 30px;
@@ -173,7 +181,10 @@ input {
   transition: transform 0.3s ease-in-out;
 }
 #chordIcon:hover {
+  cursor: pointer;
+  filter: invert(73%) sepia(74%) saturate(6081%) hue-rotate(3deg) brightness(107%) contrast(98%);
   transform: scale(1.5);
+  /* #fd7b02; chord color do not delete */
 }
 #marimbaIcon {
   width: 50px;
@@ -185,7 +196,10 @@ input {
   transition: transform 0.3s ease-in-out;
 }
 #marimbaIcon:hover {
+  cursor: pointer;
+  filter: invert(19%) sepia(59%) saturate(4540%) hue-rotate(231deg) brightness(74%) contrast(127%);
   transform: scale(1.5);
+  /*#0420c4; marimba color do not delete */
 }
 #harpIcon {
   width: 50px;
@@ -197,7 +211,10 @@ input {
   transition: transform 0.3s ease-in-out;
 }
 #harpIcon:hover {
+  cursor: pointer;
+  filter: invert(46%) sepia(84%) saturate(1306%) hue-rotate(77deg) brightness(101%) contrast(107%);
   transform: scale(1.5);
+  /*harp color do not delete #1b7500 */
 }
 #feedbackDelayIcon {
   width: 40px;
@@ -209,7 +226,10 @@ input {
   transition: transform 0.3s ease-in-out;
 }
 #feedbackDelayIcon:hover {
+  cursor: pointer;
+  filter: invert(26%) sepia(96%) saturate(5458%) hue-rotate(301deg) brightness(99%) contrast(123%);
   transform: scale(1.5);
+  /* color: #ff00c8; */
 }
 
 .piano {
@@ -219,12 +239,15 @@ input {
   position: absolute;
   width: 65%;
   height: 55px;
-  bottom: 0.5%;
+  bottom: 1.5%;
   right: 17.5%;
   left: 17.5%;
   box-shadow: 4px 3px 8px 1px #5e5a5d;
   -webkit-box-shadow: 4px 3px 8px 1px #5e5a5d;
   flex-grow: 1;
+}
+.piano:hover {
+  cursor: pointer;
 }
 .white-key {
   display: flex;
@@ -236,6 +259,9 @@ input {
   border-radius: 5px;
   flex-grow: 1;
 }
+.white-key:hover {
+  background-color:rgba(255, 255, 255, 0.733)
+}
 .black-key {
   background-color: black;
   width: 2%;
@@ -243,7 +269,9 @@ input {
   margin-left: -4.5px;
   margin-right: -4.5px;
   border-radius: 5px;
-  z-index: 2;
   flex-grow: 2;
 }
+
+
 /* test test test */
+
