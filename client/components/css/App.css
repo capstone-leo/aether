@@ -112,7 +112,7 @@ input {
   z-index: 1;
   border-radius: 15px;
   margin-left: -1;
-  top: 100px;
+  top: 170px;
 }
 
 .dropdown {
@@ -133,7 +133,7 @@ input {
 }
 #divHover {
   position: absolute;
-  top: -58px;
+  top: 80px;
   margin-left: 14px;
 }
 
@@ -290,4 +290,7 @@ input {
   z-index: 1;
 }
 
+#App {
+  position: absolute;
+}
 /* test test test */
