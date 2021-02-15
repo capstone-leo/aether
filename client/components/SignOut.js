@@ -15,7 +15,7 @@ const SignOut = (props) => {
 			className={props.enableOutline ? 'home-btn' : 'no-outline-on-focus home-btn'}
 			onClick={() => signOut()}
 		>
-			Sign Out
+			sign out
 		</button>
 	) : null;
 };
