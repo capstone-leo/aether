@@ -46,7 +46,7 @@ const Home = (props) => {
     window.addEventListener('keydown', handleKeydown)
     console.log('user-->', user)
     console.log('current user-->', auth.currentUser)
-    if (user) props.setNewUser(user)
+    props.setNewUser(user)
   }, [user])
   const [enableOutline, setEnableOutline] = useState(false)
   const [redirectTo, setRedirectTo] = useState('')

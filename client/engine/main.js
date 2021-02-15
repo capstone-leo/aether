@@ -30,14 +30,16 @@ async function load() {
   data = await fetchScene().scene
   return data
 }
-// if (auth.currentUser) {
-load()
-// }
+console.log('store-->', store)
+if (auth.currentUser) {
+  load()
+  window.location.reload()
+}
 
 // Initializes the Scene
 export const init = (sessionType) => {
-  scene = new THREE.Scene()
   singlePlayerSession = sessionType
+  scene = new THREE.Scene()
 
   if (singlePlayerSession) {
     const instru = store.getState().instruments

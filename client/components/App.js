@@ -44,9 +44,14 @@ const App = (props) => {
   const toggleModal = () => {
     setModalOpen(!modalOpen)
   }
+  const refresh = () => {
+    // it re-renders the component
+    window.location.reload()
+  }
 
   useEffect(() => {
     console.log('props-->', props)
+
     props.singleSession ? init(true) : init(false)
     animate()
     controls.current = {start, stop}

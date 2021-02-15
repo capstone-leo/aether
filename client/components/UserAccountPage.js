@@ -9,7 +9,7 @@ import {auth, fetchScene} from '../Firebase'
 import Loading from './Loading'
 import SignOut from './SignOut'
 import BackgroundParticles from './Particles'
-import SoundShape from './SoundShape'
+// import SoundShape from './SoundShape'
 import {loadScene} from '../reducer/instruments'
 import store from '../store'
 
@@ -18,17 +18,14 @@ const UserAccountPage = (props) => {
   const [user, loading, error] = useAuthState(auth) //user JSON
   const [currentUser, setcurrentUser] = useState(auth.currentUser)
   useEffect(() => {
-    // console.log('loadscene', loadScene())
-    // console.log('stroe', store.getState())
     console.log('account props.user-->', props.user)
     console.log('account current-->', auth.currentUser)
     if (auth.currentUser) {
       props.setNewUser(user)
       props.loadScene()
     }
-  }, [currentUser])
-
-  // if (!auth.currentUser) return <Redirect to='/' />;
+  }, [user])
+  if (!user) return <Redirect to="/" />
   return (
     // <motion.div
     // 	exit={{ opacity: 0 }}
@@ -59,7 +56,7 @@ const UserAccountPage = (props) => {
               type="button"
               style={{textAlign: 'center', marginTop: '1%'}}
             >
-              Start Jamming
+              {'<'} Join the World Stage
             </button>
           </Link>
           <Link to="/solo">
@@ -72,7 +69,7 @@ const UserAccountPage = (props) => {
               type="button"
               style={{textAlign: 'center', marginTop: '1%'}}
             >
-              Private Session
+              Private Session {'>'}
             </button>
           </Link>
           <br />
