@@ -54,6 +54,7 @@ export const Chat = (props) => {
     <div id='chat-box'>
       <ul id='message-list'>{messageList}</ul>
       <input
+        autocomplete="off"
         style={{ background: 'transparent', color: 'whitesmoke' }}
         id='new-message'
         onInput={(e) => {
@@ -67,6 +68,7 @@ export const Chat = (props) => {
     <div id='chat-box'>
       <ul id='message-list'>{messageList}</ul>
       <input
+        autocomplete="off"
         style={{ background: 'transparent', color: 'whitesmoke' }}
         id='new-message'
         onChange={(e)=>setName(e.target.value)}

@@ -8,7 +8,7 @@ import SignIn from './SignIn'
 import SignOut from './SignOut'
 import BackgroundParticles from './Particles.js'
 import {motion} from 'framer-motion'
-import {Frame} from 'framer'
+import {Frame, Color, Stack} from 'framer'
 
 import firebase from 'firebase/app'
 import 'firebase/firestore'
@@ -16,6 +16,9 @@ import {firebaseApp, auth, db} from '../Firebase'
 
 import {connect} from 'react-redux'
 import {setNewUser, signOutUser} from '../reducer/user'
+
+const darkBlue = Color('#0055FF')
+const blue = Color.lighten(darkBlue, 10)
 
 const container = {
   hidden: {opacity: 0},
@@ -35,7 +38,7 @@ const style = {
   textAlign: 'center',
   height: '100%',
   width: '100%',
-  backgroundColor: 'transparent',
+  backgroundColor: 'transparent' + '!important',
 }
 
 // Main Component
@@ -67,15 +70,17 @@ const Home = (props) => {
       animate={{opacity: 1}}
       initial={{opacity: 0.6}}
       transition={{duration: 0.5}}
+      // background={Color.toHexString(blue)}
     >
+      <BackgroundParticles />
       <div id="homediv">
-        <BackgroundParticles />
         <Frame
           variants={container}
           initial={{scaleX: 0.9, y: 30}}
           animate={{scaleX: 1.19, y: 1}}
           transition={{duration: 9, yoyo: Infinity}}
           style={style}
+          // background={Color.toHexString(blue)}
         >
           <header
             style={{
@@ -92,6 +97,7 @@ const Home = (props) => {
             <Loading />
           ) : auth.currentUser !== null ? (
             <Frame
+              // background={Color.toHexString(blue)}
               variants={container}
               initial="hidden"
               animate="show"
