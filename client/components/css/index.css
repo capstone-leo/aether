@@ -45,7 +45,7 @@ code {
 #slider {
 	position: absolute;
   right: 30px;
-  top: 30px;
+  top: 60px;
   color: gray;
   z-index: 1;
   /* appearance: slider-horizontal;
@@ -83,7 +83,7 @@ code {
 .sliderchild {
   font-size: 12px;
   position: absolute;
-  top: 10px;
+  top: 30px;
   color: whitesmoke;
   padding-bottom: 20px !important;
   transition: all 2s ease;
