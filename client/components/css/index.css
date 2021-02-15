@@ -6,6 +6,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: radial-gradient(#f07e7ee0, #7a81c7);
+  background-repeat: no-repeat;
+  /* height: 100vh;
+  width: 100vh; */
+  background-size: cover;
 }
 
 code {
@@ -91,6 +95,7 @@ code {
   bottom: 40px;
   opacity: 80%;
   background: whitesmoke;
+  z-index: 2;
 }
 
 .closer {
@@ -116,7 +121,7 @@ code {
 
 	position: absolute;
 	bottom: 100px;
-	right: 60px;
+	right: 30px;
 	background: transparent;
 	color: whitesmoke
   }
@@ -131,7 +136,7 @@ ul {
 	border-radius: 5px;
 	position: absolute;
 	bottom: 30px;
-	left: 92px;
+	left: 30px;
 	background: transparent;
 	color: whitesmoke;
 	border: none;
@@ -144,7 +149,7 @@ ul {
 	border-radius: 5px;
 	position: absolute;
 	bottom: 60px;
-	left: 92px;
+	left: 30px;
 	background: transparent;
 	color: whitesmoke;
 	border: none
@@ -256,17 +261,20 @@ canvas {
 }
 
 #homediv {
-  display: block;
-  /* background: rgba(233, 233, 233, 0.466); */
-  height: 100%;
+  /* display: block; */
+
+  background: rgba(233, 233, 233, 0.514);
+  /* height: 100%;
   width: 100%;
-  box-shadow: inset rgba(233, 233, 233, 0.726);
-  text-align: center;
+  /* box-shadow: inset rgba(233, 233, 233, 0.726); */
+  /* text-align: center;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 0; */
   padding-top: 11%;
-  font-size: 55px;
+  font-size: 55px; 
+  height: 100vh;
+  width: 100vw;
 }
 
 header {

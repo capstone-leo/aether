@@ -123,7 +123,7 @@ const App = (props) => {
 					alt='play-pause'
           
 				/> */}
-        Play / Pause
+        play / pause
       </button>
       <button
         className="startstop2"
@@ -131,7 +131,7 @@ const App = (props) => {
           SaveConfig()
         }}
       >
-        Save your configuration
+        save configuration
       </button>
       {/* <button
         className="startstop2"
@@ -151,12 +151,17 @@ const App = (props) => {
         isOpen={modalOpen}
       >
         <div className="modalTextDiv">
-          double click these shapes to adjust their sounds
+          Welcome! 
           <br />
-          single click to play a sound
+          Double click to spawn a random instrument. Click it to preview sound.
           <br />
-          jam with your friends or play by yourself <br />
-          PLACEHOLDERS
+          Drag and drop into the circle to play sounds for everyone.
+          <br />
+          Shift click to get rid of instruments. 
+          <br />
+          Play yourself an accompaniment on the keyboard.
+          <br />
+          Login through Google to save your configuration.
         </div>
         <button className="closer" onClick={() => setModalOpen(!modalOpen)}>
           close
