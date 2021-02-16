@@ -12,7 +12,6 @@ body {
   background-size: cover;
 }
 
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -43,7 +42,7 @@ code {
 }
 
 #slider {
-	position: absolute;
+  position: absolute;
   right: 30px;
   top: 60px;
   color: gray;
@@ -161,6 +160,7 @@ button.home-btn {
   font-family: 'Source Code Pro', monospace;
   font-size: 20%;
   font-weight: 600;
+  margin-top: 5%;
   /* background: radial-gradient(
 		circle,
 		rgb(230, 229, 223) 10%,
