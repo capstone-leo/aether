@@ -59,7 +59,6 @@ class Instrument {
   }
   transportStart = () => {
     tone.Transport.start()
-    console.log('ok')
   }
   transportStop = () => {
     tone.Transport.stop()
@@ -164,7 +163,7 @@ class Instrument {
   getGeometry = (soundType) => {
     switch (soundType) {
       case 'drums':
-        const drumRadiusTop = 4
+        const drumRadiusTop = 14
         const drumRadiusBottom = 26
         const drumHeight = 60
         const drumToneRadialSegments = 22

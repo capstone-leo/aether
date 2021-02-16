@@ -51,7 +51,6 @@ const App = (props) => {
   }
 
   useEffect(() => {
-    console.log('props-->', props)
 
     props.singleSession ? init(true) : init(false)
     animate()
@@ -60,6 +59,7 @@ const App = (props) => {
       'click',
       (e) => {
         if (e.shiftKey) {
+         
           onShiftClick(e)
         }
       },

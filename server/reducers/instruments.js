@@ -65,7 +65,8 @@ const immutable = (state = initialState, action) => {
       });
       return newState;
     case REMOVE_INSTRUMENT:
-      return state.filter((instrument) => instrument.id !== action.id);
+
+      return state.filter((instrument) => instrument.id !== action.id);     
     default:
       return state;
   }

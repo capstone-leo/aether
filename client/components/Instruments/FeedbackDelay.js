@@ -32,7 +32,6 @@ class FeedbackDelay {
   }
   transportStart = () => {
     tone.Transport.start();
-    console.log("ok");
   };
   transportStop = () => {
     tone.Transport.stop();

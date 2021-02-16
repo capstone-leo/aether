@@ -9,7 +9,7 @@ export class ProtectedRoute extends React.Component {
   }
   render() {
     const Component = this.props.component
-    console.log('componnent-->', Component)
+    console.log('component-->', Component)
     const isAuthenticated = auth.currentUser
     console.log('are you logged in?-->', auth.currentUser)
 

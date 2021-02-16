@@ -28,7 +28,6 @@ const setUpListeners = (io, socket) => {
   socket.on('add_instrument', (data) => {
     store.dispatch(receiveInstrument(data));
     const { instrument } = store.getState();
-    console.log(instrument);
     const { id, position, soundType, soundIndex } = instrument.slice(-1)[0];
     io.sockets.emit('spawn_instrument', {
       id,
@@ -54,16 +53,16 @@ const setUpListeners = (io, socket) => {
       'new_message',
       store.getState().messageReducer.slice(-1)[0]
     );
-    console.log('yooo', store.getState().messageReducer);
   });
   socket.on('remove_message', (id) => {
-    console.log('backend before', store.getState().messageReducer);
     store.dispatch(deleteMessage(id.slice(-1)[0].id));
-    console.log('backend after', store.getState().messageReducer);
+ 
     io.sockets.emit('delete_message', id);
   });
   socket.on('remove_instrument', (id) => {
+
     store.dispatch(removeInstrument(id));
+   
     io.sockets.emit('delete_instrument', id);
   });
 };

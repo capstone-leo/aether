@@ -25,6 +25,7 @@ code {
   top: 30px;
   color: whitesmoke;
   border: none;
+  z-index: 3;
 }
 
 #aboutbtn:hover {
@@ -113,10 +114,6 @@ code {
 .modalTextDiv {
   padding: 30px;
   background-color: whitesmoke;
-}
-
-.App {
-  /* position: relative; */
 }
 
 #chat-box {

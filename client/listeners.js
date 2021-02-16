@@ -61,7 +61,9 @@ export default (socket) => {
     });
   });
   socket.on('delete_instrument', (id) => {
+
     store.dispatch(removeInstrument(id));
+
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === id) {
         sceneInstrument.smash(id);
@@ -69,9 +71,8 @@ export default (socket) => {
     });
   });
   socket.on('delete_message', (id) => {
-console.log('front store,before', store.getState(), 'id', id)
     store.dispatch(removeMessage(id));
-    console.log('eeeeeeek frontend after remove', store.getState())
+
     
   })
 };

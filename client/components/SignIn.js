@@ -7,6 +7,7 @@ const SignIn = (props) => {
 	const signInWithGoogle = () => {
 		const provider = new firebase.auth.GoogleAuthProvider();
 		//instatiate new auth token
+		
 		auth.signInWithRedirect(provider);
 		//prompts redirect to and back from google login
 	};
