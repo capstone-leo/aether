@@ -1,31 +1,26 @@
-import React, {Component, useState, useEffect} from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import {useAuthState} from 'react-firebase-hooks/auth'
-import socket from '../socket'
 
 import Loading from './Loading'
 import SignIn from './SignIn'
 import SignOut from './SignOut'
 import BackgroundParticles from './Particles.js'
 import {motion} from 'framer-motion'
-import {Frame, Color, Stack} from 'framer'
+import {Frame, Color} from 'framer'
 
-import firebase from 'firebase/app'
 import 'firebase/firestore'
-import {firebaseApp, auth, db} from '../Firebase'
+import {auth} from '../Firebase'
 
 import {connect} from 'react-redux'
 import {setNewUser, signOutUser} from '../reducer/user'
-
-const darkBlue = Color('#0055FF')
-const blue = Color.lighten(darkBlue, 10)
 
 const container = {
   hidden: {opacity: 0},
   show: {
     opacity: 1,
     transition: {
-      delayChildren: 3.3,
+      delayChildren: 1.3,
       staggerChildren: 1.1,
     },
   },
@@ -47,12 +42,10 @@ const Home = (props) => {
   const [user, loading, error] = useAuthState(auth) //user JSON
   useEffect(() => {
     window.addEventListener('keydown', handleKeydown)
-    console.log('user-->', user)
-    console.log('current user-->', auth.currentUser)
     props.setNewUser(user)
   }, [user])
   const [enableOutline, setEnableOutline] = useState(false)
-  const [redirectTo, setRedirectTo] = useState('')
+  // const [redirectTo, setRedirectTo] = useState('')
 
   // Accessibility Handler
   const handleKeydown = (e) => {
@@ -80,7 +73,6 @@ const Home = (props) => {
           animate={{scaleX: 1.19, y: 1}}
           transition={{duration: 9, yoyo: Infinity}}
           style={style}
-          // background={Color.toHexString(blue)}
         >
           <header
             style={{
@@ -97,11 +89,10 @@ const Home = (props) => {
             <Loading />
           ) : auth.currentUser !== null ? (
             <Frame
-              // background={Color.toHexString(blue)}
               variants={container}
               initial="hidden"
               animate="show"
-              style={{...style, marginTop: '8%'}}
+              style={{...style, marginTop: '9%'}}
             >
               <Frame variants={item} style={style}>
                 <Link to="/sesh">
@@ -128,7 +119,7 @@ const Home = (props) => {
                         : 'no-outline-on-focus home-btn'
                     }
                     type="button"
-                    style={{textAlign: 'center', marginTop: '1%'}}
+                    style={{textAlign: 'center', marginTop: '3%'}}
                   >
                     account {'>'}
                   </button>
@@ -156,7 +147,7 @@ const Home = (props) => {
                         : 'no-outline-on-focus home-btn'
                     }
                     type="button"
-                    style={{textAlign: 'center', marginTop: '1%'}}
+                    style={{textAlign: 'center', marginTop: '3%'}}
                   >
                     start jamming {'>'}
                   </button>
