@@ -81,7 +81,7 @@ export const init = (sessionType) => {
   scene.fog = new THREE.Fog(0x040306, 10, 300);
 
   //create Jam Space and the Hammer
-  let jamSpaceGeometry = new THREE.TorusGeometry(10, 0.25, 256, 128);
+  let jamSpaceGeometry = new THREE.TorusGeometry(10, 0.25, 256, 1028);
   let jamSpaceMaterial = new THREE.MeshPhongMaterial({
     color: 0x5e5a5d,
     side: THREE.DoubleSide,
@@ -92,7 +92,7 @@ export const init = (sessionType) => {
   jamSpace.position.setY(70);
   scene.add(jamSpace);
 
-  let hammerGeometry = new THREE.BoxGeometry(0.1, 10, 0.1);
+  let hammerGeometry = new THREE.BoxGeometry(0.1, 10, .1, 1000);
   let hammerMaterial = new THREE.MeshBasicMaterial({
     color: 0x5e5a5d,
     side: THREE.DoubleSide,
