@@ -51,8 +51,6 @@ const App = (props) => {
   };
 
   useEffect(() => {
-    console.log('props-->', props);
-
     props.singleSession ? init(true) : init(false);
     animate();
     controls.current = { start, stop };

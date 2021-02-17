@@ -29,7 +29,6 @@ export const Chat = (props) => {
   const sendMessage = () => {
     socket.emit('add_message', { message: message, id: nanoid() });
     setMessage('');
-    console.log('first store', store.getState().messages);
     document.getElementById('new-message').value = '';
     setTimeout(function () {
       removeMessage(message, store.getState().messages);
@@ -37,7 +36,6 @@ export const Chat = (props) => {
   };
 
   const onNameSubmit = () => {
-
     setIsNameSet(true);
     document.getElementById('new-message').value = '';
   };
@@ -51,29 +49,29 @@ export const Chat = (props) => {
   };
 
   return isNameSet ? (
-    <div id='chat-box'>
-      <ul id='message-list'>{messageList}</ul>
+    <div id="chat-box">
+      <ul id="message-list">{messageList}</ul>
       <input
         autocomplete="off"
         style={{ background: 'transparent', color: 'whitesmoke' }}
-        id='new-message'
+        id="new-message"
         onInput={(e) => {
           setMessage(`${name}: ` + e.target.value);
         }}
         onKeyDown={(e) => (e.key === 'Enter' ? sendMessage() : null)}
-        placeholder='chat'
+        placeholder="chat"
       ></input>
     </div>
   ) : (
-    <div id='chat-box'>
-      <ul id='message-list'>{messageList}</ul>
+    <div id="chat-box">
+      <ul id="message-list">{messageList}</ul>
       <input
         autocomplete="off"
         style={{ background: 'transparent', color: 'whitesmoke' }}
-        id='new-message'
-        onChange={(e)=>setName(e.target.value)}
+        id="new-message"
+        onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => (e.key === 'Enter' ? onNameSubmit() : null)}
-        placeholder='enter name to start chat'
+        placeholder="enter name to start chat"
       ></input>
     </div>
   );

@@ -30,7 +30,6 @@ async function load() {
   data = await fetchScene().scene;
   return data;
 }
-console.log('store-->', store);
 if (auth.currentUser) {
   load();
   window.location.reload();
@@ -43,9 +42,7 @@ export const init = (sessionType) => {
 
   if (singlePlayerSession) {
     const instru = store.getState().instruments;
-    console.log('instru', instru);
     instru.forEach((element) => {
-      console.log('element-->', element);
       const newInstrument = new Instrument(
         element.id,
         element.position,
@@ -58,7 +55,6 @@ export const init = (sessionType) => {
   } else {
     socket.emit('get_all_instruments');
     // instruments = store.getState().instruments
-    console.log('instruments no solo-->', instruments);
   }
   // console.log('store.get st instru', store.getState().instruments)
 
@@ -131,7 +127,6 @@ export const init = (sessionType) => {
   let slider = document.getElementById('slider');
   slider.addEventListener('change', onInput);
   function onInput() {
-    console.log(slider.value);
     sliderValue = Number(slider.value);
   }
 

@@ -83,16 +83,11 @@ class Instrument {
   };
   pitchUp = () => {
     const soundArray = this.getSoundArray();
-    console.log(soundArray);
-    console.log(this.soundIndex);
-    console.log(soundArray.length);
     if (this.soundIndex > soundArray.length - 2) {
-      console.log('hello?');
       this.soundIndex = 0;
     } else {
       ++this.soundIndex;
     }
-    console.log('afterchange-->', this.soundIndex);
     this.sound = this.getSound(this.soundType);
 
     this.mesh.sound = this.sound;
