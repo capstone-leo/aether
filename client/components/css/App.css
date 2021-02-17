@@ -53,7 +53,8 @@ header {
   background: #f9f9f9;
 }
 ::placeholder {
-  color: white;
+  color: rgba(245, 245, 245, 0.877);
+
 }
 
 #output p {

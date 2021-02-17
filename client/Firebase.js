@@ -13,25 +13,22 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 export const sceneRef = db.collection('Session')
 
 export const setScene = async () => {
+  console.log('uid-->', auth.currentUser.uid)
   if (auth.currentUser) {
-    // console.log('scene-->', currentScene)
     return await sceneRef
-      .doc('scenes')
-      // below delineate what to save to store
-      .set(
-        {
-          scene: store.getState().instruments,
-        },
-        {merge: true}
-      )
-  } else return console.log("you're not signed in, bucko!")
+      .doc(auth.currentUser.uid)
+      // add new document to Firestore
+      .set({
+        scene: store.getState().instruments,
+      })
+  } else return console.log("you're not signed in, friend!")
 }
 
 export const fetchScene = async () => {
-  const doc = await sceneRef.doc('scenes').get()
-  if (!doc.exists) {
+  const snapshot = await sceneRef.doc(auth.currentUser.uid).get()
+  if (!snapshot.exists) {
     console.log('No such document!')
   } else {
-    return await doc.data()
+    return await snapshot.data()
   }
 }
