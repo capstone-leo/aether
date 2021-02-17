@@ -164,7 +164,8 @@ const App = (props) => {
           <br />
           <br />
           <i>
-            drag and drop soundshapes into the AETHER to collaborate with others
+            drag and drop soundshapes into the AETHER's jamspace to collaborate
+            with others
           </i>
           <br />
           <br />
