@@ -76,7 +76,7 @@ export default (socket) => {
     store.dispatch(removeInstrument(id));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === id) {
-        sceneInstrument.smash(id);
+        sceneInstrument.smash();
       }
     });
   });

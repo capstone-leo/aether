@@ -341,13 +341,33 @@ function onShiftClick() {
     store.dispatch(removeInstrument(objectSelect.reduxid));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === objectSelect.reduxid) {
-        sceneInstrument.smash(objectSelect.reduxid);
+        instruments = instruments.filter((instrument) => {
+          return instrument.mesh.reduxid !== id;
+        });
+        draggableObjects = draggableObjects.filter(
+          (instrument) => instrument.reduxid !== id
+        );
+        sceneInstrument.smash();
       }
     });
   } else {
     socket.emit('remove_instrument', objectSelect.reduxid);
+
+    // instruments = instruments.map((instrument) => {
+    //   if (instrument.mesh.reduxid === objectSelect.reduxid) {
+    //     instrument.smash();
+    //   } else {
+    //     return instrument;
+    //   }
+    // });
     store.dispatch(removeInstrument(objectSelect.reduxid));
   }
+}
+
+function deleteSceneInstrument(id) {
+  instruments = instruments.filter(
+    (instrument) => instrument.mesh.reduxid !== id
+  );
 }
 
 function incrementPitch(e) {
@@ -391,6 +411,7 @@ export {
   handleResize,
   onShiftClick,
   incrementPitch,
+  deleteSceneInstrument,
 };
 
 export {

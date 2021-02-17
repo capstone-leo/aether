@@ -1,6 +1,11 @@
 import * as three from 'three';
 import * as tone from 'tone';
-import { scene, draggableObjects, instruments } from '../../engine/main';
+import {
+  scene,
+  draggableObjects,
+  instruments,
+  deleteSceneInstrument,
+} from '../../engine/main';
 import {
   drumList,
   chordList,
@@ -77,9 +82,10 @@ class Instrument {
     this.mesh.position.setY(newY);
   };
   smash = (id) => {
-    instruments.filter((instrument) => instrument.mesh.reduxid !== id);
-    draggableObjects.filter((instrument) => instrument.reduxid !== id);
+    this.mesh.geometry.dispose();
+    this.mesh.material.dispose();
     scene.remove(this.mesh);
+    deleteSceneInstrument(this.mesh.reduxid);
   };
   pitchUp = () => {
     const soundArray = this.getSoundArray();
