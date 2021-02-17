@@ -8,7 +8,7 @@ import {
 } from './reducer/instruments';
 import Instrument from './components/Instruments/Instrument';
 import { instruments } from './engine/main';
-import { removeMessage } from './reducer/messages'
+import { removeMessage } from './reducer/messages';
 import store from './store';
 
 export default (socket) => {
@@ -60,6 +60,18 @@ export default (socket) => {
       }
     });
   });
+  socket.on('instrument_pitch_up', (data) => {
+    const { id, position, soundType, soundIndex } = data;
+    store.dispatch(dragInstrument(id, position, soundType, soundIndex));
+    instruments.forEach((sceneInstrument) => {
+      if (
+        sceneInstrument.mesh.reduxid === id &&
+        sceneInstrument.soundIndex !== soundIndex
+      ) {
+        sceneInstrument.pitchUp();
+      }
+    });
+  });
   socket.on('delete_instrument', (id) => {
     store.dispatch(removeInstrument(id));
     instruments.forEach((sceneInstrument) => {
@@ -69,9 +81,8 @@ export default (socket) => {
     });
   });
   socket.on('delete_message', (id) => {
-console.log('front store,before', store.getState(), 'id', id)
+    console.log('front store,before', store.getState(), 'id', id);
     store.dispatch(removeMessage(id));
-    console.log('eeeeeeek frontend after remove', store.getState())
-    
-  })
+    console.log('eeeeeeek frontend after remove', store.getState());
+  });
 };

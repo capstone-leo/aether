@@ -37,6 +37,17 @@ const setUpListeners = (io, socket) => {
       soundIndex,
     });
   });
+  socket.on('pitch_up_instrument', (data) => {
+    store.dispatch(
+      dragInstrument(data.id, data.position, data.soundType, data.soundIndex)
+    );
+    io.sockets.emit('instrument_pitch_up', {
+      id: data.id,
+      position: data.position,
+      soundType: data.soundType,
+      soundIndex: data.soundIndex,
+    });
+  });
   socket.on('drag_instrument', (data) => {
     store.dispatch(
       dragInstrument(data.id, data.position, data.soundType, data.soundIndex)
