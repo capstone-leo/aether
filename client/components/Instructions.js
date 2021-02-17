@@ -6,13 +6,6 @@ export function Instructions(props) {
     <div className="about">
       <button
         id="aboutbtn"
-        // style={{
-        //   color: 'whitesmoke',
-        //   position: 'relative',
-        //   background: 'transparent',
-        //   border: 'transparent',
-
-        // }}
         className={enableOutline ? '' : 'no-outline-on-focus'}
         onClick={() => toggleModal()}
       >

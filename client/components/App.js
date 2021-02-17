@@ -29,7 +29,7 @@ import store from '../store'
 import 'firebase/firestore'
 import 'firebase/auth'
 import {auth, db, sceneRef, fetchScene, setScene} from '../Firebase'
-import {Redirect} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import TonePalette from './TonePalette'
 
 const App = (props) => {
@@ -115,7 +115,6 @@ const App = (props) => {
       id="canvas"
       ref={mount}
       style={{background: 'transparent'}}
-      // onClick={() => setAnimating(!isAnimating)}
     >
       <button
         className={
@@ -123,34 +122,26 @@ const App = (props) => {
         }
         onClick={() => setAnimating(!isAnimating)}
       >
-        {/* <img
-
-					src={play_pause}
-					alt='play-pause'
-          
-				/> */}
         play / pause
       </button>
-      <button
-        className={
-          enableOutline ? 'startstop2' : 'no-outline-on-focus startstop2'
-        }
-        onClick={() => {
-          SaveConfig()
-        }}
-      >
-        save configuration
-      </button>
-      {/* <button
-        className="startstop2"
-        onClick={() => {
-          LoadConfig()
-        }}
-      >
-        console your configuration
-      </button> */}
+      {props.singleSession ? (
+        <button
+          className={
+            enableOutline ? 'startstop2' : 'no-outline-on-focus startstop2'
+          }
+          onClick={() => {
+            SaveConfig()
+          }}
+        >
+          save configuration
+        </button>
+      ) : (
+        <Link to="/">
+          <button className="startstop2">exit to home</button>
+        </Link>
+      )}
 
-      <Slider id="slider" />
+      <Slider id="slider" modalOpen={modalOpen} />
       <Instructions toggleModal={toggleModal} enableOutline={enableOutline} />
       <Modal
         id="Modal"
@@ -159,31 +150,47 @@ const App = (props) => {
         isOpen={modalOpen}
       >
         <div className="modalTextDiv">
-          - How to Jam -
+          <b> - How to Jam - </b>
           <br />
           <br />
-          double click: spawn a random instrument
+          <br />
+          GLOBAL actions
           <br />
           <br />
-          single click: preview a sound for yourself
+          double click: spawn a random soundshape
           <br />
           <br />
-          hold down Shift + left-click: remove an instrument
+          hold down Shift + click: remove an instrument
           <br />
           <br />
-          drag and drop soundshapes into the jamspace to collaborate with others
+          <i>
+            drag and drop soundshapes into the AETHER to collaborate with others
+          </i>
+          <br />
+          <br />
+          chat to your friends
+          <br />
+          <br />
+          <br />
+          LOCAL actions
+          <br />
+          <br />
+          single click: preview a sound
           <br />
           <br />
           play the full keyboard
           <br />
           <br />
-          log in, save your music, and come back to jam later!
+          click to change the tempo
+          <br />
+          <br />
+          log in, save your music session privately, and come back to jam later!
         </div>
         <button className="closer" onClick={() => setModalOpen(!modalOpen)}>
           close
         </button>
       </Modal>
-      <Chat id="chatbox" />
+      <Chat id="chatbox" enableOutline={enableOutline} />
       <TonePalette />
       <Keyboard modalOpen={modalOpen} />
     </div>

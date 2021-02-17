@@ -1,21 +1,27 @@
-import React from 'react';
+import React from 'react'
 
-export function Slider() {
+export function Slider(props) {
+  const {modalOpen} = props
   return (
-    <div className="slider">     
-    <div className="sliderchild">tempo</div>
-      <input
-        className="sliderknob"
-        type="range"
-        min="0"
-        max=".15"
-        defaultValue=".075"
-        step="0.0025"
-        id="slider"
-        orient="horizontal"
-        style={{ right: '40' }}
-      ></input>
-
-    </div>
-  );
+    <>
+      {modalOpen ? (
+        <div></div>
+      ) : (
+        <div className="slider">
+          <div className="sliderchild">tempo</div>
+          <input
+            className="sliderknob"
+            type="range"
+            min="0"
+            max=".15"
+            defaultValue=".075"
+            step="0.0025"
+            id="slider"
+            orient="horizontal"
+            style={{right: '40'}}
+          ></input>
+        </div>
+      )}
+    </>
+  )
 }

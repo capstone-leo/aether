@@ -24,6 +24,8 @@ code {
   top: 30px;
   color: whitesmoke;
   border: none;
+  z-index: 2;
+  padding: 5px;
 }
 
 #aboutbtn:hover {
@@ -110,16 +112,16 @@ code {
   left: 20px;
 } */
 
-.closer:hover {
+/* .closer:hover {
   cursor: pointer;
-}
+} */
 .closer {
   font-family: 'Source Code Pro', monospace;
   font-size: 2%;
   font-weight: 600;
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  bottom: 10px;
+  left: 15px;
   background: transparent !important;
   color: #000000ea;
   cursor: pointer;
