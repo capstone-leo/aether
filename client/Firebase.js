@@ -16,10 +16,11 @@ export const setScene = async () => {
   if (auth.currentUser) {
     // console.log('scene-->', currentScene)
     return await sceneRef
-      .doc('scenes')
+      .doc(auth.currentUser.uid)
       // below delineate what to save to store
       .set(
         {
+          //this needs to be user id for auth
           scene: store.getState().instruments,
         },
         {merge: true}
@@ -28,7 +29,7 @@ export const setScene = async () => {
 }
 
 export const fetchScene = async () => {
-  const doc = await sceneRef.doc('scenes').get()
+  const doc = await sceneRef.doc(auth.currentUser.uid).get()
   if (!doc.exists) {
     console.log('No such document!')
   } else {
