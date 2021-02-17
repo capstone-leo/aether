@@ -191,7 +191,6 @@ export const animate = () => {
   hammerBox.setFromObject(hammer)
 
   jamSpace.rotation.z += sliderValue
-  jamSpace.rotation.y += sliderValue
   if (instruments) {
     instruments.forEach((instrument) => {
       instrument.mesh.rotation.y += 0.01
