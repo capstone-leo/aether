@@ -12,16 +12,15 @@ import {
   handleResize,
   onMouseMove,
   onShiftClick,
-
-} from "../engine/main";
-import { Slider } from "./Slider";
-import { About } from "./About";
-import Keyboard from "./Instruments/Keyboard";
-import Modal from "react-modal";
-import "./css/App.css";
-import Chat from "./Chat";
-import socket from "../socket";
-import { connect } from "react-redux";
+} from '../engine/main'
+import {Slider} from './Slider'
+import {Instructions} from './Instructions'
+import Keyboard from './Instruments/Keyboard'
+import Modal from 'react-modal'
+import './css/App.css'
+import Chat from './Chat'
+import socket from '../socket'
+import {connect} from 'react-redux'
 
 // import play_pause from '../../public/assets/play-pause.png';
 import {motion} from 'framer-motion'
@@ -37,22 +36,23 @@ const App = (props) => {
   const [redirectTo, setRedirectTo] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [hovering, setHovering] = useState(false)
+  const [enableOutline, setEnableOutline] = useState(false)
   const mount = useRef(null)
   const [isAnimating, setAnimating] = useState(true)
   const controls = useRef(null)
   const hover = useRef(null)
 
+  const handleKeydown = (e) => {
+    const isTabEvent = e.keyCode === 9
+    if (isTabEvent) {
+      setEnableOutline(true)
+    }
+  }
   const toggleModal = () => {
     setModalOpen(!modalOpen)
   }
-  const refresh = () => {
-    // it re-renders the component
-    window.location.reload()
-  }
 
   useEffect(() => {
-    console.log('props-->', props)
-
     props.singleSession ? init(true) : init(false)
     animate()
     controls.current = {start, stop}
@@ -66,6 +66,7 @@ const App = (props) => {
       false
     )
 
+    window.addEventListener('keydown', handleKeydown)
     window.addEventListener('dblclick', () => addInstrument(), false)
     window.addEventListener('click', playSound, false)
     window.addEventListener('mousemove', onMouseMove)
@@ -116,7 +117,12 @@ const App = (props) => {
       style={{background: 'transparent'}}
       // onClick={() => setAnimating(!isAnimating)}
     >
-      <button className="startstop" onClick={() => setAnimating(!isAnimating)}>
+      <button
+        className={
+          enableOutline ? 'startstop' : 'no-outline-on-focus startstop'
+        }
+        onClick={() => setAnimating(!isAnimating)}
+      >
         {/* <img
 
 					src={play_pause}
@@ -126,7 +132,9 @@ const App = (props) => {
         play / pause
       </button>
       <button
-        className="startstop2"
+        className={
+          enableOutline ? 'startstop2' : 'no-outline-on-focus startstop2'
+        }
         onClick={() => {
           SaveConfig()
         }}
@@ -143,25 +151,33 @@ const App = (props) => {
       </button> */}
 
       <Slider id="slider" />
-      <About toggleModal={toggleModal} />
+      <Instructions toggleModal={toggleModal} enableOutline={enableOutline} />
       <Modal
         id="Modal"
-        className="Modal"
+        className={enableOutline ? 'Modal' : 'no-outline-on-focus Modal'}
         appElement={mount.current}
         isOpen={modalOpen}
       >
         <div className="modalTextDiv">
-          Welcome! 
+          - How to Jam -
           <br />
-          Double click to spawn a random instrument. Click it to preview sound.
           <br />
-          Drag and drop into the circle to play sounds for everyone.
+          double click: spawn a random instrument
           <br />
-          Shift click to get rid of instruments. 
           <br />
-          Play yourself an accompaniment on the keyboard.
+          single click: preview a sound for yourself
           <br />
-          Login through Google to save your configuration.
+          <br />
+          hold down Shift + left-click: remove an instrument
+          <br />
+          <br />
+          drag and drop soundshapes into the jamspace to collaborate with others
+          <br />
+          <br />
+          play the full keyboard
+          <br />
+          <br />
+          log in, save your music, and come back to jam later!
         </div>
         <button className="closer" onClick={() => setModalOpen(!modalOpen)}>
           close
@@ -169,7 +185,7 @@ const App = (props) => {
       </Modal>
       <Chat id="chatbox" />
       <TonePalette />
-      <Keyboard />
+      <Keyboard modalOpen={modalOpen} />
     </div>
   )
 }
