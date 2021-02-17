@@ -50,14 +50,11 @@ export const init = (sessionType) => {
         element.soundIndex
       );
       newInstrument.init();
-      // console.log('scene-->', scene)
     });
   } else {
     socket.emit('get_all_instruments');
     // instruments = store.getState().instruments
   }
-  // console.log('store.get st instru', store.getState().instruments)
-
   size = 1000;
   aspect = window.innerWidth / window.innerHeight;
   canvas = document.getElementById('canvas');
@@ -281,7 +278,6 @@ function addInstrument(soundType = 'tone', random) {
 function playSound() {
   if (objectSelect) {
     if (objectSelect.hover) {
-      console.log(objectSelect);
       objectSelect.playSound();
     }
   }
