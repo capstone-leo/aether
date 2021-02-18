@@ -95,7 +95,7 @@ export default [
 
   function playChord() {
     const synth = new Tone.PolySynth().toDestination();
-    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], .5);
+    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], 0.5);
   },
 
   function playDetunedChord() {
@@ -103,14 +103,7 @@ export default [
     // set the attributes across all the voices using 'set'
     synth.set({ detune: -1200 });
     // play a chord
-    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], .5);
-  },
-
-  function onRepeat(time) {
-    let chord = chords[chordIdx],
-      note = chord[step % chord.length];
-    synth.triggerAttackRelease(note, '16n', time);
-    step++;
+    synth.triggerAttackRelease(['C3', 'C4', 'D4', 'E4', 'B4'], 0.5);
   },
   function sinB4() {
     const synth = new Tone.Synth().toDestination();
