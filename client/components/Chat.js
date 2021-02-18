@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { connect } from 'react-redux';
-import socket from '../socket';
-import store from '../store';
-import receiveMessage, { deleteMessage } from '../reducer/messages';
-import { nanoid } from 'nanoid';
+import React, {useEffect, useState, useRef} from 'react'
+import {connect} from 'react-redux'
+import socket from '../socket'
+import store from '../store'
+import receiveMessage, {deleteMessage} from '../reducer/messages'
+import {nanoid} from 'nanoid'
 // import nanoid from 'nanoid'
 
 //once we start having usernames/nicknames this needs
 //to be updated for username: message
 
 export const Chat = (props) => {
-  const { messages } = props;
-  const [message, setMessage] = useState('');
-  const [name, setName] = useState('');
-  const [isNameSet, setIsNameSet] = useState(false);
+  const {messages, enableOutline} = props
+  const [message, setMessage] = useState('')
+  const [name, setName] = useState('')
+  const [isNameSet, setIsNameSet] = useState(false)
 
   //  useEffect(() => { //props.messages.length ?
   //   // document.querySelector('li') !== null ?
@@ -27,58 +27,59 @@ export const Chat = (props) => {
   // });
 
   const sendMessage = () => {
-    socket.emit('add_message', { message: message, id: nanoid() });
-    setMessage('');
-    console.log('first store', store.getState().messages);
-    document.getElementById('new-message').value = '';
+    socket.emit('add_message', {message: message, id: nanoid()})
+    setMessage('')
+    console.log('first store', store.getState().messages)
+    document.getElementById('new-message').value = ''
     setTimeout(function () {
-      removeMessage(message, store.getState().messages);
-    }, 6000);
-  };
+      removeMessage(message, store.getState().messages)
+    }, 10000)
+  }
 
   const onNameSubmit = () => {
-
-    setIsNameSet(true);
-    document.getElementById('new-message').value = '';
-  };
+    setIsNameSet(true)
+    document.getElementById('new-message').value = ''
+  }
 
   const messageList = store
     .getState()
-    .messages.map((message, i) => <li key={i}>{message.message}</li>);
+    .messages.map((message, i) => <li key={i}>{message.message}</li>)
 
   const removeMessage = (message, id) => {
-    socket.emit('remove_message', id);
-  };
+    socket.emit('remove_message', id)
+  }
 
   return isNameSet ? (
-    <div id='chat-box'>
-      <ul id='message-list'>{messageList}</ul>
+    <div id="chat-box">
+      <ul id="message-list">{messageList}</ul>
       <input
+        className={enableOutline ? '' : 'no-outline-on-focus'}
         autocomplete="off"
-        style={{ background: 'transparent', color: 'whitesmoke' }}
-        id='new-message'
+        style={{background: 'transparent', color: 'whitesmoke'}}
+        id="new-message"
         onInput={(e) => {
-          setMessage(`${name}: ` + e.target.value);
+          setMessage(`${name.toUpperCase()}: ` + e.target.value)
         }}
         onKeyDown={(e) => (e.key === 'Enter' ? sendMessage() : null)}
-        placeholder='chat'
+        placeholder="start chatting"
       ></input>
     </div>
   ) : (
-    <div id='chat-box'>
-      <ul id='message-list'>{messageList}</ul>
+    <div id="chat-box">
+      <ul id="message-list">{messageList}</ul>
       <input
+        className={enableOutline ? '' : 'no-outline-on-focus'}
         autocomplete="off"
-        style={{ background: 'transparent', color: 'whitesmoke' }}
-        id='new-message'
-        onChange={(e)=>setName(e.target.value)}
+        style={{background: 'transparent', color: 'whitesmoke'}}
+        id="new-message"
+        onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => (e.key === 'Enter' ? onNameSubmit() : null)}
-        placeholder='enter name to start chat'
+        placeholder="enter your nickname "
       ></input>
     </div>
-  );
-};
+  )
+}
 
-const mapStateToProps = (messages) => messages;
+const mapStateToProps = (messages) => messages
 
-export default connect(mapStateToProps, null)(Chat);
+export default connect(mapStateToProps, null)(Chat)

@@ -32,7 +32,7 @@ const UserAccountPage = (props) => {
     // 	animate={{ opacity: 1 }}
     // 	initial={{ opacity: 0 }}
     // 	transition={{ duration: 1.5 }}
-    <div>
+    <div id="accountdiv">
       {loading ? (
         <div style={{textAlign: 'center', marginTop: '15%', fontSize: '60px'}}>
           <BackgroundParticles />
@@ -54,7 +54,7 @@ const UserAccountPage = (props) => {
                   : 'no-outline-on-focus home-btn'
               }
               type="button"
-              style={{textAlign: 'center', marginTop: '1%'}}
+              style={{textAlign: 'center', marginTop: '1%', marginRight: '1%'}}
             >
               {'<'} Join the World Stage
             </button>
@@ -67,7 +67,7 @@ const UserAccountPage = (props) => {
                   : 'no-outline-on-focus home-btn'
               }
               type="button"
-              style={{textAlign: 'center', marginTop: '1%'}}
+              style={{textAlign: 'center', marginTop: '1%', marginLeft: '1%'}}
             >
               Private Session {'>'}
             </button>
