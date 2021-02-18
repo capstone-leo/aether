@@ -167,6 +167,9 @@ const App = (props) => {
           hold down Shift + click: remove an instrument
           <br />
           <br />
+          right click: pitch up/cycle instrument
+          <br />
+          <br />
           <i>
             drag and drop soundshapes into the AETHER's jamspace to collaborate
             with others
