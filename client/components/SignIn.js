@@ -17,7 +17,7 @@ const SignIn = (props) => {
       }
       onClick={signInWithGoogle}
     >
-      Sign In with Google
+      sign in with google
     </button>
   )
 }

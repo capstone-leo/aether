@@ -24,6 +24,8 @@ code {
   top: 30px;
   color: whitesmoke;
   border: none;
+  z-index: 2;
+  padding: 5px;
 }
 
 #aboutbtn:hover {
@@ -90,28 +92,69 @@ code {
 
 .Modal {
   position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 50%;
-  bottom: 40px;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
   opacity: 80%;
   background: whitesmoke;
-  z-index: 2;
+  z-index: 4;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: center;
 }
 
-.closer {
+/* .closer {
   position: absolute;
   bottom: 20px;
   left: 20px;
+} */
+
+/* .closer:hover {
+  cursor: pointer;
+} */
+.closer {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 2%;
+  font-weight: 600;
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  background: transparent !important;
+  color: #000000ea;
+  cursor: pointer;
+  transition: all 0.5s;
+  padding: 2px;
+  border-radius: 2.5px;
+  width: 70px;
+  border: 1px solid rgba(34, 33, 33, 0.351);
 }
 
 .closer:hover {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 2%;
+  font-weight: 600;
+  background: rgba(172, 172, 172, 0.738) !important;
+  color: #000000ea;
   cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 0px;
+  width: 72px;
+  position: absolute;
+  padding: 3px; /*150px 21px 150px; */
+  border: 1px transparent !important;
+}
+button.home-btn:active {
+  transform: scale(0.9);
+  transition: all 0.25s;
 }
 
 .modalTextDiv {
   padding: 30px;
   background-color: whitesmoke;
+  z-index: 5;
 }
 
 .App {
@@ -266,7 +309,19 @@ canvas {
   padding-top: 11%;
   font-size: 55px;
 }
-
+#accountdiv {
+  background: rgba(230, 230, 230, 0.199);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  padding-top: 3%;
+  font-size: 55px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+h6 {
+  font-family: 'Source Code Pro', monospaceace;
+}
 header {
   color: #000000;
   font-weight: 2500;

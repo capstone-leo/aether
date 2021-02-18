@@ -15,7 +15,7 @@ import {
   incrementPitch,
 } from '../engine/main';
 import { Slider } from './Slider';
-import { About } from './About';
+import { Instructions } from './Instructions';
 import Keyboard from './Instruments/Keyboard';
 import Modal from 'react-modal';
 import './css/App.css';
@@ -30,24 +30,27 @@ import store from '../store';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { auth, db, sceneRef, fetchScene, setScene } from '../Firebase';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import TonePalette from './TonePalette';
 
 const App = (props) => {
   const [redirectTo, setRedirectTo] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [enableOutline, setEnableOutline] = useState(false);
   const mount = useRef(null);
   const [isAnimating, setAnimating] = useState(true);
   const controls = useRef(null);
   const hover = useRef(null);
 
+  const handleKeydown = (e) => {
+    const isTabEvent = e.keyCode === 9;
+    if (isTabEvent) {
+      setEnableOutline(true);
+    }
+  };
   const toggleModal = () => {
     setModalOpen(!modalOpen);
-  };
-  const refresh = () => {
-    // it re-renders the component
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -64,6 +67,7 @@ const App = (props) => {
       false
     );
 
+    window.addEventListener('keydown', handleKeydown);
     window.addEventListener('dblclick', () => addInstrument(), false);
     window.addEventListener('contextmenu', incrementPitch, false);
     window.addEventListener('click', playSound, false);
@@ -76,6 +80,8 @@ const App = (props) => {
     return () => {
       stop();
       window.removeEventListener('dblclick', () => addInstrument(), false);
+      window.removeEventListener('contextmenu', incrementPitch, false);
+      window.removeEventListener('keydown', handleKeydown);
       window.removeEventListener('click', playSound, false);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', handleResize);
@@ -113,62 +119,85 @@ const App = (props) => {
       id="canvas"
       ref={mount}
       style={{ background: 'transparent' }}
-      // onClick={() => setAnimating(!isAnimating)}
     >
-      <button className="startstop" onClick={() => setAnimating(!isAnimating)}>
-        {/* <img
-
-					src={play_pause}
-					alt='play-pause'
-
-				/> */}
+      <button
+        className={
+          enableOutline ? 'startstop' : 'no-outline-on-focus startstop'
+        }
+        onClick={() => setAnimating(!isAnimating)}
+      >
         play / pause
       </button>
-      <button
-        className="startstop2"
-        onClick={() => {
-          SaveConfig();
-        }}
-      >
-        save configuration
-      </button>
-      {/* <button
-        className="startstop2"
-        onClick={() => {
-          LoadConfig()
-        }}
-      >
-        console your configuration
-      </button> */}
+      {props.singleSession ? (
+        <button
+          className={
+            enableOutline ? 'startstop2' : 'no-outline-on-focus startstop2'
+          }
+          onClick={() => {
+            SaveConfig();
+          }}
+        >
+          save configuration
+        </button>
+      ) : (
+        <Link to="/">
+          <button className="startstop2">exit to home</button>
+        </Link>
+      )}
 
-      <Slider id="slider" />
-      <About toggleModal={toggleModal} />
+      <Slider id="slider" modalOpen={modalOpen} />
+      <Instructions toggleModal={toggleModal} enableOutline={enableOutline} />
       <Modal
         id="Modal"
-        className="Modal"
+        className={enableOutline ? 'Modal' : 'no-outline-on-focus Modal'}
         appElement={mount.current}
         isOpen={modalOpen}
       >
         <div className="modalTextDiv">
-          Welcome!
+          <b> - How to Jam - </b>
           <br />
-          Double click to spawn a random instrument. Click it to preview sound.
           <br />
-          Drag and drop into the circle to play sounds for everyone.
           <br />
-          Shift click to get rid of instruments.
+          GLOBAL actions
           <br />
-          Play yourself an accompaniment on the keyboard.
           <br />
-          Login through Google to save your configuration.
+          double click: spawn a random soundshape
+          <br />
+          <br />
+          hold down Shift + click: remove an instrument
+          <br />
+          <br />
+          <i>
+            drag and drop soundshapes into the AETHER's jamspace to collaborate
+            with others
+          </i>
+          <br />
+          <br />
+          chat to your friends
+          <br />
+          <br />
+          <br />
+          LOCAL actions
+          <br />
+          <br />
+          single click: preview a sound
+          <br />
+          <br />
+          play the full keyboard
+          <br />
+          <br />
+          click to change the tempo
+          <br />
+          <br />
+          log in, save your music session privately, and come back to jam later!
         </div>
         <button className="closer" onClick={() => setModalOpen(!modalOpen)}>
           close
         </button>
       </Modal>
-      <Chat id="chatbox" />
+      <Chat id="chatbox" enableOutline={enableOutline} />
       <TonePalette />
-      <Keyboard />
+      <Keyboard modalOpen={modalOpen} />
     </div>
   );
 };
