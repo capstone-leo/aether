@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react';
 
 import {
   scene,
@@ -12,109 +12,113 @@ import {
   handleResize,
   onMouseMove,
   onShiftClick,
-} from '../engine/main'
-import {Slider} from './Slider'
-import {Instructions} from './Instructions'
-import Keyboard from './Instruments/Keyboard'
-import Modal from 'react-modal'
-import './css/App.css'
-import Chat from './Chat'
-import socket from '../socket'
-import {connect} from 'react-redux'
+  incrementPitch,
+} from '../engine/main';
+import { Slider } from './Slider';
+import { Instructions } from './Instructions';
+import Keyboard from './Instruments/Keyboard';
+import Modal from 'react-modal';
+import './css/App.css';
+import Chat from './Chat';
+import socket from '../socket';
+import { connect } from 'react-redux';
 
 // import play_pause from '../../public/assets/play-pause.png';
-import {motion} from 'framer-motion'
-import store from '../store'
+import { motion } from 'framer-motion';
+import store from '../store';
 
-import 'firebase/firestore'
-import 'firebase/auth'
-import {auth, db, sceneRef, fetchScene, setScene} from '../Firebase'
-import {Link, Redirect} from 'react-router-dom'
-import TonePalette from './TonePalette'
+import 'firebase/firestore';
+import 'firebase/auth';
+import { auth, db, sceneRef, fetchScene, setScene } from '../Firebase';
+import { Link, Redirect } from 'react-router-dom';
+import TonePalette from './TonePalette';
 
 const App = (props) => {
-  const [redirectTo, setRedirectTo] = useState('')
-  const [modalOpen, setModalOpen] = useState(false)
-  const [hovering, setHovering] = useState(false)
-  const [enableOutline, setEnableOutline] = useState(false)
-  const mount = useRef(null)
-  const [isAnimating, setAnimating] = useState(true)
-  const controls = useRef(null)
-  const hover = useRef(null)
+  const [redirectTo, setRedirectTo] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [enableOutline, setEnableOutline] = useState(false);
+  const mount = useRef(null);
+  const [isAnimating, setAnimating] = useState(true);
+  const controls = useRef(null);
+  const hover = useRef(null);
 
   const handleKeydown = (e) => {
-    const isTabEvent = e.keyCode === 9
+    const isTabEvent = e.keyCode === 9;
     if (isTabEvent) {
-      setEnableOutline(true)
+      setEnableOutline(true);
     }
-  }
+  };
   const toggleModal = () => {
-    setModalOpen(!modalOpen)
-  }
+    setModalOpen(!modalOpen);
+  };
 
   useEffect(() => {
-    props.singleSession ? init(true) : init(false)
-    animate()
-    controls.current = {start, stop}
+    props.singleSession ? init(true) : init(false);
+    animate();
+    controls.current = { start, stop };
     window.addEventListener(
       'click',
       (e) => {
         if (e.shiftKey) {
-          onShiftClick(e)
+          onShiftClick(e);
         }
       },
       false
-    )
+    );
 
-    window.addEventListener('keydown', handleKeydown)
-    window.addEventListener('dblclick', () => addInstrument(), false)
-    window.addEventListener('click', playSound, false)
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('keydown', handleKeydown);
+    window.addEventListener('dblclick', addInstrument, false);
+    window.addEventListener('contextmenu', incrementPitch, false);
+    window.addEventListener('click', playSound, false);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('resize', handleResize);
 
-    controls.current = {start, stop}
+    controls.current = { start, stop };
 
     //Trash Clean up
     return () => {
-      stop()
-      window.removeEventListener('dblclick', () => addInstrument(), false)
-      window.removeEventListener('click', playSound, false)
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('resize', handleResize)
+      stop();
+      window.removeEventListener('dblclick', addInstrument, false);
+      window.removeEventListener('contextmenu', incrementPitch, false);
+      window.removeEventListener('keydown', handleKeydown);
+      window.removeEventListener('click', playSound, false);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('resize', handleResize);
       for (let i = 0; i < scene.length; i++) {
-        scene.remove(i)
+        scene.remove(i);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   //Listens for Start and Stop
   useEffect(() => {
     if (isAnimating) {
-      controls.current.start()
+      controls.current.start();
     } else {
-      controls.current.stop()
+      controls.current.stop();
     }
-  }, [isAnimating])
+  }, [isAnimating]);
 
   const LoadConfig = () => {
-    return fetchScene()
-  }
+    return fetchScene();
+  };
 
   const SaveConfig = () => {
-    setAnimating(false)
-    auth.currentUser ? setRedirectTo('studio') : setRedirectTo('')
-    return setScene()
-  }
+    setAnimating(false);
+    auth.currentUser ? setRedirectTo('studio') : setRedirectTo('');
+    return setScene();
+  };
 
   if (redirectTo) {
-    return <Redirect to={redirectTo} />
+    return <Redirect to={redirectTo} />;
   }
   return (
     <div
       className="App"
       id="canvas"
       ref={mount}
-      style={{background: 'transparent'}}
+      style={{ background: 'transparent' }}
     >
       <button
         className={
@@ -130,7 +134,7 @@ const App = (props) => {
             enableOutline ? 'startstop2' : 'no-outline-on-focus startstop2'
           }
           onClick={() => {
-            SaveConfig()
+            SaveConfig();
           }}
         >
           save configuration
@@ -161,6 +165,9 @@ const App = (props) => {
           <br />
           <br />
           hold down Shift + click: remove an instrument
+          <br />
+          <br />
+          right click: pitch up/cycle instrument
           <br />
           <br />
           <i>
@@ -195,7 +202,7 @@ const App = (props) => {
       <TonePalette />
       <Keyboard modalOpen={modalOpen} />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
