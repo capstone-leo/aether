@@ -92,7 +92,7 @@ const Home = (props) => {
               variants={container}
               initial="hidden"
               animate="show"
-              style={{...style, marginTop: '9%'}}
+              style={{...style, marginTop: '8%'}}
             >
               <Frame variants={item} style={style}>
                 <Link to="/sesh">
@@ -119,7 +119,7 @@ const Home = (props) => {
                         : 'no-outline-on-focus home-btn'
                     }
                     type="button"
-                    style={{textAlign: 'center', marginTop: '3%'}}
+                    style={{textAlign: 'center'}}
                   >
                     account {'>'}
                   </button>

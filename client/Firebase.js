@@ -18,9 +18,12 @@ export const setScene = async () => {
     return await sceneRef
       .doc(auth.currentUser.uid)
       // add new document to Firestore
-      .set({
-        scene: store.getState().instruments,
-      })
+      .set(
+        {
+          scene: store.getState().instruments,
+        },
+        {merge: true}
+      )
   } else return console.log("you're not signed in, friend!")
 }
 
