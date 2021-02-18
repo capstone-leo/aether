@@ -240,7 +240,7 @@ function onMouseMove(event) {
   mouseThree.y = raycaster.ray.origin.y;
 }
 
-function addInstrument(soundType = 'tone', random) {
+function addInstrument(event, soundType = 'tone', random) {
   let newInstrument;
   if (random) {
     newInstrument = new Instrument(nanoid(), undefined, soundType);
@@ -265,6 +265,7 @@ function addInstrument(soundType = 'tone', random) {
     );
     // instruments.push(newInstrument)
     newInstrument.init();
+    console.log(instruments)
   } else {
     socket.emit('add_instrument', {
       id: newInstrument.mesh.reduxid,
@@ -277,6 +278,7 @@ function addInstrument(soundType = 'tone', random) {
 
 function playSound() {
   if (objectSelect) {
+    console.log(objectSelect)
     if (objectSelect.hover) {
       objectSelect.playSound();
     }
@@ -337,25 +339,12 @@ function onShiftClick() {
     store.dispatch(removeInstrument(objectSelect.reduxid));
     instruments.forEach((sceneInstrument) => {
       if (sceneInstrument.mesh.reduxid === objectSelect.reduxid) {
-        instruments = instruments.filter((instrument) => {
-          return instrument.mesh.reduxid !== id;
-        });
-        draggableObjects = draggableObjects.filter(
-          (instrument) => instrument.reduxid !== id
-        );
         sceneInstrument.smash();
       }
     });
+    console.log(draggableObjects)
   } else {
     socket.emit('remove_instrument', objectSelect.reduxid);
-
-    // instruments = instruments.map((instrument) => {
-    //   if (instrument.mesh.reduxid === objectSelect.reduxid) {
-    //     instrument.smash();
-    //   } else {
-    //     return instrument;
-    //   }
-    // });
     store.dispatch(removeInstrument(objectSelect.reduxid));
   }
 }
@@ -364,12 +353,18 @@ function deleteSceneInstrument(id) {
   instruments = instruments.filter(
     (instrument) => instrument.mesh.reduxid !== id
   );
+  draggableObjects = draggableObjects.filter(instrument => instrument.reduxid !== id)
+  dragControls.deactivate()
+  dragControls.dispose()
+  dragControls = new DragControls(draggableObjects, camera, renderer.domElement)
+  dragControls.addEventListener('drag', onDrag);
 }
 
 function incrementPitch(e) {
   e.preventDefault();
   if (objectSelect) {
     if (singlePlayerSession) {
+      objectSelect.instrumentClass.pitchUp();
       store.dispatch(
         dragInstrument(
           objectSelect.reduxid,
@@ -379,11 +374,11 @@ function incrementPitch(e) {
         )
       );
       instruments.forEach((sceneInstrument) => {
-        if (sceneInstrument.mesh.reduxid === draggingObjectReduxId) {
-          sceneInstrument.updatePosition(
-            e.object.position.x,
-            e.object.position.y
-          );
+        if (
+          sceneInstrument.mesh.reduxid === id &&
+          sceneInstrument.soundIndex !== soundIndex
+        ) {
+          sceneInstrument.pitchUp();
         }
       });
     } else {

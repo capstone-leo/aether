@@ -68,7 +68,7 @@ const App = (props) => {
     );
 
     window.addEventListener('keydown', handleKeydown);
-    window.addEventListener('dblclick', () => addInstrument(), false);
+    window.addEventListener('dblclick', addInstrument, false);
     window.addEventListener('contextmenu', incrementPitch, false);
     window.addEventListener('click', playSound, false);
     window.addEventListener('mousemove', onMouseMove);
@@ -79,7 +79,7 @@ const App = (props) => {
     //Trash Clean up
     return () => {
       stop();
-      window.removeEventListener('dblclick', () => addInstrument(), false);
+      window.removeEventListener('dblclick', addInstrument, false);
       window.removeEventListener('contextmenu', incrementPitch, false);
       window.removeEventListener('keydown', handleKeydown);
       window.removeEventListener('click', playSound, false);
