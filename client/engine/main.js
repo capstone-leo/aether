@@ -129,32 +129,32 @@ export const init = (sessionType) => {
 
   //USER INTERFACE
   const drumIcon = document.getElementById('drumIcon');
-  drumIcon.addEventListener('click', function () {
-    addInstrument('drums', 'random');
+  drumIcon.addEventListener('click', function (e) {
+    addInstrument(e, 'drums', 'random');
   });
   const addInstrumentIcon = document.getElementById('addInstrumentIcon');
   addInstrumentIcon.addEventListener('click', function (e) {
-    addInstrument('tones', 'random');
+    addInstrument(e, 'tones', 'random');
   });
   const chordIcon = document.getElementById('chordIcon');
-  chordIcon.addEventListener('click', function () {
-    addInstrument('chords', 'random');
+  chordIcon.addEventListener('click', function (e) {
+    addInstrument(e, 'chords', 'random');
   });
   const pianoIcon = document.getElementById('pianoIcon');
-  pianoIcon.addEventListener('click', function () {
-    addInstrument('pianos', 'random');
+  pianoIcon.addEventListener('click', function (e) {
+    addInstrument(e, 'pianos', 'random');
   });
   const marimbaIcon = document.getElementById('marimbaIcon');
-  marimbaIcon.addEventListener('click', function () {
-    addInstrument('marimbas', 'random');
+  marimbaIcon.addEventListener('click', function (e) {
+    addInstrument(e, 'marimbas', 'random');
   });
   const harpIcon = document.getElementById('harpIcon');
-  harpIcon.addEventListener('click', function () {
-    addInstrument('harps', 'random');
+  harpIcon.addEventListener('click', function (e) {
+    addInstrument(e, 'harps', 'random');
   });
   const feedbackDelayIcon = document.getElementById('feedbackDelayIcon');
-  feedbackDelayIcon.addEventListener('click', function () {
-    addInstrument('feedbackDelays', 'random');
+  feedbackDelayIcon.addEventListener('click', function (e) {
+    addInstrument(e, 'feedbackDelays', 'random');
   });
 };
 
